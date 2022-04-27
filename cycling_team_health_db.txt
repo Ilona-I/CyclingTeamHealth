@@ -1,0 +1,15 @@
+CREATE SCHEMA `cycling_team_health`;
+
+CREATE TABLE `cycling_team_health`.`user` (
+  `login` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `birth_date` DATE NULL,
+  `height` DOUBLE NULL,
+  `weight` DOUBLE NULL,
+  `gender` VARCHAR(45) NULL,
+  PRIMARY KEY (`login`),
+  UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE);
+
