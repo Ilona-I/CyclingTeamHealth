@@ -15,7 +15,7 @@ CREATE TABLE `cycling_team_health`.`user` (
   UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE);
 
 CREATE TABLE `cycling_team_health`.`feedback` (
-    `id` INT NOT NULL,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `login` VARCHAR(45) NOT NULL,
     `datetime` DATETIME NOT NULL,
     `rating` INT NULL,
@@ -30,7 +30,7 @@ CONSTRAINT `feedback_login`
   ON UPDATE NO ACTION);
 
 CREATE TABLE `cycling_team_health`.`team` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`));
 
@@ -40,9 +40,10 @@ CREATE TABLE `cycling_team_health`.`chat` (
   PRIMARY KEY (`id`));
 
 CREATE TABLE `cycling_team_health`.`user_chat` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `chat_id` INT NOT NULL,
   `login` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
   INDEX `user_chat_chat_id_idx` (`chat_id` ASC) VISIBLE,
   INDEX `user_chat_login_idx` (`login` ASC) VISIBLE,
   CONSTRAINT `user_chat_chat_id`
@@ -57,7 +58,7 @@ CREATE TABLE `cycling_team_health`.`user_chat` (
     ON UPDATE NO ACTION);
 
 CREATE TABLE `cycling_team_health`.`message` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `chat_id` INT NOT NULL,
   `sender` VARCHAR(45) NOT NULL,
   `text` VARCHAR(1000) NOT NULL,
@@ -71,7 +72,7 @@ CREATE TABLE `cycling_team_health`.`message` (
     ON UPDATE NO ACTION);
 
 CREATE TABLE `cycling_team_health`.`user_team` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `team_id` INT NOT NULL,
   `login` VARCHAR(45) NOT NULL,
   `role` VARCHAR(45) NOT NULL,
@@ -106,7 +107,7 @@ CREATE TABLE `cycling_team_health`.`training_goals` (
     ON UPDATE NO ACTION);
 
 CREATE TABLE `cycling_team_health`.`training_results` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `training_id` INT NOT NULL,
   `login` VARCHAR(45) NOT NULL,
   `pulse` INT NOT NULL,
