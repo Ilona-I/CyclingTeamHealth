@@ -15,7 +15,6 @@ import static ua.nure.illiashenko.ilona.constants.UserConstants.REPEATED_PASSWOR
 @Getter
 public class RegistrationData {
 
-
     private final String login;
     private final String password;
     private final String repeatedPassword;

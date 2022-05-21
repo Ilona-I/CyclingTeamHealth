@@ -1,0 +1,73 @@
+package ua.nure.illiashenko.ilona.controllers;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ua.nure.illiashenko.ilona.TransactionManager;
+import ua.nure.illiashenko.ilona.dao.ChatDAO;
+import ua.nure.illiashenko.ilona.dao.DBConnectionPool;
+import ua.nure.illiashenko.ilona.dao.FeedbackDAO;
+import ua.nure.illiashenko.ilona.dao.MessageDAO;
+import ua.nure.illiashenko.ilona.dao.TeamDAO;
+import ua.nure.illiashenko.ilona.dao.TrainingGoalsDAO;
+import ua.nure.illiashenko.ilona.dao.TrainingResultsDAO;
+import ua.nure.illiashenko.ilona.dao.UserChatDAO;
+import ua.nure.illiashenko.ilona.dao.UserDAO;
+import ua.nure.illiashenko.ilona.dao.UserTeamDAO;
+import ua.nure.illiashenko.ilona.services.ChatService;
+import ua.nure.illiashenko.ilona.services.DataValidator;
+import ua.nure.illiashenko.ilona.services.FeedbackService;
+import ua.nure.illiashenko.ilona.services.TeamService;
+import ua.nure.illiashenko.ilona.services.TrainingService;
+import ua.nure.illiashenko.ilona.services.UserService;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.CHAT_SERVICE;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.FEEDBACK_SERVICE;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.TEAM_SERVICE;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.TRAINING_SERVICE;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.USER_SERVICE;
+
+public class ContextListener implements ServletContextListener {
+
+    private final Logger logger = LoggerFactory.getLogger(ContextListener.class);
+
+    @Override
+    public void contextInitialized(ServletContextEvent servletContextEvent) {
+        ServletContext servletContext = servletContextEvent.getServletContext();
+        DBConnectionPool dbConnectionPool = new DBConnectionPool();
+        TransactionManager transactionManager = new TransactionManager(dbConnectionPool);
+
+        UserDAO userDAO = new UserDAO();
+        ChatDAO chatDAO = new ChatDAO();
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
+        MessageDAO messageDAO = new MessageDAO();
+        TeamDAO teamDAO = new TeamDAO();
+        TrainingGoalsDAO trainingGoalsDAO = new TrainingGoalsDAO();
+        TrainingResultsDAO trainingResultsDAO = new TrainingResultsDAO();
+        UserChatDAO userChatDAO = new UserChatDAO();
+        UserTeamDAO userTeamDAO = new UserTeamDAO();
+
+        UserService userService = new UserService(userDAO, transactionManager);
+        TeamService teamService = new TeamService(teamDAO, userTeamDAO, transactionManager);
+        ChatService chatService = new ChatService(chatDAO, userChatDAO, messageDAO, transactionManager);
+        FeedbackService feedbackService = new FeedbackService(feedbackDAO, transactionManager);
+        TrainingService trainingService = new TrainingService(trainingGoalsDAO, trainingResultsDAO, transactionManager);
+
+        servletContext.setAttribute(USER_SERVICE, userService);
+        servletContext.setAttribute(TEAM_SERVICE, teamService);
+        servletContext.setAttribute(CHAT_SERVICE, chatService);
+        servletContext.setAttribute(FEEDBACK_SERVICE, feedbackService);
+        servletContext.setAttribute(TRAINING_SERVICE, trainingService);
+        servletContext.setAttribute(DATA_VALIDATOR, new DataValidator());
+        logger.info("Context initialized");
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+        logger.info("Context destroyed");
+    }
+}
