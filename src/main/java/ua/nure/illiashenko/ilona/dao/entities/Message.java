@@ -1,18 +1,52 @@
 package ua.nure.illiashenko.ilona.dao.entities;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.sql.Timestamp;
 
-@Getter
-@Setter
-@Builder
 public class Message {
 
     private int id;
-    private int userChatId;
-    private Timestamp dateTime;
+    private int chatId;
+    private String sender;
     private String text;
+    private Timestamp dateTime;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(int chatId) {
+        this.chatId = chatId;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Timestamp getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(Timestamp dateTime) {
+        this.dateTime = dateTime;
+    }
 }

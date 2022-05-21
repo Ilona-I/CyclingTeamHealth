@@ -10,6 +10,114 @@ CREATE TABLE `cycling_team_health`.`user` (
   `height` DOUBLE NULL,
   `weight` DOUBLE NULL,
   `gender` VARCHAR(45) NULL,
+  `status` VARCHAR(45) NULL DEFAULT 'active',
   PRIMARY KEY (`login`),
   UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE);
+
+CREATE TABLE `cycling_team_health`.`feedback` (
+    `id` INT NOT NULL,
+    `login` VARCHAR(45) NOT NULL,
+    `datetime` DATETIME NOT NULL,
+    `rating` INT NULL,
+    `text` VARCHAR(45) NULL,
+    `status` VARCHAR(45) NOT NULL DEFAULT 'active',
+PRIMARY KEY (`id`),
+INDEX `feedback_login_idx` (`login` ASC) VISIBLE,
+CONSTRAINT `feedback_login`
+  FOREIGN KEY (`login`)
+  REFERENCES `cycling_team_health`.`user` (`login`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION);
+
+CREATE TABLE `cycling_team_health`.`team` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`));
+
+CREATE TABLE `cycling_team_health`.`chat` (
+  `id` INT NOT NULL,
+  `type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+
+CREATE TABLE `cycling_team_health`.`user_chat` (
+  `id` INT NOT NULL,
+  `chat_id` INT NOT NULL,
+  `login` VARCHAR(45) NOT NULL,
+  INDEX `user_chat_chat_id_idx` (`chat_id` ASC) VISIBLE,
+  INDEX `user_chat_login_idx` (`login` ASC) VISIBLE,
+  CONSTRAINT `user_chat_chat_id`
+    FOREIGN KEY (`chat_id`)
+    REFERENCES `cycling_team_health`.`chat` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `user_chat_login`
+    FOREIGN KEY (`login`)
+    REFERENCES `cycling_team_health`.`user` (`login`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `cycling_team_health`.`message` (
+  `id` INT NOT NULL,
+  `chat_id` INT NOT NULL,
+  `sender` VARCHAR(45) NOT NULL,
+  `text` VARCHAR(1000) NOT NULL,
+  `datetime` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `message_chat_id_idx` (`chat_id` ASC) VISIBLE,
+  CONSTRAINT `message_chat_id`
+    FOREIGN KEY (`chat_id`)
+    REFERENCES `cycling_team_health`.`chat` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `cycling_team_health`.`user_team` (
+  `id` INT NOT NULL,
+  `team_id` INT NOT NULL,
+  `login` VARCHAR(45) NOT NULL,
+  `role` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `user_team_team_id_idx` (`team_id` ASC) VISIBLE,
+  INDEX `user_team_login_idx` (`login` ASC) VISIBLE,
+  CONSTRAINT `user_team_team_id`
+    FOREIGN KEY (`team_id`)
+    REFERENCES `cycling_team_health`.`team` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `user_team_login`
+    FOREIGN KEY (`login`)
+    REFERENCES `cycling_team_health`.`user` (`login`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `cycling_team_health`.`training_goals` (
+  `id` INT NOT NULL,
+  `team_id` INT NOT NULL,
+  `pulse` INT NULL,
+  `speed` INT NULL,
+  `distance` INT NULL,
+  `start_datetime` DATETIME NULL,
+  `end_datetime` DATETIME NULL,
+  PRIMARY KEY (`id`),
+  INDEX `training_team_id_idx` (`team_id` ASC) VISIBLE,
+  CONSTRAINT `training_team_id`
+    FOREIGN KEY (`team_id`)
+    REFERENCES `cycling_team_health`.`team` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `cycling_team_health`.`training_result` (
+  `id` INT NOT NULL,
+  `training_id` INT NOT NULL,
+  `login` VARCHAR(45) NOT NULL,
+  `pulse` INT NOT NULL,
+  `speed` INT NOT NULL,
+  `distance` INT NOT NULL,
+  `datetime` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `training_result_training_id_idx` (`training_id` ASC) VISIBLE,
+  CONSTRAINT `training_result_training_id`
+    FOREIGN KEY (`training_id`)
+    REFERENCES `cycling_team_health`.`training_goals` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
