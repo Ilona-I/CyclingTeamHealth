@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.ADMIN_SERVICE;
 
-@WebServlet("/admin/database/backup")
+@WebServlet("/database/backup")
 public class BackUpTheDatabaseServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(BackUpTheDatabaseServlet.class);
@@ -24,6 +24,6 @@ public class BackUpTheDatabaseServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
-        adminService.backUpDatabase();
+        System.out.println("28: "+adminService.backUpDatabase());
     }
 }

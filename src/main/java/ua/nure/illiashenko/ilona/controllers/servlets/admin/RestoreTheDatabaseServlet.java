@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.ADMIN_SERVICE;
 
-@WebServlet("/admin/database/restore")
+@WebServlet("/database/restore")
 public class RestoreTheDatabaseServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(RestoreTheDatabaseServlet.class);
@@ -24,6 +24,6 @@ public class RestoreTheDatabaseServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response){
-        adminService.restoreDatabase();
+        System.out.println(adminService.restoreDatabase());
     }
 }

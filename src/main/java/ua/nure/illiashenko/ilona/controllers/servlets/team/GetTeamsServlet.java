@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.TEAM_SERVICE;
 
-@WebServlet("teams")
+@WebServlet("/teams")
 public class GetTeamsServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(GetTeamsServlet.class);

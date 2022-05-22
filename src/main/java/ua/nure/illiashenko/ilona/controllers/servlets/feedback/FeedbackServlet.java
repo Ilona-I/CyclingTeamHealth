@@ -14,9 +14,9 @@ import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATO
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.FEEDBACK_SERVICE;
 
 @WebServlet("/feedback")
-public class SendFeedbackServlet extends HttpServlet {
+public class FeedbackServlet extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(SendFeedbackServlet.class);
+    private static final Logger logger = LoggerFactory.getLogger(FeedbackServlet.class);
     private FeedbackService feedbackService;
     private DataValidator dataValidator;
 
@@ -28,6 +28,21 @@ public class SendFeedbackServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response){
+
+    }
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response){
+
+    }
+
+    @Override
+    public void doPut(HttpServletRequest request, HttpServletResponse response){
+
+    }
+
+    @Override
+    public void doDelete(HttpServletRequest request, HttpServletResponse response){
 
     }
 }

@@ -14,9 +14,9 @@ import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATO
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.TRAINING_SERVICE;
 
 @WebServlet("/training/goal")
-public class UpdateTrainingGoalServlet extends HttpServlet {
+public class TrainingGoalServlet extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(UpdateTrainingGoalServlet.class);
+    private static final Logger logger = LoggerFactory.getLogger(TrainingGoalServlet.class);
     private TrainingService trainingService;
     private DataValidator dataValidator;
 
@@ -27,7 +27,17 @@ public class UpdateTrainingGoalServlet extends HttpServlet {
     }
 
     @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
+
+    }
+
+    @Override
     public void doPut(HttpServletRequest request, HttpServletResponse response) {
+
+    }
+
+    @Override
+    public void doDelete(HttpServletRequest request, HttpServletResponse response) {
 
     }
 }

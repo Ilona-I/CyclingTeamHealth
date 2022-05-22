@@ -14,9 +14,9 @@ import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATO
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.USER_SERVICE;
 
 @WebServlet("/user")
-public class UpdateUserServlet extends HttpServlet {
+public class UserServlet extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(UpdateUserServlet.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserServlet.class);
     private UserService userService;
     private DataValidator dataValidator;
 
@@ -27,7 +27,17 @@ public class UpdateUserServlet extends HttpServlet {
     }
 
     @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
+
+    }
+
+    @Override
     public void doPut(HttpServletRequest request, HttpServletResponse response) {
+
+    }
+
+    @Override
+    public void doDelete(HttpServletRequest request, HttpServletResponse response) {
 
     }
 }

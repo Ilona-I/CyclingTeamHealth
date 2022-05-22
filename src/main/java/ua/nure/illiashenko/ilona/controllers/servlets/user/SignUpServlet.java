@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.USER_SERVICE;
 
-@WebServlet
+@WebServlet("/signUp")
 public class SignUpServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(SignUpServlet.class);

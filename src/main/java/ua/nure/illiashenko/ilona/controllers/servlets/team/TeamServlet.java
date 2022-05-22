@@ -1,11 +1,9 @@
-package ua.nure.illiashenko.ilona.controllers.servlets.training;
+package ua.nure.illiashenko.ilona.controllers.servlets.team;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.nure.illiashenko.ilona.controllers.servlets.team.AddUserToTeamServlet;
 import ua.nure.illiashenko.ilona.services.DataValidator;
 import ua.nure.illiashenko.ilona.services.TeamService;
-import ua.nure.illiashenko.ilona.services.TrainingService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,23 +12,32 @@ import javax.servlet.http.HttpServletResponse;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.TEAM_SERVICE;
-import static ua.nure.illiashenko.ilona.constants.ContextConstants.TRAINING_SERVICE;
 
-@WebServlet("/training/goal")
-public class AddTrainingGoalServlet extends HttpServlet {
+@WebServlet("/team")
+public class TeamServlet extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(AddTrainingGoalServlet.class);
-    private TrainingService trainingService;
+    private static final Logger logger = LoggerFactory.getLogger(TeamServlet.class);
+    private TeamService teamService;
     private DataValidator dataValidator;
 
     @Override
     public void init() {
-        trainingService = (TrainingService) getServletContext().getAttribute(TRAINING_SERVICE);
+        teamService = (TeamService) getServletContext().getAttribute(TEAM_SERVICE);
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) {
+    public void doPost(HttpServletRequest request, HttpServletResponse response){
+
+    }
+
+    @Override
+    public void doPut(HttpServletRequest request, HttpServletResponse response){
+
+    }
+
+    @Override
+    public void doDelete(HttpServletRequest request, HttpServletResponse response){
 
     }
 }

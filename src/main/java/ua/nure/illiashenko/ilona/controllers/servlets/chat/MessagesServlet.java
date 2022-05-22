@@ -14,9 +14,9 @@ import static ua.nure.illiashenko.ilona.constants.ContextConstants.CHAT_SERVICE;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
 
 @WebServlet("/chat")
-public class SendMessageServlet extends HttpServlet {
+public class MessagesServlet extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(SendMessageServlet.class);
+    private static final Logger logger = LoggerFactory.getLogger(MessagesServlet.class);
     private ChatService chatService;
     private DataValidator dataValidator;
 
@@ -26,8 +26,15 @@ public class SendMessageServlet extends HttpServlet {
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
     }
 
+    // Send message.
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response){
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
+
+    }
+
+    // Get messages.
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
 
     }
 }
