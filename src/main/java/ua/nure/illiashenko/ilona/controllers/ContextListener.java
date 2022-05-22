@@ -2,7 +2,9 @@ package ua.nure.illiashenko.ilona.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.nure.illiashenko.ilona.TransactionManager;
+import ua.nure.illiashenko.ilona.dao.DatabaseManager;
+import ua.nure.illiashenko.ilona.services.AdminService;
+import ua.nure.illiashenko.ilona.services.TransactionManager;
 import ua.nure.illiashenko.ilona.dao.ChatDAO;
 import ua.nure.illiashenko.ilona.dao.DBConnectionPool;
 import ua.nure.illiashenko.ilona.dao.FeedbackDAO;
@@ -24,6 +26,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.ADMIN_SERVICE;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.CHAT_SERVICE;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.FEEDBACK_SERVICE;
@@ -50,18 +53,21 @@ public class ContextListener implements ServletContextListener {
         TrainingResultsDAO trainingResultsDAO = new TrainingResultsDAO();
         UserChatDAO userChatDAO = new UserChatDAO();
         UserTeamDAO userTeamDAO = new UserTeamDAO();
+        DatabaseManager databaseManager = new DatabaseManager();
 
         UserService userService = new UserService(userDAO, transactionManager);
         TeamService teamService = new TeamService(teamDAO, userTeamDAO, transactionManager);
         ChatService chatService = new ChatService(chatDAO, userChatDAO, messageDAO, transactionManager);
         FeedbackService feedbackService = new FeedbackService(feedbackDAO, transactionManager);
         TrainingService trainingService = new TrainingService(trainingGoalsDAO, trainingResultsDAO, transactionManager);
+        AdminService adminService = new AdminService(databaseManager);
 
         servletContext.setAttribute(USER_SERVICE, userService);
         servletContext.setAttribute(TEAM_SERVICE, teamService);
         servletContext.setAttribute(CHAT_SERVICE, chatService);
         servletContext.setAttribute(FEEDBACK_SERVICE, feedbackService);
         servletContext.setAttribute(TRAINING_SERVICE, trainingService);
+        servletContext.setAttribute(ADMIN_SERVICE, adminService);
         servletContext.setAttribute(DATA_VALIDATOR, new DataValidator());
         logger.info("Context initialized");
     }

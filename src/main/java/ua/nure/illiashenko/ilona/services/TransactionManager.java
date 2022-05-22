@@ -1,4 +1,4 @@
-package ua.nure.illiashenko.ilona;
+package ua.nure.illiashenko.ilona.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
