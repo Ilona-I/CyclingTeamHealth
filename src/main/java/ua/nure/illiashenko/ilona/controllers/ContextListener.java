@@ -14,7 +14,6 @@ import ua.nure.illiashenko.ilona.dao.TrainingGoalsDAO;
 import ua.nure.illiashenko.ilona.dao.TrainingResultsDAO;
 import ua.nure.illiashenko.ilona.dao.UserChatDAO;
 import ua.nure.illiashenko.ilona.dao.UserDAO;
-import ua.nure.illiashenko.ilona.dao.UserTeamDAO;
 import ua.nure.illiashenko.ilona.services.ChatService;
 import ua.nure.illiashenko.ilona.services.DataValidator;
 import ua.nure.illiashenko.ilona.services.FeedbackService;
@@ -52,11 +51,10 @@ public class ContextListener implements ServletContextListener {
         TrainingGoalsDAO trainingGoalsDAO = new TrainingGoalsDAO();
         TrainingResultsDAO trainingResultsDAO = new TrainingResultsDAO();
         UserChatDAO userChatDAO = new UserChatDAO();
-        UserTeamDAO userTeamDAO = new UserTeamDAO();
         DatabaseManager databaseManager = new DatabaseManager();
 
         UserService userService = new UserService(userDAO, transactionManager);
-        TeamService teamService = new TeamService(teamDAO, userTeamDAO, transactionManager);
+        TeamService teamService = new TeamService(teamDAO, userDAO, transactionManager);
         ChatService chatService = new ChatService(chatDAO, userChatDAO, messageDAO, transactionManager);
         FeedbackService feedbackService = new FeedbackService(feedbackDAO, transactionManager);
         TrainingService trainingService = new TrainingService(trainingGoalsDAO, trainingResultsDAO, transactionManager);

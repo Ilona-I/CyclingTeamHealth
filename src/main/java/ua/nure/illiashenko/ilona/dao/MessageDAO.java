@@ -4,6 +4,7 @@ import ua.nure.illiashenko.ilona.dao.entities.Message;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class MessageDAO implements DAO <Message, Integer>{
 
@@ -13,7 +14,7 @@ public class MessageDAO implements DAO <Message, Integer>{
     }
 
     @Override
-    public Message get(Integer key, Connection connection) throws SQLException {
+    public Optional<Message> get(Integer key, Connection connection) throws SQLException {
         return null;
     }
 

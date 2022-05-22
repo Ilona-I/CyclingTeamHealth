@@ -4,6 +4,7 @@ import ua.nure.illiashenko.ilona.dao.entities.Chat;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class ChatDAO implements DAO<Chat, Integer>{
 
@@ -13,7 +14,7 @@ public class ChatDAO implements DAO<Chat, Integer>{
     }
 
     @Override
-    public Chat get(Integer key, Connection connection) throws SQLException {
+    public Optional<Chat> get(Integer key, Connection connection) throws SQLException {
         return null;
     }
 

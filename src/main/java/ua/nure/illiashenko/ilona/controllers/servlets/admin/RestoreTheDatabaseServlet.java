@@ -23,7 +23,7 @@ public class RestoreTheDatabaseServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response){
-        System.out.println(adminService.restoreDatabase());
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
+        adminService.restoreDatabase();
     }
 }

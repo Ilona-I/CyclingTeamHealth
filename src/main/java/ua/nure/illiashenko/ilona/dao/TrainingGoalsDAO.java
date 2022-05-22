@@ -4,6 +4,7 @@ import ua.nure.illiashenko.ilona.dao.entities.TrainingGoals;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class TrainingGoalsDAO implements DAO<TrainingGoals, Integer>{
     @Override
@@ -12,7 +13,7 @@ public class TrainingGoalsDAO implements DAO<TrainingGoals, Integer>{
     }
 
     @Override
-    public TrainingGoals get(Integer key, Connection connection) throws SQLException {
+    public Optional<TrainingGoals> get(Integer key, Connection connection) throws SQLException {
         return null;
     }
 

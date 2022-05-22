@@ -13,6 +13,10 @@ public class UserConstants {
     public static final String WEIGHT = "weight";
     public static final String GENDER = "gender";
     public static final String STATUS = "status";
+    public static final String ROLE = "role";
+    public static final String TEAM_ID = "teamId";
+    public static final String TEAM_TYPE = "teamType";
+    public static final String TEAM_NAME = "teamName";
 
     private UserConstants(){
     }

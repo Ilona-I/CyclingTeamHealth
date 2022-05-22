@@ -4,6 +4,7 @@ import ua.nure.illiashenko.ilona.dao.entities.Feedback;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class FeedbackDAO implements DAO<Feedback, Integer>{
     @Override
@@ -12,7 +13,7 @@ public class FeedbackDAO implements DAO<Feedback, Integer>{
     }
 
     @Override
-    public Feedback get(Integer key, Connection connection) throws SQLException {
+    public Optional<Feedback> get(Integer key, Connection connection) throws SQLException {
         return null;
     }
 

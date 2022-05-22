@@ -24,6 +24,6 @@ public class BackUpTheDatabaseServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("28: "+adminService.backUpDatabase());
+        adminService.backUpDatabase();
     }
 }

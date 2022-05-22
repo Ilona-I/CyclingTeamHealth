@@ -12,6 +12,7 @@ import ua.nure.illiashenko.ilona.exceptions.user.CannotUpdateUserException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.function.Function;
 
 public class UserService {
@@ -49,11 +50,12 @@ public class UserService {
         return doInTransaction(function);
     }
 
-    public User getUser(String login) {
-        Function<Connection, User> function = connection -> {
+    public Optional<User> getUser(String login) {
+        Function<Connection, Optional<User>> function = connection -> {
             try {
                 return userDAO.get(login, connection);
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 throw new CannotFindUserException(e.getMessage());
             }
         };
@@ -70,6 +72,18 @@ public class UserService {
             }
         };
         return doInTransaction(function);
+    }
+
+    public boolean isUserWithSuchLoginExists(String login) {
+        Function<Connection, Optional<User>> function = connection -> {
+            try {
+                return userDAO.get(login, connection);
+            } catch (SQLException e) {
+                logger.error(e.getMessage());
+                throw new CannotFindUserException(e.getMessage());
+            }
+        };
+        return doInTransaction(function).isPresent();
     }
 
     private <R> R doInTransaction(Function<Connection, R> function) {

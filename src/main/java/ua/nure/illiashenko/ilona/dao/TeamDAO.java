@@ -4,6 +4,7 @@ import ua.nure.illiashenko.ilona.dao.entities.Team;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class TeamDAO implements DAO<Team, Integer>{
     @Override
@@ -12,7 +13,7 @@ public class TeamDAO implements DAO<Team, Integer>{
     }
 
     @Override
-    public Team get(Integer key, Connection connection) throws SQLException {
+    public Optional<Team> get(Integer key, Connection connection) throws SQLException {
         return null;
     }
 
