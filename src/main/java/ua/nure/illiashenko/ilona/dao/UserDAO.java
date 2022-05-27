@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.DELETE_USER;
+import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_TEAM_MEMBERS;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_USER_BY_LOGIN;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.INSERT_USER;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.UPDATE_USER;
@@ -88,7 +89,7 @@ public class UserDAO implements DAO<User, String> {
 
     public List<User> getTeamMembers(int teamId, Connection connection) throws SQLException {
         List<User> teamMembers = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_LOGIN)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_TEAM_MEMBERS)) {
             preparedStatement.setInt(1, teamId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

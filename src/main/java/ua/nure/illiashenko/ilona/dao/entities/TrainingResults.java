@@ -9,8 +9,6 @@ public class TrainingResults {
     private String login;
     private int pulse;
     private int speed;
-    private int distance;
-    private Timestamp dateTime;
 
     public int getId() {
         return id;
@@ -50,21 +48,5 @@ public class TrainingResults {
 
     public void setSpeed(int speed) {
         this.speed = speed;
-    }
-
-    public int getDistance() {
-        return distance;
-    }
-
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
-
-    public Timestamp getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(Timestamp dateTime) {
-        this.dateTime = dateTime;
     }
 }

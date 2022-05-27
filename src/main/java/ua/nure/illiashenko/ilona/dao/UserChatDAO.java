@@ -1,29 +1,92 @@
 package ua.nure.illiashenko.ilona.dao;
 
+import com.mysql.cj.jdbc.exceptions.OperationNotSupportedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ua.nure.illiashenko.ilona.dao.entities.UserChat;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import static ua.nure.illiashenko.ilona.constants.SQLQuery.DELETE_USER_CHAT;
+import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_CHAT;
+import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_USER_CHATS;
+import static ua.nure.illiashenko.ilona.constants.SQLQuery.INSERT_USER_CHAT;
+
 public class UserChatDAO implements DAO<UserChat, Integer> {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserChatDAO.class);
+
     @Override
     public boolean insert(UserChat userChat, Connection connection) throws SQLException {
-        return false;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_CHAT)) {
+            preparedStatement.setInt(1, userChat.getChatId());
+            preparedStatement.setString(2, userChat.getLogin());
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new SQLException();
+        }
     }
 
     @Override
     public Optional<UserChat> get(Integer key, Connection connection) throws SQLException {
-        return null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_CHAT)) {
+            preparedStatement.setInt(1, key);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                UserChat userChat = new UserChat();
+                userChat.setId(resultSet.getInt(1));
+                userChat.setChatId(resultSet.getInt(2));
+                userChat.setLogin(resultSet.getString(3));
+                return Optional.of(userChat);
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new SQLException();
+        }
+        return Optional.empty();
     }
 
     @Override
     public boolean update(Integer key, UserChat newEntity, Connection connection) throws SQLException {
-        return false;
+        throw new OperationNotSupportedException();
     }
 
     @Override
     public boolean delete(Integer key, Connection connection) throws SQLException {
-        return false;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_CHAT)) {
+            preparedStatement.setInt(1, key);
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new SQLException();
+        }
+    }
+
+    public List<UserChat> getUserChats(String login, Connection connection) throws SQLException {
+        List<UserChat> userChatList = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_CHATS)) {
+            preparedStatement.setString(1, login);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                UserChat userChat = new UserChat();
+                userChat.setId(resultSet.getInt(1));
+                userChat.setChatId(resultSet.getInt(2));
+                userChat.setLogin(resultSet.getString(3));
+                userChatList.add(userChat);
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new SQLException();
+        }
+        return userChatList;
     }
 }

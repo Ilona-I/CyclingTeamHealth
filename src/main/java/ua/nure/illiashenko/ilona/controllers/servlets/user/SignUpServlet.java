@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
@@ -44,14 +43,14 @@ public class SignUpServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         UserData userData = new UserData(request);
         List<String> validationErrors = dataValidator.validate(userData);
-        if(userService.isUserWithSuchLoginExists(userData.getLogin())){
+        if (userService.isUserWithSuchLoginExists(userData.getLogin())) {
             validationErrors.add("userWithSuchLoginExists");
         }
-        if(ENTER_TEAM.equals(userData.getTeamType())&&dataValidator.isNumber(userData.getTeamId())&&!teamService.isTeamWithSuchIdExists(Integer.parseInt(userData.getTeamId()))){
+        if (ENTER_TEAM.equals(userData.getTeamType()) && dataValidator.isNumber(userData.getTeamId()) && !teamService.isTeamWithSuchIdExists(Integer.parseInt(userData.getTeamId()))) {
             validationErrors.add("teamDoesNotExist");
             response.setStatus(404);
         }
-        if(!validationErrors.isEmpty()){
+        if (!validationErrors.isEmpty()) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("validationErrors", validationErrors);
             PrintWriter writer = response.getWriter();

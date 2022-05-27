@@ -83,7 +83,6 @@ CREATE TABLE `cycling_team_health`.`training_goals` (
   `team_id` INT NOT NULL,
   `pulse` INT NULL,
   `speed` INT NULL,
-  `distance` INT NULL,
   `start_datetime` DATETIME NULL,
   `end_datetime` DATETIME NULL,
   PRIMARY KEY (`id`),
@@ -100,8 +99,6 @@ CREATE TABLE `cycling_team_health`.`training_results` (
   `login` VARCHAR(45) NOT NULL,
   `pulse` INT NOT NULL,
   `speed` INT NOT NULL,
-  `distance` INT NOT NULL,
-  `datetime` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `training_result_training_id_idx` (`training_id` ASC) VISIBLE,
   CONSTRAINT `training_result_training_id`

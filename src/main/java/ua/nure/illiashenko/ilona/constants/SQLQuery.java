@@ -19,10 +19,15 @@ public class SQLQuery {
 
     public static final String INSERT_CHAT = "";
     public static final String GET_CHAT = "";
+    public static final String DELETE_CHAT = "";
 
     public static final String INSERT_USER_CHAT = "";
+    public static final String DELETE_USER_CHAT = "";
 
     public static final String INSERT_MESSAGE = "";
+    public static final String GET_MESSAGE = "";
+    public static final String UPDATE_MESSAGE = "";
+    public static final String DELETE_MESSAGE = "";
     public static final String GET_MESSAGES_BY_CHAT_ID = "";
 
     public static final String INSERT_FEEDBACK = "";
@@ -31,15 +36,15 @@ public class SQLQuery {
     public static final String GET_FEEDBACKS = "";
     public static final String GET_FEEDBACK = "";
 
-    public static final String INSERT_TRAINING_GOAL = "";
-    public static final String UPDATE_TRAINING_GOAL = "";
-    public static final String DELETE_TRAINING_GOAL = "";
-    public static final String GET_TRAINING_GOAL = "";
+    public static final String INSERT_TRAINING_GOALS = "";
+    public static final String UPDATE_TRAINING_GOALS = "";
+    public static final String DELETE_TRAINING_GOALS = "";
     public static final String GET_TRAINING_GOALS = "";
 
-    public static final String INSERT_TRAINING_RESULT = "";
-    public static final String GET_TRAINING_RESULT = "";
+    public static final String INSERT_TRAINING_RESULTS = "";
     public static final String GET_TRAINING_RESULTS = "";
+
+    public static final String GET_USER_CHATS = "";
 
     private SQLQuery() {
     }

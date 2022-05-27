@@ -8,7 +8,6 @@ public class TrainingGoals {
     private int teamId;
     private int pulse;
     private int speed;
-    private int distance;
     private Timestamp startDateTime;
     private Timestamp endDateTime;
 
@@ -42,14 +41,6 @@ public class TrainingGoals {
 
     public void setSpeed(int speed) {
         this.speed = speed;
-    }
-
-    public int getDistance() {
-        return distance;
-    }
-
-    public void setDistance(int distance) {
-        this.distance = distance;
     }
 
     public Timestamp getStartDateTime() {

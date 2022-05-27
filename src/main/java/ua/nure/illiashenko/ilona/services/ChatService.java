@@ -5,6 +5,11 @@ import org.slf4j.LoggerFactory;
 import ua.nure.illiashenko.ilona.dao.ChatDAO;
 import ua.nure.illiashenko.ilona.dao.MessageDAO;
 import ua.nure.illiashenko.ilona.dao.UserChatDAO;
+import ua.nure.illiashenko.ilona.dao.entities.UserChat;
+
+import java.util.List;
+
+import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_USER_CHATS;
 
 public class ChatService {
 
@@ -20,4 +25,8 @@ public class ChatService {
         this.messageDAO = messageDAO;
         this.transactionManager = transactionManager;
     }
+/*
+    public List<UserChat> getUserChats(String userLogin){
+
+    }*/
 }
