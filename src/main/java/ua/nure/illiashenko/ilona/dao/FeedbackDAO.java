@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,19 +24,22 @@ public class FeedbackDAO implements DAO<Feedback, Integer> {
     private static final Logger logger = LoggerFactory.getLogger(FeedbackDAO.class);
 
     @Override
-    public boolean insert(Feedback feedback, Connection connection) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_FEEDBACK)) {
+    public Feedback insert(Feedback feedback, Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_FEEDBACK, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, feedback.getLogin());
             preparedStatement.setTimestamp(2, feedback.getDateTime());
             preparedStatement.setInt(3, feedback.getRating());
             preparedStatement.setString(4, feedback.getText());
             preparedStatement.setString(5, feedback.getStatus());
             preparedStatement.executeUpdate();
-            return true;
+            ResultSet keys=preparedStatement.getGeneratedKeys();
+            keys.next();
+            feedback.setId(keys.getInt(1));
         } catch (SQLException e) {
             logger.error(e.getMessage());
             throw new SQLException();
         }
+        return feedback;
     }
 
     @Override

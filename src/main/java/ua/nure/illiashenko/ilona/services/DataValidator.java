@@ -115,10 +115,10 @@ public class DataValidator {
         if (!userData.getPassword().equals(userData.getRepeatedPassword())) {
             validationErrors.add("wrongRepeatedPassword");
         }
-        if(!isRole(userData.getRole())){
+        if (!isRole(userData.getRole())) {
             validationErrors.add("wrongRole");
         }
-        if(NEW_TEAM.equals(userData.getTeamType())&&userData.getTeamName().length()==0){
+        if (NEW_TEAM.equals(userData.getTeamType()) && userData.getTeamName().length() == 0) {
             validationErrors.add("wrongTeamName");
         }
         if (!userData.getBirthDate().isEmpty() && !isDate(userData.getBirthDate())) {

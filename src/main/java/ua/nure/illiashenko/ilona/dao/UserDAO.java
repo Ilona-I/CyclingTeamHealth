@@ -23,15 +23,15 @@ public class UserDAO implements DAO<User, String> {
     private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
 
     @Override
-    public boolean insert(User user, Connection connection) throws SQLException {
+    public User insert(User user, Connection connection) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER)) {
             setUserData(user, preparedStatement);
             preparedStatement.executeUpdate();
-            return true;
         } catch (SQLException e) {
             logger.error(e.getMessage());
             throw new SQLException();
         }
+        return user;
     }
 
     @Override

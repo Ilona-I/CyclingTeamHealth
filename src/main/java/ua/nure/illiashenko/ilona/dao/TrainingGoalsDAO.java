@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.DELETE_TRAINING_GOALS;
@@ -20,19 +21,22 @@ public class TrainingGoalsDAO implements DAO<TrainingGoals, Integer> {
     private static final Logger logger = LoggerFactory.getLogger(TrainingGoalsDAO.class);
 
     @Override
-    public boolean insert(TrainingGoals trainingGoals, Connection connection) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TRAINING_GOALS)) {
+    public TrainingGoals insert(TrainingGoals trainingGoals, Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TRAINING_GOALS, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, trainingGoals.getTeamId());
             preparedStatement.setInt(2, trainingGoals.getPulse());
             preparedStatement.setInt(3, trainingGoals.getSpeed());
             preparedStatement.setTimestamp(4, trainingGoals.getStartDateTime());
             preparedStatement.setTimestamp(5, trainingGoals.getEndDateTime());
             preparedStatement.executeUpdate();
-            return true;
+            ResultSet keys=preparedStatement.getGeneratedKeys();
+            keys.next();
+            trainingGoals.setId(keys.getInt(1));
         } catch (SQLException e) {
             logger.error(e.getMessage());
             throw new SQLException();
         }
+        return trainingGoals;
     }
 
     @Override

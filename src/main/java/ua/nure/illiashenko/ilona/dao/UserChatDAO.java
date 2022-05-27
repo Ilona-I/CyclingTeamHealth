@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,16 +24,19 @@ public class UserChatDAO implements DAO<UserChat, Integer> {
     private static final Logger logger = LoggerFactory.getLogger(UserChatDAO.class);
 
     @Override
-    public boolean insert(UserChat userChat, Connection connection) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_CHAT)) {
+    public UserChat insert(UserChat userChat, Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_CHAT, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, userChat.getChatId());
             preparedStatement.setString(2, userChat.getLogin());
             preparedStatement.executeUpdate();
-            return true;
+            ResultSet keys=preparedStatement.getGeneratedKeys();
+            keys.next();
+            userChat.setId(keys.getInt(1));
         } catch (SQLException e) {
             logger.error(e.getMessage());
             throw new SQLException();
         }
+        return userChat;
     }
 
     @Override

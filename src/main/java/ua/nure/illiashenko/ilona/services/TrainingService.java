@@ -17,4 +17,6 @@ public class TrainingService {
        this.trainingResultsDAO = trainingResultsDAO;
        this.transactionManager = transactionManager;
     }
+
+
 }

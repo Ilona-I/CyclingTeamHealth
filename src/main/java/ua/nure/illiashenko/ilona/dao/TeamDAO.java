@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.DELETE_TEAM;
@@ -20,15 +21,18 @@ public class TeamDAO implements DAO<Team, Integer> {
     private static final Logger logger = LoggerFactory.getLogger(TeamDAO.class);
 
     @Override
-    public boolean insert(Team team, Connection connection) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TEAM)) {
+    public Team insert(Team team, Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TEAM, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, team.getName());
             preparedStatement.executeUpdate();
-            return true;
+            ResultSet keys=preparedStatement.getGeneratedKeys();
+            keys.next();
+            team.setId(keys.getInt(1));
         } catch (SQLException e) {
             logger.error(e.getMessage());
             throw new SQLException();
         }
+        return team;
     }
 
     @Override

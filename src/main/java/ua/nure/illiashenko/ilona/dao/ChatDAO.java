@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.DELETE_CHAT;
@@ -25,15 +26,18 @@ public class ChatDAO implements DAO<Chat, Integer> {
     private static final Logger logger = LoggerFactory.getLogger(ChatDAO.class);
 
     @Override
-    public boolean insert(Chat chat, Connection connection) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CHAT)) {
+    public Chat insert(Chat chat, Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CHAT, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, chat.getType());
             preparedStatement.executeUpdate();
-            return true;
+            ResultSet keys=preparedStatement.getGeneratedKeys();
+            keys.next();
+            chat.setId(keys.getInt(1));
         } catch (SQLException e) {
             logger.error(e.getMessage());
             throw new SQLException();
         }
+        return chat;
     }
 
     @Override

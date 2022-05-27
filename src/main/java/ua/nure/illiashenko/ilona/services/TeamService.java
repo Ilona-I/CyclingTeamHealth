@@ -9,9 +9,9 @@ import ua.nure.illiashenko.ilona.dao.entities.User;
 import ua.nure.illiashenko.ilona.exceptions.team.CannotCreateTeamException;
 import ua.nure.illiashenko.ilona.exceptions.team.CannotDeleteTeamException;
 import ua.nure.illiashenko.ilona.exceptions.CannotDoTransactionException;
+import ua.nure.illiashenko.ilona.exceptions.team.CannotFindTeamException;
 import ua.nure.illiashenko.ilona.exceptions.team.CannotFindTeamMembersException;
 import ua.nure.illiashenko.ilona.exceptions.team.CannotUpdateTeamException;
-import ua.nure.illiashenko.ilona.exceptions.user.CannotFindUserException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -45,13 +45,13 @@ public class TeamService {
         return doInTransaction(function);
     }
 
-    public boolean isTeamWithSuchIdExists(int id){
+    public boolean isTeamWithSuchIdExists(int id) {
         Function<Connection, Optional<Team>> function = connection -> {
             try {
                 return teamDAO.get(id, connection);
             } catch (SQLException e) {
                 logger.error(e.getMessage());
-                throw new CannotFindUserException(e.getMessage());
+                throw new CannotFindTeamException(e.getMessage());
             }
         };
         return doInTransaction(function).isPresent();

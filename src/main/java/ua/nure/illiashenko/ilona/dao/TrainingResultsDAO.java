@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_TRAINING_RESULTS;
@@ -19,18 +20,21 @@ public class TrainingResultsDAO implements DAO<TrainingResults, Integer> {
     private static final Logger logger = LoggerFactory.getLogger(TrainingResultsDAO.class);
 
     @Override
-    public boolean insert(TrainingResults trainingResults, Connection connection) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TRAINING_RESULTS)) {
+    public TrainingResults insert(TrainingResults trainingResults, Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TRAINING_RESULTS, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, trainingResults.getTrainingId());
             preparedStatement.setString(2, trainingResults.getLogin());
             preparedStatement.setInt(3, trainingResults.getPulse());
             preparedStatement.setInt(4, trainingResults.getSpeed());
             preparedStatement.executeUpdate();
-            return true;
+            ResultSet keys=preparedStatement.getGeneratedKeys();
+            keys.next();
+            trainingResults.setId(keys.getInt(1));
         } catch (SQLException e) {
             logger.error(e.getMessage());
             throw new SQLException();
         }
+        return trainingResults;
     }
 
     @Override
