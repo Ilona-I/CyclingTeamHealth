@@ -2,10 +2,10 @@ package ua.nure.illiashenko.ilona.constants;
 
 public class SQLQuery {
 
-    public static final String INSERT_USER = "INSERT INTO `user` (`login`, `password`, `first_name`, `last_name`, `email`, `birth_date`, `height`, `weight`, `gender`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    public static final String INSERT_USER = "INSERT INTO `user` (`login`, `password`, `first_name`, `last_name`, `email`, `role`, `team_id`, `birth_date`, `height`, `weight`, `gender`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     public static final String UPDATE_USER = "";
     public static final String DELETE_USER = "";
-    public static final String GET_USER_BY_LOGIN = "";
+    public static final String GET_USER_BY_LOGIN = "SELECT * FROM `user` WHERE `login` = ?;";
 
     public static final String INSERT_TEAM = "INSERT INTO `team` (`name`) VALUES (?)";
     public static final String UPDATE_TEAM = "";

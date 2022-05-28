@@ -1,8 +1,9 @@
 package ua.nure.illiashenko.ilona.dao.entities;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Message {
+public class Message implements Serializable {
 
     private int id;
     private int chatId;

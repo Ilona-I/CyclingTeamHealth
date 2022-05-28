@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.Objects;
+
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.TEAM_SERVICE;
 
 @WebServlet("/team/user")
@@ -24,7 +26,8 @@ public class TeamUserServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response){
-
+        String teamId = Objects.requireNonNull(request.getParameter("teamId"));
+       // String login =
     }
 
     @Override

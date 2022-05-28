@@ -1,6 +1,8 @@
 package ua.nure.illiashenko.ilona.dao.entities;
 
-public class Team {
+import java.io.Serializable;
+
+public class Team implements Serializable {
 
     private int id;
     private String name;

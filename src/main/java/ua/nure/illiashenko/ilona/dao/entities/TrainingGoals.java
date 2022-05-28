@@ -1,8 +1,9 @@
 package ua.nure.illiashenko.ilona.dao.entities;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class TrainingGoals {
+public class TrainingGoals implements Serializable {
 
     private int id;
     private int teamId;

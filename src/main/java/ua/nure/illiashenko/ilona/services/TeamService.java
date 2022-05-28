@@ -33,11 +33,10 @@ public class TeamService {
         this.transactionManager = transactionManager;
     }
 
-    public boolean createTeam(Team team) {
-        Function<Connection, Boolean> function = connection -> {
+    public Team createTeam(Team team) {
+        Function<Connection, Team> function = connection -> {
             try {
-                teamDAO.insert(team, connection);
-                return true;
+                return teamDAO.insert(team, connection);
             } catch (SQLException e) {
                 throw new CannotCreateTeamException(e.getMessage());
             }

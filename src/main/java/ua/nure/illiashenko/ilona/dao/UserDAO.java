@@ -68,11 +68,13 @@ public class UserDAO implements DAO<User, String> {
         preparedStatement.setString(3, user.getFirstName());
         preparedStatement.setString(4, user.getLastName());
         preparedStatement.setString(5, user.getEmail());
-        preparedStatement.setDate(6, user.getBirthDate());
-        preparedStatement.setDouble(7, user.getHeight());
-        preparedStatement.setDouble(8, user.getWeight());
-        preparedStatement.setString(9, user.getGender());
-        preparedStatement.setString(10, user.getStatus());
+        preparedStatement.setString(6, user.getRole());
+        preparedStatement.setInt(7, user.getTeamId());
+        preparedStatement.setDate(8, user.getBirthDate());
+        preparedStatement.setDouble(9, user.getHeight());
+        preparedStatement.setDouble(10, user.getWeight());
+        preparedStatement.setString(11, user.getGender());
+        preparedStatement.setString(12, user.getStatus());
     }
 
     @Override

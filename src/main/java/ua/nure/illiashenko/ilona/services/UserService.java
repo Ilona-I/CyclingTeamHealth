@@ -32,6 +32,7 @@ public class UserService {
                 userDAO.insert(user, connection);
                 return true;
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 throw new CannotAddNewUserException(e.getMessage());
             }
         };
@@ -44,6 +45,7 @@ public class UserService {
                 userDAO.update(login, newUser, connection);
                 return true;
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 throw new CannotUpdateUserException(e.getMessage());
             }
         };
@@ -68,6 +70,7 @@ public class UserService {
                 userDAO.delete(login, connection);
                 return true;
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 throw new CannotDeleteUserException(e.getMessage());
             }
         };

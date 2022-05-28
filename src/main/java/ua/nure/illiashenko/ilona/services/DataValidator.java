@@ -1,12 +1,17 @@
 package ua.nure.illiashenko.ilona.services;
 
+import ua.nure.illiashenko.ilona.controllers.dto.FeedbackData;
 import ua.nure.illiashenko.ilona.controllers.dto.LogInData;
+import ua.nure.illiashenko.ilona.controllers.dto.RegistrationData;
+import ua.nure.illiashenko.ilona.controllers.dto.TeamData;
 import ua.nure.illiashenko.ilona.controllers.dto.UserData;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import static ua.nure.illiashenko.ilona.constants.StatusType.ACTIVE;
+import static ua.nure.illiashenko.ilona.constants.StatusType.BLOCKED;
 import static ua.nure.illiashenko.ilona.constants.TeamType.NEW_TEAM;
 import static ua.nure.illiashenko.ilona.constants.UserRole.CYCLIST;
 import static ua.nure.illiashenko.ilona.constants.UserRole.DOCTOR;
@@ -95,43 +100,26 @@ public class DataValidator {
         return TRAINER.equals(role) || CYCLIST.equals(role) || DOCTOR.equals(role) || SOIGNEUR.equals(role);
     }
 
-    public List<String> validate(UserData userData) {
-        List<String> validationErrors = new ArrayList<>();
-        if (!isLogin(userData.getLogin())) {
-            validationErrors.add("wrongLogin");
+    private boolean isStatus(String status) {
+        if (status == null) {
+            return false;
         }
-        if (!isName(userData.getFirstName())) {
-            validationErrors.add("wrongFirstName");
-        }
-        if (!isName(userData.getLastName())) {
-            validationErrors.add("wrongLastName");
-        }
-        if (!isEmail(userData.getEmail())) {
-            validationErrors.add("wrongEmail");
-        }
-        if (!isPassword(userData.getPassword())) {
+        return ACTIVE.equals(status) || BLOCKED.equals(status);
+    }
+
+    public List<String> validate(RegistrationData registrationData) {
+        List<String> validationErrors = validate(registrationData.getLogin(), registrationData.getFirstName(), registrationData.getLastName(), registrationData.getEmail(), registrationData.getBirthDate(), registrationData.getHeight(), registrationData.getWeight(), registrationData.getGender());
+        if (!isPassword(registrationData.getPassword())) {
             validationErrors.add("wrongPassword");
         }
-        if (!userData.getPassword().equals(userData.getRepeatedPassword())) {
+        if (!registrationData.getPassword().equals(registrationData.getRepeatedPassword())) {
             validationErrors.add("wrongRepeatedPassword");
         }
-        if (!isRole(userData.getRole())) {
+        if (!isRole(registrationData.getRole())) {
             validationErrors.add("wrongRole");
         }
-        if (NEW_TEAM.equals(userData.getTeamType()) && userData.getTeamName().length() == 0) {
+        if (NEW_TEAM.equals(registrationData.getTeamType()) && registrationData.getTeamName().length() == 0) {
             validationErrors.add("wrongTeamName");
-        }
-        if (!userData.getBirthDate().isEmpty() && !isDate(userData.getBirthDate())) {
-            validationErrors.add("wrongBirthDate");
-        }
-        if (!userData.getHeight().isEmpty() && !isNumber(userData.getHeight())) {
-            validationErrors.add("wrongHeight");
-        }
-        if (!userData.getWeight().isEmpty() && !isNumber(userData.getWeight())) {
-            validationErrors.add("wrongWeight");
-        }
-        if (!userData.getGender().isEmpty() && !isGender(userData.getGender())) {
-            validationErrors.add("wrongGender");
         }
         return validationErrors;
     }
@@ -143,6 +131,70 @@ public class DataValidator {
         }
         if (!isPassword(logInData.getPassword())) {
             validationErrors.add("wrongPassword");
+        }
+        return validationErrors;
+    }
+
+    public List<String> validate(FeedbackData feedbackData) {
+        List<String> validationErrors = new ArrayList<>();
+        if (!feedbackData.getId().isEmpty() && !isNumber(feedbackData.getId())) {
+            validationErrors.add("wrongId");
+        }
+        if (!isLogin(feedbackData.getLogin())) {
+            validationErrors.add("wrongLogin");
+        }
+        if (!feedbackData.getDateTime().isEmpty() && !isDateTime(feedbackData.getDateTime())) {
+            validationErrors.add("wrongDateTime");
+        }
+        if (!isNumber(feedbackData.getRating())) {
+            validationErrors.add("wrongRating");
+        }
+        if (!feedbackData.getStatus().isEmpty() && !isStatus(feedbackData.getStatus())) {
+            validationErrors.add("wrongStatus");
+        }
+        return validationErrors;
+    }
+
+    public List<String> validate(TeamData teamData) {
+        List<String> validationErrors = new ArrayList<>();
+        if (!isNumber(teamData.getId())) {
+            validationErrors.add("wrongTeamId");
+        }
+        if (teamData.getName().isEmpty()) {
+            validationErrors.add("wrongTeamName");
+        }
+        return validationErrors;
+    }
+
+    public List<String> validate(UserData userData) {
+        return validate(userData.getLogin(), userData.getFirstName(), userData.getLastName(), userData.getEmail(), userData.getBirthDate(), userData.getHeight(), userData.getWeight(), userData.getGender());
+    }
+
+    private List<String> validate(String login, String firstName, String lastName, String email, String birthDate, String height, String weight, String gender) {
+        List<String> validationErrors = new ArrayList<>();
+        if (!isLogin(login)) {
+            validationErrors.add("wrongLogin");
+        }
+        if (!isName(firstName)) {
+            validationErrors.add("wrongFirstName");
+        }
+        if (!isName(lastName)) {
+            validationErrors.add("wrongLastName");
+        }
+        if (!isEmail(email)) {
+            validationErrors.add("wrongEmail");
+        }
+        if (!birthDate.isEmpty() && !isDate(birthDate)) {
+            validationErrors.add("wrongBirthDate");
+        }
+        if (!height.isEmpty() && !isNumber(height)) {
+            validationErrors.add("wrongHeight");
+        }
+        if (!weight.isEmpty() && !isNumber(weight)) {
+            validationErrors.add("wrongWeight");
+        }
+        if (!gender.isEmpty() && !isGender(gender)) {
+            validationErrors.add("wrongGender");
         }
         return validationErrors;
     }

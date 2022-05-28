@@ -1,8 +1,9 @@
 package ua.nure.illiashenko.ilona.dao.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class User {
+public class User implements Serializable {
 
     private String login;
     private String password;

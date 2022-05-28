@@ -46,6 +46,13 @@ public class LogInServlet extends HttpServlet {
                 User user = optionalUser.get();
                 if (!user.getPassword().equals(logInData.getPassword())) {
                     validationErrors.add("wrongPassword");
+                    setValidationErrors(response, validationErrors);
+                } else {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("user", user);
+                    PrintWriter writer = response.getWriter();
+                    writer.write(jsonObject.toString());
+                    writer.print(jsonObject);
                 }
             } else {
                 setValidationErrors(response, validationErrors);

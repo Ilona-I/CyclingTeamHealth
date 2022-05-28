@@ -1,6 +1,8 @@
 package ua.nure.illiashenko.ilona.dao.entities;
 
-public class Chat {
+import java.io.Serializable;
+
+public class Chat implements Serializable {
 
     private int id;
     private String type;
