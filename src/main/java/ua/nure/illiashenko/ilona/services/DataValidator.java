@@ -4,6 +4,8 @@ import ua.nure.illiashenko.ilona.controllers.dto.FeedbackData;
 import ua.nure.illiashenko.ilona.controllers.dto.LogInData;
 import ua.nure.illiashenko.ilona.controllers.dto.RegistrationData;
 import ua.nure.illiashenko.ilona.controllers.dto.TeamData;
+import ua.nure.illiashenko.ilona.controllers.dto.TrainingGoalsData;
+import ua.nure.illiashenko.ilona.controllers.dto.TrainingResultsData;
 import ua.nure.illiashenko.ilona.controllers.dto.UserData;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ public class DataValidator {
     private final Pattern datePattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
     private final Pattern dateTimePattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
 
-    private boolean isLogin(String login) {
+    public boolean isLogin(String login) {
         if (login == null) {
             return false;
         }
@@ -195,6 +197,46 @@ public class DataValidator {
         }
         if (!gender.isEmpty() && !isGender(gender)) {
             validationErrors.add("wrongGender");
+        }
+        return validationErrors;
+    }
+
+    public List<String> validate(TrainingGoalsData trainingGoalsData) {
+        List<String> validationErrors = new ArrayList<>();
+        if (!trainingGoalsData.getId().isEmpty() && !isNumber(trainingGoalsData.getId())) {
+            validationErrors.add("wrongId");
+        }
+        if (!isNumber(trainingGoalsData.getTeamId())) {
+            validationErrors.add("wrongTeamId");
+        }
+        if (!trainingGoalsData.getPulse().isEmpty() && !isNumber(trainingGoalsData.getPulse())) {
+            validationErrors.add("wrongPulse");
+        }
+        if (!trainingGoalsData.getSpeed().isEmpty() && !isNumber(trainingGoalsData.getSpeed())) {
+            validationErrors.add("wrongSpeed");
+        }
+        if (!isDateTime(trainingGoalsData.getStartDateTime())) {
+            validationErrors.add("wrongStartDateTime");
+        }
+        if (!isDateTime(trainingGoalsData.getEndDateTime())) {
+            validationErrors.add("wrongEndDateTime");
+        }
+        return validationErrors;
+    }
+
+    public List<String> validate(TrainingResultsData trainingResultsData) {
+        List<String> validationErrors = new ArrayList<>();
+        if (!isNumber(trainingResultsData.getTrainingId())) {
+            validationErrors.add("wrongTrainingId");
+        }
+        if (!isLogin(trainingResultsData.getLogin())) {
+            validationErrors.add("wrongLogin");
+        }
+        if (!isNumber(trainingResultsData.getPulse())) {
+            validationErrors.add("wrongPulse");
+        }
+        if (!isNumber(trainingResultsData.getSpeed())) {
+            validationErrors.add("wrongSpeed");
         }
         return validationErrors;
     }

@@ -9,9 +9,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.DELETE_TRAINING_GOALS;
+import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_TEAM_TRAININGS;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_TRAINING_GOALS;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.INSERT_TRAINING_GOALS;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.UPDATE_TRAINING_GOALS;
@@ -29,7 +32,7 @@ public class TrainingGoalsDAO implements DAO<TrainingGoals, Integer> {
             preparedStatement.setTimestamp(4, trainingGoals.getStartDateTime());
             preparedStatement.setTimestamp(5, trainingGoals.getEndDateTime());
             preparedStatement.executeUpdate();
-            ResultSet keys=preparedStatement.getGeneratedKeys();
+            ResultSet keys = preparedStatement.getGeneratedKeys();
             keys.next();
             trainingGoals.setId(keys.getInt(1));
         } catch (SQLException e) {
@@ -88,5 +91,27 @@ public class TrainingGoalsDAO implements DAO<TrainingGoals, Integer> {
             logger.error(e.getMessage());
             throw new SQLException();
         }
+    }
+
+    public List<TrainingGoals> getTeamTrainings(int teamId, Connection connection) throws SQLException {
+        List<TrainingGoals> trainingGoalsList = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_TEAM_TRAININGS)) {
+            preparedStatement.setInt(1, teamId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                TrainingGoals trainingGoals = new TrainingGoals();
+                trainingGoals.setId(resultSet.getInt(1));
+                trainingGoals.setTeamId(resultSet.getInt(2));
+                trainingGoals.setPulse(resultSet.getInt(3));
+                trainingGoals.setSpeed(resultSet.getInt(4));
+                trainingGoals.setStartDateTime(resultSet.getTimestamp(5));
+                trainingGoals.setEndDateTime(resultSet.getTimestamp(6));
+                trainingGoalsList.add(trainingGoals);
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new SQLException();
+        }
+        return trainingGoalsList;
     }
 }

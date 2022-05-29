@@ -40,24 +40,24 @@ public class LogInServlet extends HttpServlet {
         List<String> validationErrors = dataValidator.validate(logInData);
         if (!validationErrors.isEmpty()) {
             setValidationErrors(response, validationErrors);
-        } else {
-            Optional<User> optionalUser = userService.getUser(logInData.getLogin());
-            if (optionalUser.isPresent()) {
-                User user = optionalUser.get();
-                if (!user.getPassword().equals(logInData.getPassword())) {
-                    validationErrors.add("wrongPassword");
-                    setValidationErrors(response, validationErrors);
-                } else {
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("user", user);
-                    PrintWriter writer = response.getWriter();
-                    writer.write(jsonObject.toString());
-                    writer.print(jsonObject);
-                }
-            } else {
-                setValidationErrors(response, validationErrors);
-            }
+            return;
         }
+        Optional<User> optionalUser = userService.getUser(logInData.getLogin());
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (!user.getPassword().equals(logInData.getPassword())) {
+                validationErrors.add("wrongPassword");
+                setValidationErrors(response, validationErrors);
+                return;
+            }
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("user", user);
+            PrintWriter writer = response.getWriter();
+            writer.write(jsonObject.toString());
+            writer.print(jsonObject);
+            return;
+        }
+        setValidationErrors(response, validationErrors);
     }
 
     private void setValidationErrors(HttpServletResponse response, List<String> validationErrors) throws IOException {

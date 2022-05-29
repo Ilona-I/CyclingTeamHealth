@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import ua.nure.illiashenko.ilona.dao.TrainingGoalsDAO;
 import ua.nure.illiashenko.ilona.dao.TrainingResultsDAO;
 import ua.nure.illiashenko.ilona.dao.entities.TrainingGoals;
+import ua.nure.illiashenko.ilona.dao.entities.TrainingResults;
 import ua.nure.illiashenko.ilona.exceptions.CannotDoTransactionException;
 import ua.nure.illiashenko.ilona.exceptions.training.CannotAddTrainingException;
 import ua.nure.illiashenko.ilona.exceptions.training.CannotDeleteTrainingException;
@@ -12,7 +13,10 @@ import ua.nure.illiashenko.ilona.exceptions.training.CannotUpdateTrainingExcepti
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 public class TrainingService {
@@ -40,16 +44,81 @@ public class TrainingService {
         return doInTransaction(function);
     }
 
-   /* public List<TrainingGoals> getAllTeamTrainings(int teamId){
-        Function<Connection, List<TrainingGoals>> function = connection -> {
+    public boolean addTrainingResults(TrainingResults trainingResults) {
+        Function<Connection, Boolean> function = connection -> {
             try {
-
+                trainingResultsDAO.insert(trainingResults, connection);
+                return true;
             } catch (SQLException e) {
                 throw new CannotAddTrainingException(e.getMessage());
             }
         };
         return doInTransaction(function);
-    }*/
+    }
+
+    public Optional<TrainingResults> getUserTrainingResults(String login, int trainingId) {
+        Function<Connection, Optional<TrainingResults>> function = connection -> {
+            try {
+                return trainingResultsDAO.get(login, trainingId, connection);
+            } catch (SQLException e) {
+                throw new CannotAddTrainingException(e.getMessage());
+            }
+        };
+        return doInTransaction(function);
+    }
+
+    public List<TrainingResults> getTeamTrainingResults(int trainingId) {
+        Function<Connection, List<TrainingResults>> function = connection -> {
+            try {
+                return trainingResultsDAO.getTeamTrainingResults(trainingId, connection);
+            } catch (SQLException e) {
+                throw new CannotAddTrainingException(e.getMessage());
+            }
+        };
+        return doInTransaction(function);
+    }
+
+    public List<TrainingResults> getUserTrainingsResults(String login) {
+        Function<Connection, List<TrainingResults>> function = connection -> {
+            try {
+                return trainingResultsDAO.getUserTrainingsResults(login, connection);
+            } catch (SQLException e) {
+                throw new CannotAddTrainingException(e.getMessage());
+            }
+        };
+        return doInTransaction(function);
+    }
+
+    public Map<TrainingGoals, List<TrainingResults>> getTeamTrainingsResults(int teamId) {
+        List<TrainingGoals> teamTrainings = getAllTeamTrainings(teamId);
+        Map<TrainingGoals, List<TrainingResults>> teamTrainingsResults = new HashMap<>();
+        for (TrainingGoals trainingGoals : teamTrainings) {
+            teamTrainingsResults.put(trainingGoals, getTeamTrainingResults(trainingGoals.getId()));
+        }
+        return teamTrainingsResults;
+    }
+
+    public List<TrainingGoals> getAllTeamTrainings(int teamId) {
+        Function<Connection, List<TrainingGoals>> function = connection -> {
+            try {
+                return trainingGoalsDAO.getTeamTrainings(teamId, connection);
+            } catch (SQLException e) {
+                throw new CannotAddTrainingException(e.getMessage());
+            }
+        };
+        return doInTransaction(function);
+    }
+
+    public boolean isTrainingWithSuchIdExists(int id) {
+        Function<Connection, Boolean> function = connection -> {
+            try {
+                return trainingGoalsDAO.get(id, connection).isPresent();
+            } catch (SQLException e) {
+                throw new CannotUpdateTrainingException(e.getMessage());
+            }
+        };
+        return doInTransaction(function);
+    }
 
     public boolean updateTrainingGoals(TrainingGoals trainingGoals) {
         Function<Connection, Boolean> function = connection -> {

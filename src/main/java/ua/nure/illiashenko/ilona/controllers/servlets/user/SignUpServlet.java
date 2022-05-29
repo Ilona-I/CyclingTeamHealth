@@ -59,40 +59,41 @@ public class SignUpServlet extends HttpServlet {
             PrintWriter writer = response.getWriter();
             writer.write(jsonObject.toString());
             writer.print(jsonObject);
-        } else {
-            User user = new User();
-            user.setLogin(registrationData.getLogin());
-            user.setPassword(registrationData.getPassword());
-            user.setFirstName(registrationData.getFirstName());
-            user.setLastName(registrationData.getLastName());
-            user.setEmail(registrationData.getEmail());
-            user.setRole(registrationData.getRole());
-            if (NEW_TEAM.equals(registrationData.getTeamType())) {
-                Team team = new Team();
-                team.setName(registrationData.getTeamId());
-                team = teamService.createTeam(team);
-                user.setTeamId(team.getId());
-            } else {
-                user.setTeamId(Integer.parseInt(registrationData.getTeamId()));
-            }
-            if (!registrationData.getBirthDate().isEmpty()) {
-                user.setBirthDate(Date.valueOf(registrationData.getBirthDate()));
-            }
-            if (!registrationData.getHeight().isEmpty()) {
-                user.setHeight(Double.parseDouble(registrationData.getHeight()));
-            }
-            if (!registrationData.getWeight().isEmpty()) {
-                user.setWeight(Double.parseDouble(registrationData.getWeight()));
-            }
-
-            user.setStatus(ACTIVE);
-            userService.addUser(user);
-
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("user", user);
-            PrintWriter writer = response.getWriter();
-            writer.write(jsonObject.toString());
-            writer.print(jsonObject);
+            return;
         }
+        User user = new User();
+        user.setLogin(registrationData.getLogin());
+        user.setPassword(registrationData.getPassword());
+        user.setFirstName(registrationData.getFirstName());
+        user.setLastName(registrationData.getLastName());
+        user.setEmail(registrationData.getEmail());
+        user.setRole(registrationData.getRole());
+        if (NEW_TEAM.equals(registrationData.getTeamType())) {
+            Team team = new Team();
+            team.setName(registrationData.getTeamId());
+            team = teamService.createTeam(team);
+            user.setTeamId(team.getId());
+        } else {
+            user.setTeamId(Integer.parseInt(registrationData.getTeamId()));
+        }
+        if (!registrationData.getBirthDate().isEmpty()) {
+            user.setBirthDate(Date.valueOf(registrationData.getBirthDate()));
+        }
+        if (!registrationData.getHeight().isEmpty()) {
+            user.setHeight(Double.parseDouble(registrationData.getHeight()));
+        }
+        if (!registrationData.getWeight().isEmpty()) {
+            user.setWeight(Double.parseDouble(registrationData.getWeight()));
+        }
+
+        user.setStatus(ACTIVE);
+        userService.addUser(user);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("user", user);
+        PrintWriter writer = response.getWriter();
+        writer.write(jsonObject.toString());
+        writer.print(jsonObject);
+
     }
 }
