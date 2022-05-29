@@ -1,12 +1,13 @@
 package ua.nure.illiashenko.ilona.controllers.servlets.user;
 
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
 import ua.nure.illiashenko.ilona.controllers.dto.LogInData;
 import ua.nure.illiashenko.ilona.dao.entities.User;
 import ua.nure.illiashenko.ilona.services.DataValidator;
 import ua.nure.illiashenko.ilona.services.UserService;
+import ua.nure.illiashenko.ilona.utils.MD5Util;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,23 +15,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.USER_SERVICE;
 
 @WebServlet("/logIn")
 public class LogInServlet extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(LogInServlet.class);
+    private final Logger logger = LoggerFactory.getLogger(LogInServlet.class);
     private UserService userService;
+    private ResponseWriter responseWriter;
     private DataValidator dataValidator;
 
     @Override
     public void init() {
         userService = (UserService) getServletContext().getAttribute(USER_SERVICE);
+        responseWriter = (ResponseWriter) getServletContext().getAttribute(RESPONSE_WRITER);
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
     }
 
@@ -39,32 +43,24 @@ public class LogInServlet extends HttpServlet {
         LogInData logInData = new LogInData(request);
         List<String> validationErrors = dataValidator.validate(logInData);
         if (!validationErrors.isEmpty()) {
-            setValidationErrors(response, validationErrors);
+            responseWriter.writeValidationErrors(response, validationErrors);
             return;
         }
         Optional<User> optionalUser = userService.getUser(logInData.getLogin());
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (!user.getPassword().equals(logInData.getPassword())) {
-                validationErrors.add("wrongPassword");
-                setValidationErrors(response, validationErrors);
-                return;
+            try {
+                if (!user.getPassword().equals(MD5Util.md5(logInData.getPassword()))) {
+                    validationErrors.add("wrongPassword");
+                    responseWriter.writeValidationErrors(response, validationErrors);
+                    return;
+                }
+            } catch (NoSuchAlgorithmException e) {
+                logger.error(e.getMessage());
             }
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("user", user);
-            PrintWriter writer = response.getWriter();
-            writer.write(jsonObject.toString());
-            writer.print(jsonObject);
+            responseWriter.writeUser(response, user);
             return;
         }
-        setValidationErrors(response, validationErrors);
-    }
-
-    private void setValidationErrors(HttpServletResponse response, List<String> validationErrors) throws IOException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("validationErrors", validationErrors);
-        PrintWriter writer = response.getWriter();
-        writer.write(jsonObject.toString());
-        writer.print(jsonObject);
+        responseWriter.writeValidationErrors(response, validationErrors);
     }
 }

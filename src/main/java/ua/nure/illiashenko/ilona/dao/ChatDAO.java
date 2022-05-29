@@ -17,6 +17,7 @@ import static ua.nure.illiashenko.ilona.constants.SQLQuery.DELETE_CHAT;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.DELETE_FEEDBACK;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_CHAT;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_FEEDBACK;
+import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_USERS_CHAT_ID;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.INSERT_CHAT;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.INSERT_FEEDBACK;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.UPDATE_FEEDBACK;
@@ -30,7 +31,7 @@ public class ChatDAO implements DAO<Chat, Integer> {
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CHAT, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, chat.getType());
             preparedStatement.executeUpdate();
-            ResultSet keys=preparedStatement.getGeneratedKeys();
+            ResultSet keys = preparedStatement.getGeneratedKeys();
             keys.next();
             chat.setId(keys.getInt(1));
         } catch (SQLException e) {

@@ -1,8 +1,8 @@
 package ua.nure.illiashenko.ilona.controllers.servlets.user;
 
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
 import ua.nure.illiashenko.ilona.controllers.dto.RegistrationData;
 import ua.nure.illiashenko.ilona.dao.entities.Team;
 import ua.nure.illiashenko.ilona.dao.entities.User;
@@ -16,11 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.List;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.TEAM_SERVICE;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.USER_SERVICE;
 import static ua.nure.illiashenko.ilona.constants.StatusType.ACTIVE;
@@ -33,12 +34,14 @@ public class SignUpServlet extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(SignUpServlet.class);
     private UserService userService;
     private TeamService teamService;
+    private ResponseWriter responseWriter;
     private DataValidator dataValidator;
 
     @Override
     public void init() {
         userService = (UserService) getServletContext().getAttribute(USER_SERVICE);
         teamService = (TeamService) getServletContext().getAttribute(TEAM_SERVICE);
+        responseWriter = (ResponseWriter) getServletContext().getAttribute(RESPONSE_WRITER);
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
     }
 
@@ -52,13 +55,11 @@ public class SignUpServlet extends HttpServlet {
         if (ENTER_TEAM.equals(registrationData.getTeamType()) && dataValidator.isNumber(registrationData.getTeamId()) && !teamService.isTeamWithSuchIdExists(Integer.parseInt(registrationData.getTeamId()))) {
             validationErrors.add("teamDoesNotExist");
             response.setStatus(404);
+            responseWriter.writeValidationErrors(response, validationErrors);
+            return;
         }
         if (!validationErrors.isEmpty()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("validationErrors", validationErrors);
-            PrintWriter writer = response.getWriter();
-            writer.write(jsonObject.toString());
-            writer.print(jsonObject);
+            responseWriter.writeValidationErrors(response, validationErrors);
             return;
         }
         User user = new User();
@@ -70,7 +71,7 @@ public class SignUpServlet extends HttpServlet {
         user.setRole(registrationData.getRole());
         if (NEW_TEAM.equals(registrationData.getTeamType())) {
             Team team = new Team();
-            team.setName(registrationData.getTeamId());
+            team.setName(registrationData.getTeamName());
             team = teamService.createTeam(team);
             user.setTeamId(team.getId());
         } else {
@@ -85,15 +86,12 @@ public class SignUpServlet extends HttpServlet {
         if (!registrationData.getWeight().isEmpty()) {
             user.setWeight(Double.parseDouble(registrationData.getWeight()));
         }
-
         user.setStatus(ACTIVE);
-        userService.addUser(user);
-
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("user", user);
-        PrintWriter writer = response.getWriter();
-        writer.write(jsonObject.toString());
-        writer.print(jsonObject);
-
+        try {
+            userService.addUser(user);
+        } catch (NoSuchAlgorithmException e) {
+            logger.error(e.getMessage());
+        }
+        responseWriter.writeUser(response, user);
     }
 }

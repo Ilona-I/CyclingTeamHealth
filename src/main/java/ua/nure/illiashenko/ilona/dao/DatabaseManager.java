@@ -12,13 +12,20 @@ import static ua.nure.illiashenko.ilona.constants.DBConnectionData.MY_SQL_USERNA
 
 public class DatabaseManager {
 
+    private final String backupPath;
+    private final String mySqlBinPath;
+
+    public DatabaseManager(String backupPath, String mySqlBinPath) {
+        this.backupPath = backupPath;
+        this.mySqlBinPath = mySqlBinPath;
+    }
+
     public boolean backupDB() {
         try {
-            File file = new File("C:\\Users\\ill76\\OneDrive\\Робочий стіл\\3 курс 2 семестр\\Архітектура програмного забезпечення\\CyclingTeamHealth\\backup");
+            File file = new File(backupPath);
             file.mkdir();
-            String savePath = "\"C:\\Users\\ill76\\OneDrive\\Робочий стіл\\3 курс 2 семестр\\Архітектура програмного забезпечення\\CyclingTeamHealth\\backup\\backup.sql\"";
-            System.out.println(file.getAbsolutePath());
-            String executeCmd = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump -u" + MY_SQL_USERNAME + " -p" + MY_SQL_PASSWORD + " --add-drop-database -B " + MY_SQL_DB_NAME + " -r " + savePath;
+            String savePath = "\"" + backupPath + "\\backup.sql\"";
+            String executeCmd = mySqlBinPath + "\\mysqldump -u" + MY_SQL_USERNAME + " -p" + MY_SQL_PASSWORD + " --add-drop-database -B " + MY_SQL_DB_NAME + " -r " + savePath;
             Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
             int processComplete = runtimeProcess.waitFor();
             return processComplete == 0;
@@ -29,7 +36,7 @@ public class DatabaseManager {
 
     public boolean restoreDB() {
         try {
-            String executeCmd = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql -u" + MY_SQL_USERNAME + " -p" + MY_SQL_PASSWORD + " -A -D " + MY_SQL_DB_NAME + " -e \"SOURCE backup\\backup.sql\"";
+            String executeCmd = mySqlBinPath + "\\mysql -u" + MY_SQL_USERNAME + " -p" + MY_SQL_PASSWORD + " -A -D " + MY_SQL_DB_NAME + " -e \"SOURCE backup\\backup.sql\"";
             Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
             int processComplete = runtimeProcess.waitFor();
             return processComplete == 0;

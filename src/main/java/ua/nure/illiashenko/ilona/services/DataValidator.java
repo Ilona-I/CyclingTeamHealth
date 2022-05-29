@@ -2,6 +2,7 @@ package ua.nure.illiashenko.ilona.services;
 
 import ua.nure.illiashenko.ilona.controllers.dto.FeedbackData;
 import ua.nure.illiashenko.ilona.controllers.dto.LogInData;
+import ua.nure.illiashenko.ilona.controllers.dto.MessageData;
 import ua.nure.illiashenko.ilona.controllers.dto.RegistrationData;
 import ua.nure.illiashenko.ilona.controllers.dto.TeamData;
 import ua.nure.illiashenko.ilona.controllers.dto.TrainingGoalsData;
@@ -12,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import static ua.nure.illiashenko.ilona.constants.ChatType.PRIVATE;
+import static ua.nure.illiashenko.ilona.constants.ChatType.PUBLIC;
+import static ua.nure.illiashenko.ilona.constants.ChatType.RECOMMENDATIONS;
 import static ua.nure.illiashenko.ilona.constants.StatusType.ACTIVE;
 import static ua.nure.illiashenko.ilona.constants.StatusType.BLOCKED;
 import static ua.nure.illiashenko.ilona.constants.TeamType.NEW_TEAM;
@@ -107,6 +111,13 @@ public class DataValidator {
             return false;
         }
         return ACTIVE.equals(status) || BLOCKED.equals(status);
+    }
+
+    public boolean isChatType(String chatType) {
+        if (chatType == null) {
+            return false;
+        }
+        return PRIVATE.equals(chatType) || PUBLIC.equals(chatType) || RECOMMENDATIONS.equals(chatType);
     }
 
     public List<String> validate(RegistrationData registrationData) {
@@ -237,6 +248,20 @@ public class DataValidator {
         }
         if (!isNumber(trainingResultsData.getSpeed())) {
             validationErrors.add("wrongSpeed");
+        }
+        return validationErrors;
+    }
+
+    public List<String> validate(MessageData messageData) {
+        List<String> validationErrors = new ArrayList<>();
+        if (!isNumber(messageData.getChatId())) {
+            validationErrors.add("wrongChatId");
+        }
+        if (!isLogin(messageData.getSender())) {
+            validationErrors.add("wrongLogin");
+        }
+        if (messageData.getText().isEmpty()) {
+            validationErrors.add("wrongText");
         }
         return validationErrors;
     }

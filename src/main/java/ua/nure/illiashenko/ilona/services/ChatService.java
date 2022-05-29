@@ -16,6 +16,7 @@ import ua.nure.illiashenko.ilona.exceptions.chat.CannotSendMessageException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
 public class ChatService {
@@ -33,20 +34,9 @@ public class ChatService {
         this.transactionManager = transactionManager;
     }
 
-    public boolean sendMessage(Message message, String chatType) {
+    public boolean sendMessage(Message message) {
         Function<Connection, Boolean> function = connection -> {
             try {
-                int chatId = message.getChatId();
-                if (chatId == 0) {
-                    Chat chat = new Chat();
-                    chat.setType(chatType);
-                    chatId = chatDAO.insert(chat, connection).getId();
-                    message.setChatId(chatId);
-                    UserChat userChat = new UserChat();
-                    userChat.setChatId(chatId);
-                    userChat.setLogin(message.getSender());
-                    userChatDAO.insert(userChat, connection);
-                }
                 messageDAO.insert(message, connection);
                 return true;
             } catch (SQLException e) {
@@ -55,6 +45,38 @@ public class ChatService {
         };
         return doInTransaction(function);
     }
+
+    public Chat createChat(String sender, String receiver, String chatType) {
+        Function<Connection, Chat> function = connection -> {
+            try {
+                Chat chat = new Chat();
+                chat.setType(chatType);
+                chat = chatDAO.insert(chat, connection);
+                UserChat userChat = new UserChat();
+                userChat.setChatId(chat.getId());
+                userChat.setLogin(sender);
+                userChatDAO.insert(userChat, connection);
+                userChat.setLogin(receiver);
+                userChatDAO.insert(userChat, connection);
+                return chat;
+            } catch (SQLException e) {
+                throw new CannotSendMessageException(e.getMessage());
+            }
+        };
+        return doInTransaction(function);
+    }
+
+    public Optional<Integer> getUsersChatId(String sender, String receiver) {
+        Function<Connection, Optional<Integer>> function = connection -> {
+            try {
+                return userChatDAO.getUsersChatId(sender, receiver, connection);
+            } catch (SQLException e) {
+                throw new CannotFindUserChatsException(e.getMessage());
+            }
+        };
+        return doInTransaction(function);
+    }
+
 
     public List<UserChat> getUserChats(String userLogin) {
         Function<Connection, List<UserChat>> function = connection -> {

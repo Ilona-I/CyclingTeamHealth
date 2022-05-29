@@ -1,6 +1,7 @@
 package ua.nure.illiashenko.ilona.controllers.servlets.training.results;
 
 import org.json.JSONObject;
+import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
 import ua.nure.illiashenko.ilona.services.DataValidator;
 import ua.nure.illiashenko.ilona.services.TrainingService;
 import ua.nure.illiashenko.ilona.services.UserService;
@@ -15,6 +16,7 @@ import java.io.PrintWriter;
 import java.util.Objects;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.TRAINING_SERVICE;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.USER_SERVICE;
 
@@ -23,12 +25,14 @@ public class UserTrainingsResultsServlet extends HttpServlet {
 
     private TrainingService trainingService;
     private UserService userService;
+    private ResponseWriter responseWriter;
     private DataValidator dataValidator;
 
     @Override
     public void init() {
         trainingService = (TrainingService) getServletContext().getAttribute(TRAINING_SERVICE);
         userService = (UserService) getServletContext().getAttribute(USER_SERVICE);
+        responseWriter = (ResponseWriter) getServletContext().getAttribute(RESPONSE_WRITER);
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
     }
 

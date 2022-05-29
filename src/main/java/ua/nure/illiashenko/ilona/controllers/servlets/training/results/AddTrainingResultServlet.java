@@ -3,6 +3,7 @@ package ua.nure.illiashenko.ilona.controllers.servlets.training.results;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
 import ua.nure.illiashenko.ilona.controllers.dto.TrainingResultsData;
 import ua.nure.illiashenko.ilona.dao.entities.TrainingResults;
 import ua.nure.illiashenko.ilona.services.DataValidator;
@@ -18,18 +19,20 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.TRAINING_SERVICE;
 
 @WebServlet("/training/result")
 public class AddTrainingResultServlet extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(AddTrainingResultServlet.class);
     private TrainingService trainingService;
+    private ResponseWriter responseWriter;
     private DataValidator dataValidator;
 
     @Override
     public void init() {
         trainingService = (TrainingService) getServletContext().getAttribute(TRAINING_SERVICE);
+        responseWriter = (ResponseWriter) getServletContext().getAttribute(RESPONSE_WRITER);
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
     }
 
@@ -38,11 +41,7 @@ public class AddTrainingResultServlet extends HttpServlet {
         TrainingResultsData trainingResultsData = new TrainingResultsData(request);
         List<String> validationErrors = dataValidator.validate(trainingResultsData);
         if (!validationErrors.isEmpty()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("validationErrors", validationErrors);
-            PrintWriter writer = response.getWriter();
-            writer.write(jsonObject.toString());
-            writer.print(jsonObject);
+            responseWriter.writeValidationErrors(response, validationErrors);
             return;
         }
         TrainingResults trainingResults = new TrainingResults();

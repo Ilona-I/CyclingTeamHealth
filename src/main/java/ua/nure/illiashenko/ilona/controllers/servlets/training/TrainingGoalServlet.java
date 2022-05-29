@@ -3,6 +3,7 @@ package ua.nure.illiashenko.ilona.controllers.servlets.training;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
 import ua.nure.illiashenko.ilona.controllers.dto.TrainingGoalsData;
 import ua.nure.illiashenko.ilona.dao.entities.TrainingGoals;
 import ua.nure.illiashenko.ilona.services.DataValidator;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.TRAINING_SERVICE;
 
 @WebServlet("/training/goal")
@@ -27,11 +29,13 @@ public class TrainingGoalServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(TrainingGoalServlet.class);
     private TrainingService trainingService;
+    private ResponseWriter responseWriter;
     private DataValidator dataValidator;
 
     @Override
     public void init() {
         trainingService = (TrainingService) getServletContext().getAttribute(TRAINING_SERVICE);
+        responseWriter = (ResponseWriter) getServletContext().getAttribute(RESPONSE_WRITER);
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
     }
 
@@ -40,11 +44,7 @@ public class TrainingGoalServlet extends HttpServlet {
         TrainingGoalsData trainingGoalsData = new TrainingGoalsData(request);
         List<String> validationErrors = dataValidator.validate(trainingGoalsData);
         if (!validationErrors.isEmpty()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("validationErrors", validationErrors);
-            PrintWriter writer = response.getWriter();
-            writer.write(jsonObject.toString());
-            writer.print(jsonObject);
+            responseWriter.writeValidationErrors(response, validationErrors);
             return;
         }
         TrainingGoals trainingGoals = new TrainingGoals();

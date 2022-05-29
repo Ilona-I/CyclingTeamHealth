@@ -3,6 +3,7 @@ package ua.nure.illiashenko.ilona.controllers.servlets.feedback;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
 import ua.nure.illiashenko.ilona.controllers.dto.FeedbackData;
 import ua.nure.illiashenko.ilona.dao.entities.Feedback;
 import ua.nure.illiashenko.ilona.services.DataValidator;
@@ -22,6 +23,8 @@ import java.util.Objects;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.FEEDBACK_SERVICE;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
+import static ua.nure.illiashenko.ilona.constants.ParameterConstants.ID;
 import static ua.nure.illiashenko.ilona.constants.StatusType.ACTIVE;
 
 @WebServlet("/feedback")
@@ -30,10 +33,12 @@ public class FeedbackServlet extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(FeedbackServlet.class);
     private FeedbackService feedbackService;
     private DataValidator dataValidator;
+    private ResponseWriter responseWriter;
 
     @Override
     public void init() {
         feedbackService = (FeedbackService) getServletContext().getAttribute(FEEDBACK_SERVICE);
+        responseWriter = (ResponseWriter) getServletContext().getAttribute(RESPONSE_WRITER);
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
     }
 
@@ -42,11 +47,7 @@ public class FeedbackServlet extends HttpServlet {
         FeedbackData feedbackData = new FeedbackData(request);
         List<String> validationErrors = dataValidator.validate(feedbackData);
         if (!validationErrors.isEmpty()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("validationErrors", validationErrors);
-            PrintWriter writer = response.getWriter();
-            writer.write(jsonObject.toString());
-            writer.print(jsonObject);
+            responseWriter.writeValidationErrors(response, validationErrors);
         } else {
             Feedback feedback = new Feedback();
             feedback.setLogin(feedbackData.getLogin());
@@ -63,6 +64,7 @@ public class FeedbackServlet extends HttpServlet {
         FeedbackData feedbackData = new FeedbackData(request);
         List<String> validationErrors = dataValidator.validate(feedbackData);
         if (!validationErrors.isEmpty()) {
+            response.setStatus(400);
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("validationErrors", validationErrors);
             PrintWriter writer = response.getWriter();
@@ -84,7 +86,7 @@ public class FeedbackServlet extends HttpServlet {
 
     @Override
     public void doDelete(HttpServletRequest request, HttpServletResponse response) {
-        String feedbackId = Objects.requireNonNull(request.getParameter("feedbackId"));
+        String feedbackId = Objects.requireNonNull(request.getParameter(ID));
         if (!dataValidator.isNumber(feedbackId)) {
             response.setStatus(400);
         } else {

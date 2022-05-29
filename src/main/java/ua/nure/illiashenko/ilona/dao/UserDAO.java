@@ -111,11 +111,13 @@ public class UserDAO implements DAO<User, String> {
         user.setFirstName(resultSet.getString(3));
         user.setLastName(resultSet.getString(4));
         user.setEmail(resultSet.getString(5));
-        user.setBirthDate(resultSet.getDate(6));
-        user.setHeight(resultSet.getDouble(7));
-        user.setWeight(resultSet.getDouble(8));
-        user.setGender(resultSet.getString(9));
-        user.setStatus(resultSet.getString(10));
+        user.setRole(resultSet.getString(6));
+        user.setTeamId(resultSet.getInt(7));
+        user.setBirthDate(resultSet.getDate(8));
+        user.setHeight(resultSet.getDouble(9));
+        user.setWeight(resultSet.getDouble(10));
+        user.setGender(resultSet.getString(11));
+        user.setStatus(resultSet.getString(12));
         return user;
     }
 }

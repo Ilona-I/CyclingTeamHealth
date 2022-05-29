@@ -3,6 +3,7 @@ package ua.nure.illiashenko.ilona.controllers.servlets.user;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
 import ua.nure.illiashenko.ilona.controllers.dto.UserData;
 import ua.nure.illiashenko.ilona.dao.entities.User;
 import ua.nure.illiashenko.ilona.services.DataValidator;
@@ -20,18 +21,20 @@ import java.util.List;
 import java.util.Objects;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.USER_SERVICE;
 
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserServlet.class);
     private UserService userService;
     private DataValidator dataValidator;
+    private ResponseWriter responseWriter;
 
     @Override
     public void init() {
         userService = (UserService) getServletContext().getAttribute(USER_SERVICE);
+        responseWriter = (ResponseWriter) getServletContext().getAttribute(RESPONSE_WRITER);
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
     }
 
@@ -45,11 +48,7 @@ public class UserServlet extends HttpServlet {
         UserData userData = new UserData(request);
         List<String> validationErrors = dataValidator.validate(userData);
         if (!validationErrors.isEmpty()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("validationErrors", validationErrors);
-            PrintWriter writer = response.getWriter();
-            writer.write(jsonObject.toString());
-            writer.print(jsonObject);
+            responseWriter.writeValidationErrors(response, validationErrors);
             return;
         }
         User user = new User();

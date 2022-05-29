@@ -18,6 +18,6 @@ public class UserConstants {
     public static final String TEAM_TYPE = "teamType";
     public static final String TEAM_NAME = "teamName";
 
-    private UserConstants(){
+    private UserConstants() {
     }
 }

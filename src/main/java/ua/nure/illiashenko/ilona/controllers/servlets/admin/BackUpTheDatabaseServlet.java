@@ -1,7 +1,5 @@
 package ua.nure.illiashenko.ilona.controllers.servlets.admin;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ua.nure.illiashenko.ilona.services.AdminService;
 
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +12,6 @@ import static ua.nure.illiashenko.ilona.constants.ContextConstants.ADMIN_SERVICE
 @WebServlet("/database/backup")
 public class BackUpTheDatabaseServlet extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(BackUpTheDatabaseServlet.class);
     private AdminService adminService;
 
     @Override

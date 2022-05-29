@@ -107,4 +107,24 @@ public class RegistrationData {
     public String getTeamName() {
         return teamName;
     }
+
+    @Override
+    public String toString() {
+        return "RegistrationData{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", repeatedPassword='" + repeatedPassword + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", role='" + role + '\'' +
+                ", teamType='" + teamType + '\'' +
+                ", teamId='" + teamId + '\'' +
+                ", teamName='" + teamName + '\'' +
+                ", email='" + email + '\'' +
+                ", birthDate='" + birthDate + '\'' +
+                ", height='" + height + '\'' +
+                ", weight='" + weight + '\'' +
+                ", gender='" + gender + '\'' +
+                '}';
+    }
 }

@@ -7,6 +7,6 @@ public class UserRole {
     public static final String DOCTOR = "doctor";
     public static final String SOIGNEUR = "soigneur";
 
-    private UserRole(){
+    private UserRole() {
     }
 }

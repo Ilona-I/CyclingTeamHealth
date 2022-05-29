@@ -11,11 +11,12 @@ public class SQLQuery {
     public static final String UPDATE_TEAM = "UPDATE `cycling_team_health`.`team` SET `name` = ? WHERE (`id` = ?);";
     public static final String DELETE_TEAM = "DELETE FROM `cycling_team_health`.`team` WHERE (`id` = ?);";
     public static final String GET_TEAM = "SELECT * FROM cycling_team_health.team WHERE `id` = ?;";
-
     public static final String GET_TEAM_MEMBERS = "SELECT * FROM `user` WHERE `team_id` = ?;";
+
     public static final String INSERT_CHAT = "INSERT INTO `cycling_team_health`.`chat` (`type`) VALUES (?);";
     public static final String GET_CHAT = "SELECT * FROM `cycling_team_health`.`chat` WHERE `id` = ?;";
     public static final String DELETE_CHAT = "DELETE FROM `cycling_team_health`.`chat` WHERE (`id` = ?);";
+    public static final String GET_USERS_CHAT_ID = "SELECT `chat_id` FROM `user_chat` WHERE `login` = ? AND `chat_id` in (SELECT `chat_id` FROM `user_chat` WHERE `login` = ?);";
 
     public static final String INSERT_USER_CHAT = "INSERT INTO `cycling_team_health`.`user_chat` (`chat_id`, `login`) VALUES (?, ?);";
     public static final String DELETE_USER_CHAT = "DELETE FROM `cycling_team_health`.`user_chat` WHERE (`id` = ?);";

@@ -29,6 +29,7 @@ import static ua.nure.illiashenko.ilona.constants.ContextConstants.ADMIN_SERVICE
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.CHAT_SERVICE;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.FEEDBACK_SERVICE;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.TEAM_SERVICE;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.TRAINING_SERVICE;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.USER_SERVICE;
@@ -51,7 +52,7 @@ public class ContextListener implements ServletContextListener {
         TrainingGoalsDAO trainingGoalsDAO = new TrainingGoalsDAO();
         TrainingResultsDAO trainingResultsDAO = new TrainingResultsDAO();
         UserChatDAO userChatDAO = new UserChatDAO();
-        DatabaseManager databaseManager = new DatabaseManager();
+        DatabaseManager databaseManager = new DatabaseManager(servletContext.getInitParameter("backupPath"), servletContext.getInitParameter("mySqlBinPath"));
 
         UserService userService = new UserService(userDAO, transactionManager);
         TeamService teamService = new TeamService(teamDAO, userDAO, transactionManager);
@@ -67,6 +68,7 @@ public class ContextListener implements ServletContextListener {
         servletContext.setAttribute(TRAINING_SERVICE, trainingService);
         servletContext.setAttribute(ADMIN_SERVICE, adminService);
         servletContext.setAttribute(DATA_VALIDATOR, new DataValidator());
+        servletContext.setAttribute(RESPONSE_WRITER, new ResponseWriter());
         logger.info("Context initialized");
     }
 

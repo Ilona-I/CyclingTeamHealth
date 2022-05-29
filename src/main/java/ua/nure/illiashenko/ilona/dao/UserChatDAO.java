@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.DELETE_USER_CHAT;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_CHAT;
+import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_USERS_CHAT_ID;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_USER_CHATS;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.INSERT_USER_CHAT;
 
@@ -92,5 +93,20 @@ public class UserChatDAO implements DAO<UserChat, Integer> {
             throw new SQLException();
         }
         return userChatList;
+    }
+
+    public Optional<Integer> getUsersChatId(String sender, String receiver, Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_USERS_CHAT_ID)) {
+            preparedStatement.setString(1, sender);
+            preparedStatement.setString(2, receiver);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return Optional.of(resultSet.getInt(1));
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new SQLException();
+        }
+        return Optional.empty();
     }
 }

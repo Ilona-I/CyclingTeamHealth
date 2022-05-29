@@ -9,7 +9,9 @@ import ua.nure.illiashenko.ilona.exceptions.user.CannotAddNewUserException;
 import ua.nure.illiashenko.ilona.exceptions.user.CannotDeleteUserException;
 import ua.nure.illiashenko.ilona.exceptions.user.CannotFindUserException;
 import ua.nure.illiashenko.ilona.exceptions.user.CannotUpdateUserException;
+import ua.nure.illiashenko.ilona.utils.MD5Util;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -26,7 +28,8 @@ public class UserService {
         this.transactionManager = transactionManager;
     }
 
-    public boolean addUser(User user) {
+    public boolean addUser(User user) throws NoSuchAlgorithmException {
+        user.setPassword(MD5Util.md5(user.getPassword()));
         Function<Connection, Boolean> function = connection -> {
             try {
                 userDAO.insert(user, connection);
@@ -42,9 +45,13 @@ public class UserService {
     public boolean updateUser(String login, User newUser) {
         Function<Connection, Boolean> function = connection -> {
             try {
+                User user = userDAO.get(login, connection).get();
+                if (!user.getPassword().equals(newUser.getPassword())) {
+                    newUser.setPassword(MD5Util.md5(newUser.getPassword()));
+                }
                 userDAO.update(login, newUser, connection);
                 return true;
-            } catch (SQLException e) {
+            } catch (SQLException | NoSuchAlgorithmException e) {
                 logger.error(e.getMessage());
                 throw new CannotUpdateUserException(e.getMessage());
             }

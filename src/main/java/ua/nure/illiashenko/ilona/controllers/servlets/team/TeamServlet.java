@@ -3,6 +3,7 @@ package ua.nure.illiashenko.ilona.controllers.servlets.team;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
 import ua.nure.illiashenko.ilona.controllers.dto.TeamData;
 import ua.nure.illiashenko.ilona.dao.entities.Team;
 import ua.nure.illiashenko.ilona.services.DataValidator;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.TEAM_SERVICE;
 
 @WebServlet("/team")
@@ -26,11 +28,13 @@ public class TeamServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(TeamServlet.class);
     private TeamService teamService;
+    private ResponseWriter responseWriter;
     private DataValidator dataValidator;
 
     @Override
     public void init() {
         teamService = (TeamService) getServletContext().getAttribute(TEAM_SERVICE);
+        responseWriter = (ResponseWriter) getServletContext().getAttribute(RESPONSE_WRITER);
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
     }
 
@@ -39,18 +43,13 @@ public class TeamServlet extends HttpServlet {
         TeamData teamData = new TeamData(request);
         List<String> validationErrors = dataValidator.validate(teamData);
         if (!validationErrors.isEmpty()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("validationErrors", validationErrors);
-            PrintWriter writer = response.getWriter();
-            writer.write(jsonObject.toString());
-            writer.print(jsonObject);
-        } else {
-            Team team = new Team();
-            team.setId(Integer.parseInt(teamData.getId()));
-            team.setName(teamData.getName());
-            teamService.updateTeam(team.getId(), team);
-
+            responseWriter.writeValidationErrors(response, validationErrors);
+            return;
         }
+        Team team = new Team();
+        team.setId(Integer.parseInt(teamData.getId()));
+        team.setName(teamData.getName());
+        teamService.updateTeam(team.getId(), team);
     }
 
     @Override

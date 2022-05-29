@@ -2,9 +2,18 @@
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
-<web-app>
+<web-app  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee">
   <display-name>Archetype Created Web Application</display-name>
   <listener>
     <listener-class>ua.nure.illiashenko.ilona.controllers.ContextListener</listener-class>
   </listener>
+  <context-param>
+    <param-name>backupPath</param-name>
+    <param-value>C:\Program Files\apache-tomcat-8.5.69\bin\backup</param-value>
+  </context-param>
+  <context-param>
+    <param-name>mySqlBinPath</param-name>
+    <param-value>C:\Program Files\MySQL\MySQL Server 8.0\bin</param-value>
+  </context-param>
 </web-app>
