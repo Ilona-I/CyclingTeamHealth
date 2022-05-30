@@ -20,15 +20,19 @@ import ua.nure.illiashenko.ilona.services.FeedbackService;
 import ua.nure.illiashenko.ilona.services.TeamService;
 import ua.nure.illiashenko.ilona.services.TrainingService;
 import ua.nure.illiashenko.ilona.services.UserService;
+import ua.nure.illiashenko.ilona.utils.Base64Util;
+import ua.nure.illiashenko.ilona.utils.MD5Util;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.ADMIN_SERVICE;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.BASE_64_UTIL;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.CHAT_SERVICE;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.FEEDBACK_SERVICE;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.MD_5_UTIL;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.TEAM_SERVICE;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.TRAINING_SERVICE;
@@ -53,8 +57,9 @@ public class ContextListener implements ServletContextListener {
         TrainingResultsDAO trainingResultsDAO = new TrainingResultsDAO();
         UserChatDAO userChatDAO = new UserChatDAO();
         DatabaseManager databaseManager = new DatabaseManager(servletContext.getInitParameter("backupPath"), servletContext.getInitParameter("mySqlBinPath"));
+        MD5Util md5Util = new MD5Util();
 
-        UserService userService = new UserService(userDAO, transactionManager);
+        UserService userService = new UserService(userDAO, transactionManager, md5Util);
         TeamService teamService = new TeamService(teamDAO, userDAO, transactionManager);
         ChatService chatService = new ChatService(chatDAO, userChatDAO, messageDAO, transactionManager);
         FeedbackService feedbackService = new FeedbackService(feedbackDAO, transactionManager);
@@ -69,6 +74,8 @@ public class ContextListener implements ServletContextListener {
         servletContext.setAttribute(ADMIN_SERVICE, adminService);
         servletContext.setAttribute(DATA_VALIDATOR, new DataValidator());
         servletContext.setAttribute(RESPONSE_WRITER, new ResponseWriter());
+        servletContext.setAttribute(BASE_64_UTIL, new Base64Util());
+        servletContext.setAttribute(MD_5_UTIL, md5Util);
         logger.info("Context initialized");
     }
 

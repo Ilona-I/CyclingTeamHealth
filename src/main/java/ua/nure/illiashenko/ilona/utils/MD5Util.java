@@ -11,7 +11,7 @@ public class MD5Util {
 
     private static final Logger logger = LoggerFactory.getLogger(MD5Util.class);
 
-    public static String md5(String st) throws NoSuchAlgorithmException {
+    public String md5(String st) throws NoSuchAlgorithmException {
         MessageDigest messageDigest;
         byte[] digest;
         try {

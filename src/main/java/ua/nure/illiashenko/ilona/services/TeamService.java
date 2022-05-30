@@ -92,8 +92,15 @@ public class TeamService {
         return doInTransaction(function);
     }
 
-    public Map<String, Integer> getTeams() {
-        return null;
+    public Map<Team, Integer> getTeamsRatings() {
+        Function<Connection, Map<Team, Integer>> function = connection -> {
+            try {
+                return teamDAO.getTeamsRatings(connection);
+            } catch (SQLException e) {
+                throw new CannotFindTeamMembersException(e.getMessage());
+            }
+        };
+        return doInTransaction(function);
     }
 
     private <R> R doInTransaction(Function<Connection, R> function) {

@@ -1,8 +1,5 @@
 package ua.nure.illiashenko.ilona.controllers.servlets.training.results;
 
-import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
 import ua.nure.illiashenko.ilona.controllers.dto.TrainingResultsData;
 import ua.nure.illiashenko.ilona.dao.entities.TrainingResults;
@@ -15,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;

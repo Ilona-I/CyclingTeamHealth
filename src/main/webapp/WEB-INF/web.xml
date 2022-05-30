@@ -16,4 +16,24 @@
     <param-name>mySqlBinPath</param-name>
     <param-value>C:\Program Files\MySQL\MySQL Server 8.0\bin</param-value>
   </context-param>
+  <filter>
+    <filter-name>EncodingFilter</filter-name>
+    <filter-class>ua.nure.illiashenko.ilona.controllers.filters.EncodingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>EncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>AccessRestrictionFilter</filter-name>
+    <filter-class>ua.nure.illiashenko.ilona.controllers.filters.AccessRestrictionFilter</filter-class>
+    <init-param>
+      <param-name>securityXmlFile</param-name>
+      <param-value>security.xml</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>AccessRestrictionFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 </web-app>

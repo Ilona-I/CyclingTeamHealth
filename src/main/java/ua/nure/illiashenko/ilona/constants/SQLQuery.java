@@ -46,6 +46,10 @@ public class SQLQuery {
     public static final String GET_USER_TRAINING_RESULTS = "SELECT * FROM cycling_team_health.training_results WHERE `login` = ? AND `id` = ?;";
     public static final String GET_USER_TRAININGS_RESULTS = "SELECT * FROM cycling_team_health.training_results WHERE `login` = ?;";
     public static final String GET_TEAM_TRAINING_RESULTS = "SELECT * FROM cycling_team_health.training_results WHERE `training_id` = (SELECT id FROM `cycling_team_health`.`training_goals` WHERE `team_id` = ?);";
+    public static final String GET_TEAMS_RATINGS = "SELECT id, name, (SELECT sum(training_results.speed) from training_results " +
+            "where training_id in (SELECT id from training_goals where training_goals.team_id=team.id) and login in (select login from user where role = 'cyclist'))*" +
+            "(SELECT sum(UNIX_TIMESTAMP(end_datetime)-UNIX_TIMESTAMP(start_datetime)) from training_goals where training_goals.team_id=team.id) as rating " +
+            "from team group by id;";
 
     private SQLQuery() {
     }

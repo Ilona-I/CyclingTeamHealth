@@ -30,7 +30,7 @@ public class UserChatDAO implements DAO<UserChat, Integer> {
             preparedStatement.setInt(1, userChat.getChatId());
             preparedStatement.setString(2, userChat.getLogin());
             preparedStatement.executeUpdate();
-            ResultSet keys=preparedStatement.getGeneratedKeys();
+            ResultSet keys = preparedStatement.getGeneratedKeys();
             keys.next();
             userChat.setId(keys.getInt(1));
         } catch (SQLException e) {

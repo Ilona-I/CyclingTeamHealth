@@ -32,7 +32,7 @@ public class FeedbackDAO implements DAO<Feedback, Integer> {
             preparedStatement.setString(4, feedback.getText());
             preparedStatement.setString(5, feedback.getStatus());
             preparedStatement.executeUpdate();
-            ResultSet keys=preparedStatement.getGeneratedKeys();
+            ResultSet keys = preparedStatement.getGeneratedKeys();
             keys.next();
             feedback.setId(keys.getInt(1));
         } catch (SQLException e) {

@@ -1,8 +1,6 @@
 package ua.nure.illiashenko.ilona.controllers.servlets.feedback;
 
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
 import ua.nure.illiashenko.ilona.controllers.dto.FeedbackData;
 import ua.nure.illiashenko.ilona.dao.entities.Feedback;
@@ -30,7 +28,6 @@ import static ua.nure.illiashenko.ilona.constants.StatusType.ACTIVE;
 @WebServlet("/feedback")
 public class FeedbackServlet extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(FeedbackServlet.class);
     private FeedbackService feedbackService;
     private DataValidator dataValidator;
     private ResponseWriter responseWriter;

@@ -27,7 +27,6 @@ import static ua.nure.illiashenko.ilona.constants.ContextConstants.TRAINING_SERV
 @WebServlet("/training/goal")
 public class TrainingGoalServlet extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(TrainingGoalServlet.class);
     private TrainingService trainingService;
     private ResponseWriter responseWriter;
     private DataValidator dataValidator;

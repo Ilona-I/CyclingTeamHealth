@@ -1,6 +1,5 @@
 package ua.nure.illiashenko.ilona.controllers.servlets.chat;
 
-import org.json.JSONObject;
 import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
 import ua.nure.illiashenko.ilona.dao.entities.UserChat;
 import ua.nure.illiashenko.ilona.services.ChatService;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,10 +41,6 @@ public class GetChatsServlet extends HttpServlet {
             return;
         }
         List<UserChat> chats = chatService.getUserChats(login);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("chats", chats);
-        PrintWriter writer = response.getWriter();
-        writer.write(jsonObject.toString());
-        writer.print(jsonObject);
+        responseWriter.writeUserChats(response, chats);
     }
 }

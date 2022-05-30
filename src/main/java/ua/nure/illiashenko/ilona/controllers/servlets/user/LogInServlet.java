@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.MD_5_UTIL;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.USER_SERVICE;
 
@@ -30,12 +31,14 @@ public class LogInServlet extends HttpServlet {
     private UserService userService;
     private ResponseWriter responseWriter;
     private DataValidator dataValidator;
+    private MD5Util md5Util;
 
     @Override
     public void init() {
         userService = (UserService) getServletContext().getAttribute(USER_SERVICE);
         responseWriter = (ResponseWriter) getServletContext().getAttribute(RESPONSE_WRITER);
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
+        md5Util = (MD5Util) getServletContext().getAttribute(MD_5_UTIL);
     }
 
     @Override
@@ -50,7 +53,7 @@ public class LogInServlet extends HttpServlet {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             try {
-                if (!user.getPassword().equals(MD5Util.md5(logInData.getPassword()))) {
+                if (!user.getPassword().equals(md5Util.md5(logInData.getPassword()))) {
                     validationErrors.add("wrongPassword");
                     responseWriter.writeValidationErrors(response, validationErrors);
                     return;

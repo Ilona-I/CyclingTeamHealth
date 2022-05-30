@@ -22,14 +22,16 @@ public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private final UserDAO userDAO;
     private final TransactionManager transactionManager;
+    private final MD5Util md5Util;
 
-    public UserService(UserDAO userDAO, TransactionManager transactionManager) {
+    public UserService(UserDAO userDAO, TransactionManager transactionManager, MD5Util md5Util) {
         this.userDAO = userDAO;
         this.transactionManager = transactionManager;
+        this.md5Util = md5Util;
     }
 
     public boolean addUser(User user) throws NoSuchAlgorithmException {
-        user.setPassword(MD5Util.md5(user.getPassword()));
+        user.setPassword(md5Util.md5(user.getPassword()));
         Function<Connection, Boolean> function = connection -> {
             try {
                 userDAO.insert(user, connection);
@@ -47,7 +49,7 @@ public class UserService {
             try {
                 User user = userDAO.get(login, connection).get();
                 if (!user.getPassword().equals(newUser.getPassword())) {
-                    newUser.setPassword(MD5Util.md5(newUser.getPassword()));
+                    newUser.setPassword(md5Util.md5(newUser.getPassword()));
                 }
                 userDAO.update(login, newUser, connection);
                 return true;

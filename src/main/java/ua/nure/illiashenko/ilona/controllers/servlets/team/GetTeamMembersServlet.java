@@ -1,6 +1,5 @@
 package ua.nure.illiashenko.ilona.controllers.servlets.team;
 
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Objects;
 

@@ -23,6 +23,7 @@ import java.util.Objects;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.USER_SERVICE;
+import static ua.nure.illiashenko.ilona.constants.UserConstants.LOGIN;
 
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
@@ -39,8 +40,14 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) {
-
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String login = Objects.requireNonNull(request.getParameter(LOGIN));
+        if (!userService.isUserWithSuchLoginExists(login)) {
+            response.setStatus(404);
+            return;
+        }
+        User user = userService.getUser(login).get();
+        responseWriter.writeUser(response, user);
     }
 
     @Override

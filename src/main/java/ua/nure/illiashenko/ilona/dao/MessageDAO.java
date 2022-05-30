@@ -31,7 +31,7 @@ public class MessageDAO implements DAO <Message, Integer> {
             preparedStatement.setString(3, message.getText());
             preparedStatement.setTimestamp(4, message.getDateTime());
             preparedStatement.executeUpdate();
-            ResultSet keys=preparedStatement.getGeneratedKeys();
+            ResultSet keys = preparedStatement.getGeneratedKeys();
             keys.next();
             message.setId(keys.getInt(1));
         } catch (SQLException e) {

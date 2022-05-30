@@ -9,10 +9,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.DELETE_TEAM;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_TEAM;
+import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_TEAMS_RATINGS;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.INSERT_TEAM;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.UPDATE_TEAM;
 
@@ -25,7 +28,7 @@ public class TeamDAO implements DAO<Team, Integer> {
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TEAM, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, team.getName());
             preparedStatement.executeUpdate();
-            ResultSet keys=preparedStatement.getGeneratedKeys();
+            ResultSet keys = preparedStatement.getGeneratedKeys();
             keys.next();
             team.setId(keys.getInt(1));
         } catch (SQLException e) {
@@ -76,5 +79,22 @@ public class TeamDAO implements DAO<Team, Integer> {
             logger.error(e.getMessage());
             throw new SQLException();
         }
+    }
+
+    public Map<Team, Integer> getTeamsRatings(Connection connection) throws SQLException {
+        Map<Team, Integer> teamsRatings = new HashMap<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_TEAMS_RATINGS)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Team team = new Team();
+                team.setId(resultSet.getInt(1));
+                team.setName(resultSet.getString(2));
+                teamsRatings.put(team, resultSet.getInt(3));
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new SQLException();
+        }
+        return teamsRatings;
     }
 }

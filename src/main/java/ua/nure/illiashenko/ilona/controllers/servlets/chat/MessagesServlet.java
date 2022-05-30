@@ -1,6 +1,5 @@
 package ua.nure.illiashenko.ilona.controllers.servlets.chat;
 
-import org.json.JSONObject;
 import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
 import ua.nure.illiashenko.ilona.controllers.dto.MessageData;
 import ua.nure.illiashenko.ilona.dao.entities.Chat;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +23,7 @@ import java.util.Optional;
 import static ua.nure.illiashenko.ilona.constants.ChatType.PRIVATE;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.CHAT_SERVICE;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.USER_SERVICE;
 import static ua.nure.illiashenko.ilona.constants.ParameterConstants.CHAT_ID;
 import static ua.nure.illiashenko.ilona.constants.ParameterConstants.CHAT_TYPE;
@@ -43,6 +42,7 @@ public class MessagesServlet extends HttpServlet {
     public void init() {
         chatService = (ChatService) getServletContext().getAttribute(CHAT_SERVICE);
         userService = (UserService) getServletContext().getAttribute(USER_SERVICE);
+        responseWriter = (ResponseWriter) getServletContext().getAttribute(RESPONSE_WRITER);
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
     }
 
@@ -92,10 +92,6 @@ public class MessagesServlet extends HttpServlet {
             chatId = Integer.parseInt(chatIdString);
         }
         List<Message> messages = chatService.getChatMessages(chatId);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("messages", messages);
-        PrintWriter writer = response.getWriter();
-        writer.write(jsonObject.toString());
-        writer.print(jsonObject);
+        responseWriter.writeMessages(response, messages);
     }
 }

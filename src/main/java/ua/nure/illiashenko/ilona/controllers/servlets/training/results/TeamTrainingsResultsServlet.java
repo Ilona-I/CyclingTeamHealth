@@ -1,7 +1,7 @@
 package ua.nure.illiashenko.ilona.controllers.servlets.training.results;
 
-import org.json.JSONObject;
 import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
+import ua.nure.illiashenko.ilona.dao.entities.TrainingResults;
 import ua.nure.illiashenko.ilona.services.DataValidator;
 import ua.nure.illiashenko.ilona.services.TeamService;
 import ua.nure.illiashenko.ilona.services.TrainingService;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import java.util.Objects;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
@@ -48,10 +48,7 @@ public class TeamTrainingsResultsServlet extends HttpServlet {
             response.setStatus(404);
             return;
         }
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("teamTrainingsResults", trainingService.getTeamTrainingResults(id));
-        PrintWriter writer = response.getWriter();
-        writer.write(jsonObject.toString());
-        writer.print(jsonObject);
+        List<TrainingResults> trainingResults = trainingService.getTeamTrainingResults(id);
+        responseWriter.writeTrainingResults(response, trainingResults);
     }
 }
