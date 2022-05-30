@@ -120,6 +120,17 @@ public class TrainingService {
         return doInTransaction(function);
     }
 
+    public Optional<TrainingGoals> getTrainingGoals(int id) {
+        Function<Connection, Optional<TrainingGoals>> function = connection -> {
+            try {
+                return trainingGoalsDAO.get(id, connection);
+            } catch (SQLException e) {
+                throw new CannotUpdateTrainingException(e.getMessage());
+            }
+        };
+        return doInTransaction(function);
+    }
+
     public boolean updateTrainingGoals(TrainingGoals trainingGoals) {
         Function<Connection, Boolean> function = connection -> {
             try {

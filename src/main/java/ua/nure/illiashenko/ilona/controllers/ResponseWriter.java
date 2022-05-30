@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import ua.nure.illiashenko.ilona.dao.entities.Feedback;
 import ua.nure.illiashenko.ilona.dao.entities.Message;
 import ua.nure.illiashenko.ilona.dao.entities.Team;
+import ua.nure.illiashenko.ilona.dao.entities.TrainingGoals;
 import ua.nure.illiashenko.ilona.dao.entities.TrainingResults;
 import ua.nure.illiashenko.ilona.dao.entities.User;
 import ua.nure.illiashenko.ilona.dao.entities.UserChat;
@@ -72,6 +73,22 @@ public class ResponseWriter {
     public void writeTeamsRatings(HttpServletResponse response, Map<Team, Integer> teams) throws IOException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("teamsRatings", teams);
+        PrintWriter writer = response.getWriter();
+        writer.write(jsonObject.toString());
+        writer.print(jsonObject);
+    }
+
+    public void writeAllTeamTrainingGoals(HttpServletResponse response, List<TrainingGoals> trainingGoals) throws IOException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("trainingGoals", trainingGoals);
+        PrintWriter writer = response.getWriter();
+        writer.write(jsonObject.toString());
+        writer.print(jsonObject);
+    }
+
+    public void writeTrainingGoals(HttpServletResponse response, TrainingGoals trainingGoals) throws IOException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("trainingGoals", trainingGoals);
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
         writer.print(jsonObject);

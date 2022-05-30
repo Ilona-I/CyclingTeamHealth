@@ -7,6 +7,7 @@ import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
 import ua.nure.illiashenko.ilona.controllers.dto.TrainingGoalsData;
 import ua.nure.illiashenko.ilona.dao.entities.TrainingGoals;
 import ua.nure.illiashenko.ilona.services.DataValidator;
+import ua.nure.illiashenko.ilona.services.TeamService;
 import ua.nure.illiashenko.ilona.services.TrainingService;
 
 import javax.servlet.annotation.WebServlet;
@@ -22,18 +23,22 @@ import java.util.Objects;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.TEAM_SERVICE;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.TRAINING_SERVICE;
+import static ua.nure.illiashenko.ilona.constants.ParameterConstants.ID;
 
-@WebServlet("/training/goal")
-public class TrainingGoalServlet extends HttpServlet {
+@WebServlet("/training/goals")
+public class TrainingGoalsServlet extends HttpServlet {
 
     private TrainingService trainingService;
+    private TeamService teamService;
     private ResponseWriter responseWriter;
     private DataValidator dataValidator;
 
     @Override
     public void init() {
         trainingService = (TrainingService) getServletContext().getAttribute(TRAINING_SERVICE);
+        teamService = (TeamService) getServletContext().getAttribute(TEAM_SERVICE);
         responseWriter = (ResponseWriter) getServletContext().getAttribute(RESPONSE_WRITER);
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
     }
@@ -57,6 +62,37 @@ public class TrainingGoalServlet extends HttpServlet {
             trainingGoals.setSpeed(Integer.parseInt(trainingGoalsData.getSpeed()));
         }
         trainingService.addTraining(trainingGoals);
+    }
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String teamIdParameter = Objects.requireNonNull(request.getParameter("teamId"));
+        String trainingIdParameter = request.getParameter("trainingId");
+        if (!dataValidator.isNumber(teamIdParameter)) {
+            response.setStatus(400);
+            return;
+        }
+        int teamId = Integer.parseInt(teamIdParameter);
+        if (!teamService.isTeamWithSuchIdExists(teamId)) {
+            response.setStatus(404);
+            return;
+        }
+        if (trainingIdParameter == null) {
+            List<TrainingGoals> trainingGoalsList = trainingService.getAllTeamTrainings(teamId);
+            responseWriter.writeAllTeamTrainingGoals(response, trainingGoalsList);
+            return;
+        }
+        if (!dataValidator.isNumber(trainingIdParameter)) {
+            response.setStatus(400);
+            return;
+        }
+        int trainingId = Integer.parseInt(trainingIdParameter);
+        if (!trainingService.isTrainingWithSuchIdExists(trainingId)) {
+            response.setStatus(404);
+            return;
+        }
+        TrainingGoals trainingGoals = trainingService.getTrainingGoals(trainingId).get();
+        responseWriter.writeTrainingGoals(response, trainingGoals);
     }
 
     @Override
@@ -91,7 +127,7 @@ public class TrainingGoalServlet extends HttpServlet {
 
     @Override
     public void doDelete(HttpServletRequest request, HttpServletResponse response) {
-        String trainingGoalsId = Objects.requireNonNull(request.getParameter("trainingGoalsId"));
+        String trainingGoalsId = Objects.requireNonNull(request.getParameter(ID));
         if (!dataValidator.isNumber(trainingGoalsId)) {
             response.setStatus(400);
             return;

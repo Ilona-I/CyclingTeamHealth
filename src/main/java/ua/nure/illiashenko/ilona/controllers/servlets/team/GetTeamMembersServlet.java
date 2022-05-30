@@ -23,7 +23,6 @@ import static ua.nure.illiashenko.ilona.constants.ContextConstants.TEAM_SERVICE;
 @WebServlet("/team/users")
 public class GetTeamMembersServlet extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(GetTeamMembersServlet.class);
     private TeamService teamService;
     private ResponseWriter responseWriter;
     private DataValidator dataValidator;
