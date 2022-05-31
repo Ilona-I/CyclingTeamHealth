@@ -43,7 +43,6 @@ public class ResponseWriter {
         jsonObject.put("messages", messages);
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
-        writer.print(jsonObject);
     }
 
     public void writeTrainingResults(HttpServletResponse response, List<TrainingResults> trainingResults) throws IOException {
@@ -51,7 +50,6 @@ public class ResponseWriter {
         jsonObject.put("results", trainingResults);
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
-        writer.print(jsonObject);
     }
 
     public void writeUserTrainingResults(HttpServletResponse response, TrainingResults trainingResults) throws IOException {
@@ -59,7 +57,6 @@ public class ResponseWriter {
         jsonObject.put("userTrainingResults", trainingResults);
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
-        writer.print(jsonObject);
     }
 
     public void writeFeedbacks(HttpServletResponse response, List<Feedback> feedbacks) throws IOException {
@@ -67,7 +64,6 @@ public class ResponseWriter {
         jsonObject.put("feedbacks", feedbacks);
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
-        writer.print(jsonObject);
     }
 
     public void writeTeamsRatings(HttpServletResponse response, Map<Team, Integer> teams) throws IOException {
@@ -75,7 +71,6 @@ public class ResponseWriter {
         jsonObject.put("teamsRatings", teams);
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
-        writer.print(jsonObject);
     }
 
     public void writeAllTeamTrainingGoals(HttpServletResponse response, List<TrainingGoals> trainingGoals) throws IOException {
@@ -83,7 +78,6 @@ public class ResponseWriter {
         jsonObject.put("trainingGoals", trainingGoals);
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
-        writer.print(jsonObject);
     }
 
     public void writeTrainingGoals(HttpServletResponse response, TrainingGoals trainingGoals) throws IOException {
@@ -91,7 +85,6 @@ public class ResponseWriter {
         jsonObject.put("trainingGoals", trainingGoals);
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
-        writer.print(jsonObject);
     }
 
     public void writePulseValues(HttpServletResponse response, Map<String, Double> pulseValues) throws IOException {
@@ -99,7 +92,6 @@ public class ResponseWriter {
         jsonObject.put("pulseValues", pulseValues);
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
-        writer.print(jsonObject);
     }
 
     public void writeValidationErrors(HttpServletResponse response, List<String> validationErrors) throws IOException {
