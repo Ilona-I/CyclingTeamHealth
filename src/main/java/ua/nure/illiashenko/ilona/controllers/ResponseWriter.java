@@ -94,6 +94,14 @@ public class ResponseWriter {
         writer.print(jsonObject);
     }
 
+    public void writePulseValues(HttpServletResponse response, Map<String, Double> pulseValues) throws IOException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("pulseValues", pulseValues);
+        PrintWriter writer = response.getWriter();
+        writer.write(jsonObject.toString());
+        writer.print(jsonObject);
+    }
+
     public void writeValidationErrors(HttpServletResponse response, List<String> validationErrors) throws IOException {
         response.setStatus(400);
         JSONObject jsonObject = new JSONObject();

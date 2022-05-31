@@ -13,7 +13,10 @@ import ua.nure.illiashenko.ilona.utils.MD5Util;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -96,6 +99,28 @@ public class UserService {
             }
         };
         return doInTransaction(function).isPresent();
+    }
+
+    public Map<String, Double> getPulseValues(String gender, Date birthDate) {
+        Map<String, Double> pulseValues = new HashMap<>();
+        int k = 202;
+        double r = 0.55;
+        if ("female".equals(gender)) {
+            k = 216;
+            r = 1.09;
+        }
+        long age = ((new Date(new java.util.Date().getTime()).getTime() - birthDate.getTime()) / 31536000000L);
+        pulseValues.put("maxPulse", k - (r * age));
+        pulseValues.put("maxTimeForMaxPulse", 5.0);
+        double minPulse = 60;
+        if (age > 30 && age <= 40) {
+            minPulse = 55;
+        }
+        if (age > 40 && age <= 60) {
+            minPulse = 50;
+        }
+        pulseValues.put("minPulse", minPulse);
+        return pulseValues;
     }
 
     private <R> R doInTransaction(Function<Connection, R> function) {

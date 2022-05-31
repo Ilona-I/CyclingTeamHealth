@@ -92,7 +92,7 @@ public class DataValidator {
         return dateTimePattern.matcher(dateTime).matches();
     }
 
-    private boolean isGender(String gender) {
+    public boolean isGender(String gender) {
         if (gender == null) {
             return false;
         }
