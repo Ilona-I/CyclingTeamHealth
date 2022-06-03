@@ -2,8 +2,11 @@
 <html>
 <head>
     <title>Title</title>
+    <script src="js/chats.js"></script>
 </head>
 <body>
-
+    <h1>Chats</h1>
+    <div id="chats">
+    </div>
 </body>
 </html>

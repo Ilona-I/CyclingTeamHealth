@@ -54,7 +54,7 @@ public class ResponseWriter {
 
     public void writeUserTrainingResults(HttpServletResponse response, TrainingResults trainingResults) throws IOException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userTrainingResults", trainingResults);
+        jsonObject.put("userTrainingResults", new JSONObject(trainingResults));
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
     }
@@ -66,9 +66,10 @@ public class ResponseWriter {
         writer.write(jsonObject.toString());
     }
 
-    public void writeTeamsRatings(HttpServletResponse response, Map<Team, Integer> teams) throws IOException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("teamsRatings", teams);
+    public void writeTeamsRatings(HttpServletResponse response, Map<String, Integer> teams) throws IOException {
+        response.setStatus(200);
+        response.setContentType("application/json");
+        JSONObject jsonObject = new JSONObject(teams);
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
     }
@@ -82,7 +83,7 @@ public class ResponseWriter {
 
     public void writeTrainingGoals(HttpServletResponse response, TrainingGoals trainingGoals) throws IOException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("trainingGoals", trainingGoals);
+        jsonObject.put("trainingGoals", new JSONObject(trainingGoals));
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
     }

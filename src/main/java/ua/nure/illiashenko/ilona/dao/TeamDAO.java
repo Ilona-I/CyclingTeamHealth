@@ -1,5 +1,6 @@
 package ua.nure.illiashenko.ilona.dao;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.nure.illiashenko.ilona.dao.entities.Team;
@@ -81,15 +82,12 @@ public class TeamDAO implements DAO<Team, Integer> {
         }
     }
 
-    public Map<Team, Integer> getTeamsRatings(Connection connection) throws SQLException {
-        Map<Team, Integer> teamsRatings = new HashMap<>();
+    public Map<String, Integer> getTeamsRatings(Connection connection) throws SQLException {
+        Map<String, Integer> teamsRatings = new HashMap<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_TEAMS_RATINGS)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Team team = new Team();
-                team.setId(resultSet.getInt(1));
-                team.setName(resultSet.getString(2));
-                teamsRatings.put(team, resultSet.getInt(3));
+                teamsRatings.put(resultSet.getString(1), resultSet.getInt(2));
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());

@@ -1,5 +1,6 @@
 package ua.nure.illiashenko.ilona.services;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.nure.illiashenko.ilona.dao.TeamDAO;
@@ -92,8 +93,8 @@ public class TeamService {
         return doInTransaction(function);
     }
 
-    public Map<Team, Integer> getTeamsRatings() {
-        Function<Connection, Map<Team, Integer>> function = connection -> {
+    public Map<String, Integer> getTeamsRatings() {
+        Function<Connection, Map<String, Integer>> function = connection -> {
             try {
                 return teamDAO.getTeamsRatings(connection);
             } catch (SQLException e) {

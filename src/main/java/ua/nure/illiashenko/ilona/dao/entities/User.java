@@ -113,4 +113,21 @@ public class User implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"login\":\"" + login + '"' +
+                ", \"firstName\":\"" + firstName + '"' +
+                ", \"lastName\":\"" + lastName + '"' +
+                ", \"email\":\"" + email + '"' +
+                ", \"role\":\"" + role + '"' +
+                ", \"teamId\":\"" + teamId + '"' +
+                ", \"birthDate\":\"" + birthDate + '"' +
+                ", \"height\":\"" + height + '"' +
+                ", \"weight\":\"" + weight + '"' +
+                ", \"gender\":\"'" + gender + '"' +
+                ", \"status\":\"" + status + '"' +
+                '}';
+    }
 }

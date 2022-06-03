@@ -50,11 +50,14 @@ public class AccessRestrictionFilter implements Filter {
         String requestURI = request.getRequestURI();
         for (Constraint constraint : constraints) {
             if (constraint.getUrlPattern().matcher(requestURI).find()) {
-                Object user = request.getHeader("Authorization");
+                System.out.println(constraint.getUrlPattern());
+                System.out.println(requestURI);
+                String user = request.getHeader("Authorization");
+                response.setHeader("Authorization", user);
                 if (user == null) {
                     response.setStatus(401);
                     return false;
-                } else if (!constraint.getRoles().contains(new JSONObject(base64Util.decodeString(user.toString())).get("role"))) {
+                } else if (!constraint.getRoles().contains(new JSONObject(base64Util.decodeString(user)).get("role"))) {
                     response.setStatus(403);
                     return false;
                 }

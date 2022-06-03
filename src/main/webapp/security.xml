@@ -21,7 +21,7 @@
         <role>soigneur</role>
     </constraint>
     <constraint>
-        <url-pattern>CyclingTeamHealth_war/feedback.*</url-pattern>
+        <url-pattern>CyclingTeamHealth_war/feedback([?].*)*$</url-pattern>
         <role>admin</role>
         <role>trainer</role>
         <role>cyclist</role>
@@ -37,7 +37,7 @@
         <role>soigneur</role>
     </constraint>
     <constraint>
-        <url-pattern>CyclingTeamHealth_war/team.*</url-pattern>
+        <url-pattern>CyclingTeamHealth_war/team([?].*)*$</url-pattern>
         <role>admin</role>
         <role>trainer</role>
     </constraint>

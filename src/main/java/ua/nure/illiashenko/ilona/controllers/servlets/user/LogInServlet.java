@@ -7,6 +7,7 @@ import ua.nure.illiashenko.ilona.controllers.dto.LogInData;
 import ua.nure.illiashenko.ilona.dao.entities.User;
 import ua.nure.illiashenko.ilona.services.DataValidator;
 import ua.nure.illiashenko.ilona.services.UserService;
+import ua.nure.illiashenko.ilona.utils.Base64Util;
 import ua.nure.illiashenko.ilona.utils.MD5Util;
 
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +20,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.BASE_64_UTIL;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.MD_5_UTIL;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
@@ -32,6 +34,7 @@ public class LogInServlet extends HttpServlet {
     private ResponseWriter responseWriter;
     private DataValidator dataValidator;
     private MD5Util md5Util;
+    private Base64Util base64Util;
 
     @Override
     public void init() {
@@ -39,6 +42,7 @@ public class LogInServlet extends HttpServlet {
         responseWriter = (ResponseWriter) getServletContext().getAttribute(RESPONSE_WRITER);
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
         md5Util = (MD5Util) getServletContext().getAttribute(MD_5_UTIL);
+        base64Util = (Base64Util) getServletContext().getAttribute(BASE_64_UTIL);
     }
 
     @Override
@@ -61,6 +65,7 @@ public class LogInServlet extends HttpServlet {
             } catch (NoSuchAlgorithmException e) {
                 logger.error(e.getMessage());
             }
+            response.setHeader("Authorization", base64Util.encodeString(user.toString()));
             responseWriter.writeUser(response, user);
             return;
         }

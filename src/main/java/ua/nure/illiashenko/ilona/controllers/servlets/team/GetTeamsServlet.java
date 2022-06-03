@@ -1,5 +1,6 @@
 package ua.nure.illiashenko.ilona.controllers.servlets.team;
 
+import org.json.JSONObject;
 import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
 import ua.nure.illiashenko.ilona.dao.entities.Team;
 import ua.nure.illiashenko.ilona.services.TeamService;
@@ -29,7 +30,7 @@ public class GetTeamsServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Map<Team, Integer> teams = teamService.getTeamsRatings();
+        Map<String, Integer> teams = teamService.getTeamsRatings();
         responseWriter.writeTeamsRatings(response, teams);
     }
 }
