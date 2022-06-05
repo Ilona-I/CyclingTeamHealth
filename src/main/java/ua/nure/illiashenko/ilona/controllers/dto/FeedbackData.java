@@ -51,4 +51,16 @@ public class FeedbackData {
     public String getStatus() {
         return status;
     }
+
+    @Override
+    public String toString() {
+        return "FeedbackData{" +
+                "id='" + id + '\'' +
+                ", login='" + login + '\'' +
+                ", dateTime='" + dateTime + '\'' +
+                ", rating='" + rating + '\'' +
+                ", text='" + text + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

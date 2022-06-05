@@ -59,4 +59,15 @@ public class Feedback implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "{\"id\":\"" + id +
+                "\", \"login\":\"" + login +
+                "\", \"dateTime\":\"" + dateTime +
+                "\", \"rating\":\"" + rating +
+                "\", \"text\":\"" + text +
+                "\", \"status\":\"" + status +
+                "\"}";
+    }
 }

@@ -126,7 +126,7 @@ public class User implements Serializable {
                 ", \"birthDate\":\"" + birthDate + '"' +
                 ", \"height\":\"" + height + '"' +
                 ", \"weight\":\"" + weight + '"' +
-                ", \"gender\":\"'" + gender + '"' +
+                ", \"gender\":\"" + gender + '"' +
                 ", \"status\":\"" + status + '"' +
                 '}';
     }

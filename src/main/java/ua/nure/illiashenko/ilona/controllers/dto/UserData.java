@@ -33,8 +33,8 @@ public class UserData {
         this.birthDate = Objects.requireNonNull(request.getParameter(BIRTH_DATE)).trim();
         this.height = Objects.requireNonNull(request.getParameter(HEIGHT)).trim();
         this.weight = Objects.requireNonNull(request.getParameter(WEIGHT)).trim();
-        this.gender = Objects.requireNonNull(request.getParameter(GENDER)).trim();
-        this.status = Objects.requireNonNull(request.getParameter(STATUS)).trim();
+        this.gender = request.getParameter(GENDER);
+        this.status = request.getParameter(STATUS);
     }
 
     public String getLogin() {
@@ -71,5 +71,20 @@ public class UserData {
 
     public String getStatus() {
         return status;
+    }
+
+    @Override
+    public String toString() {
+        return "UserData{" +
+                "login='" + login + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", birthDate='" + birthDate + '\'' +
+                ", height='" + height + '\'' +
+                ", weight='" + weight + '\'' +
+                ", gender='" + gender + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

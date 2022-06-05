@@ -31,4 +31,12 @@ public class UserChat implements Serializable {
     public void setLogin(String login) {
         this.login = login;
     }
+
+    @Override
+    public String toString() {
+        return "{\"id\":\"" + id +
+                "\", \"chatId\":\"" + chatId +
+                "\", \"login\":\"" + login +
+                "\"}";
+    }
 }

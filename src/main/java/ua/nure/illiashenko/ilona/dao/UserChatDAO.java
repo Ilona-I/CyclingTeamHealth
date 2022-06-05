@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.DELETE_USER_CHAT;
@@ -76,23 +78,19 @@ public class UserChatDAO implements DAO<UserChat, Integer> {
         }
     }
 
-    public List<UserChat> getUserChats(String login, Connection connection) throws SQLException {
-        List<UserChat> userChatList = new ArrayList<>();
+    public Map<Integer, String> getUserChats(String login, Connection connection) throws SQLException {
+        Map<Integer, String> userChats = new HashMap<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_CHATS)) {
             preparedStatement.setString(1, login);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                UserChat userChat = new UserChat();
-                userChat.setId(resultSet.getInt(1));
-                userChat.setChatId(resultSet.getInt(2));
-                userChat.setLogin(resultSet.getString(3));
-                userChatList.add(userChat);
+                userChats.put(resultSet.getInt(1), resultSet.getString(2));
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
             throw new SQLException();
         }
-        return userChatList;
+        return userChats;
     }
 
     public Optional<Integer> getUsersChatId(String sender, String receiver, Connection connection) throws SQLException {

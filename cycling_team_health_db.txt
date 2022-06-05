@@ -44,6 +44,7 @@ CREATE TABLE `cycling_team_health`.`team` (
 CREATE TABLE `cycling_team_health`.`chat` (
   `id` INT NOT NULL,
   `type` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
 
 CREATE TABLE `cycling_team_health`.`user_chat` (

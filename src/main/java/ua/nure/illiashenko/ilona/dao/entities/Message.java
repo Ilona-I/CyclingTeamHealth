@@ -50,4 +50,15 @@ public class Message implements Serializable {
     public void setDateTime(Timestamp dateTime) {
         this.dateTime = dateTime;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"id\":\"" + id +
+                "\", \"chatId\":\"" + chatId +
+                "\", \"sender\":\"" + sender +
+                "\", \"text\":\"" + text +
+                "\", \"dateTime\":\"" + dateTime +
+                "\"}";
+    }
 }

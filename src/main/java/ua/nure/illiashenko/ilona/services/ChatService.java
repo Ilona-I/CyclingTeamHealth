@@ -16,6 +16,7 @@ import ua.nure.illiashenko.ilona.exceptions.chat.CannotSendMessageException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -51,6 +52,7 @@ public class ChatService {
             try {
                 Chat chat = new Chat();
                 chat.setType(chatType);
+                chat.setName(sender + "  |  " + receiver);
                 chat = chatDAO.insert(chat, connection);
                 UserChat userChat = new UserChat();
                 userChat.setChatId(chat.getId());
@@ -66,10 +68,14 @@ public class ChatService {
         return doInTransaction(function);
     }
 
-    public Optional<Integer> getUsersChatId(String sender, String receiver) {
-        Function<Connection, Optional<Integer>> function = connection -> {
+    public Optional<Chat> getUsersChat(String sender, String receiver) {
+        Function<Connection, Optional<Chat>> function = connection -> {
             try {
-                return userChatDAO.getUsersChatId(sender, receiver, connection);
+                Optional<Integer> id = userChatDAO.getUsersChatId(sender, receiver, connection);
+                if (id.isPresent()) {
+                    return chatDAO.get(id.get(), connection);
+                }
+                return Optional.empty();
             } catch (SQLException e) {
                 throw new CannotFindUserChatsException(e.getMessage());
             }
@@ -78,8 +84,8 @@ public class ChatService {
     }
 
 
-    public List<UserChat> getUserChats(String userLogin) {
-        Function<Connection, List<UserChat>> function = connection -> {
+    public Map<Integer, String> getUserChats(String userLogin) {
+        Function<Connection, Map<Integer, String>> function = connection -> {
             try {
                 return userChatDAO.getUserChats(userLogin, connection);
             } catch (SQLException e) {
@@ -89,8 +95,8 @@ public class ChatService {
         return doInTransaction(function);
     }
 
-    public List<Message> getChatMessages(int chatId) {
-        Function<Connection, List<Message>> function = connection -> {
+    public List<String> getChatMessages(int chatId) {
+        Function<Connection, List<String>> function = connection -> {
             try {
                 return messageDAO.getChatMessages(chatId, connection);
             } catch (SQLException e) {

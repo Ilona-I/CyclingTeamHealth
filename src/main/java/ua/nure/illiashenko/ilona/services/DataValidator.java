@@ -34,7 +34,7 @@ public class DataValidator {
     private final Pattern loginPattern = Pattern.compile("^[_A-Za-z0-9]{4,20}$");
     private final Pattern genderPattern = Pattern.compile("^male|female$");
     private final Pattern datePattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
-    private final Pattern dateTimePattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}");
+    private final Pattern dateTimePattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.?\\d?");
 
     public boolean isLogin(String login) {
         if (login == null) {
@@ -200,10 +200,10 @@ public class DataValidator {
         if (!birthDate.isEmpty() && !isDate(birthDate)) {
             validationErrors.add("wrongBirthDate");
         }
-        if (!height.isEmpty() && !isNumber(height)) {
+        if (!height.isEmpty() && !isDoubleNumber(height)) {
             validationErrors.add("wrongHeight");
         }
-        if (!weight.isEmpty() && !isNumber(weight)) {
+        if (!weight.isEmpty() && !isDoubleNumber(weight)) {
             validationErrors.add("wrongWeight");
         }
         if (!gender.isEmpty() && !isGender(gender)) {

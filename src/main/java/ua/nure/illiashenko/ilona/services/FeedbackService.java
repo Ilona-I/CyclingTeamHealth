@@ -26,8 +26,8 @@ public class FeedbackService {
         this.transactionManager = transactionManager;
     }
 
-    public List<Feedback> getFeedbacks() {
-        Function<Connection, List<Feedback>> function = connection -> {
+    public List<String> getFeedbacks() {
+        Function<Connection, List<String>> function = connection -> {
             try {
                 return feedbackDAO.getFeedbacks(connection);
             } catch (SQLException e) {

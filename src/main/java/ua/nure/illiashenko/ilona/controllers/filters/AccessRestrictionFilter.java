@@ -54,6 +54,9 @@ public class AccessRestrictionFilter implements Filter {
                 System.out.println(requestURI);
                 String user = request.getHeader("Authorization");
                 response.setHeader("Authorization", user);
+                System.out.println("57: "+user);
+                System.out.println(base64Util.decodeString(user));
+                System.out.println(new JSONObject(base64Util.decodeString(user)).get("role"));
                 if (user == null) {
                     response.setStatus(401);
                     return false;

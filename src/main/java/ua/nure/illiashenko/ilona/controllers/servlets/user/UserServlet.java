@@ -1,13 +1,12 @@
 package ua.nure.illiashenko.ilona.controllers.servlets.user;
 
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ua.nure.illiashenko.ilona.controllers.ResponseWriter;
 import ua.nure.illiashenko.ilona.controllers.dto.UserData;
 import ua.nure.illiashenko.ilona.dao.entities.User;
 import ua.nure.illiashenko.ilona.services.DataValidator;
 import ua.nure.illiashenko.ilona.services.UserService;
+import ua.nure.illiashenko.ilona.utils.Base64Util;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,11 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.BASE_64_UTIL;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.USER_SERVICE;
@@ -31,12 +30,14 @@ public class UserServlet extends HttpServlet {
     private UserService userService;
     private DataValidator dataValidator;
     private ResponseWriter responseWriter;
+    private Base64Util base64Util;
 
     @Override
     public void init() {
         userService = (UserService) getServletContext().getAttribute(USER_SERVICE);
         responseWriter = (ResponseWriter) getServletContext().getAttribute(RESPONSE_WRITER);
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
+        base64Util = (Base64Util) getServletContext().getAttribute(BASE_64_UTIL);
     }
 
     @Override
@@ -51,15 +52,18 @@ public class UserServlet extends HttpServlet {
     }
 
     @Override
-    public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         UserData userData = new UserData(request);
+        System.out.println(userData);
         List<String> validationErrors = dataValidator.validate(userData);
+        System.out.println(validationErrors);
         if (!validationErrors.isEmpty()) {
             responseWriter.writeValidationErrors(response, validationErrors);
             return;
         }
-        User user = new User();
-        user.setLogin(userData.getLogin());
+        boolean isCurrentUser = userData.getLogin().equals(new JSONObject(base64Util.decodeString(request.getHeader("Authorization"))).get("login"));
+        User user = userService.getUser(userData.getLogin()).get();
+        System.out.println("66: "+user);
         user.setFirstName(userData.getFirstName());
         user.setLastName(userData.getLastName());
         user.setEmail(userData.getEmail());
@@ -74,13 +78,11 @@ public class UserServlet extends HttpServlet {
         }
         user.setStatus(userData.getStatus());
         userService.updateUser(user.getLogin(), user);
-
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("user", user);
-        PrintWriter writer = response.getWriter();
-        writer.write(jsonObject.toString());
-        writer.print(jsonObject);
-
+        if (isCurrentUser) {
+            response.setHeader("Authorization", base64Util.encodeString(user.toString()));
+            return;
+        }
+        responseWriter.writeUser(response, user);
     }
 
     @Override

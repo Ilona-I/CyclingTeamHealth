@@ -14,13 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.BASE_64_UTIL;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.CHAT_SERVICE;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.USER_SERVICE;
-import static ua.nure.illiashenko.ilona.constants.UserConstants.LOGIN;
 
 @WebServlet("/chats")
 public class GetChatsServlet extends HttpServlet {
@@ -40,13 +39,12 @@ public class GetChatsServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //String login = Objects.requireNonNull(request.getParameter(LOGIN));
         String login = new JSONObject(base64Util.decodeString(request.getHeader("Authorization"))).get("login").toString();
         if (!userService.isUserWithSuchLoginExists(login)) {
             response.setStatus(404);
             return;
         }
-        List<UserChat> chats = chatService.getUserChats(login);
+        Map<Integer, String> chats = chatService.getUserChats(login);
         responseWriter.writeUserChats(response, chats);
     }
 }

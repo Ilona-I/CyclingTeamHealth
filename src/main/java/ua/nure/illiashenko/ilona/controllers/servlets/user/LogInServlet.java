@@ -66,9 +66,9 @@ public class LogInServlet extends HttpServlet {
                 logger.error(e.getMessage());
             }
             response.setHeader("Authorization", base64Util.encodeString(user.toString()));
-            responseWriter.writeUser(response, user);
             return;
         }
+        validationErrors.add("wrongLogin");
         responseWriter.writeValidationErrors(response, validationErrors);
     }
 }

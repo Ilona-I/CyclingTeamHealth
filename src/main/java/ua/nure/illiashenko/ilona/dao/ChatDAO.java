@@ -30,6 +30,7 @@ public class ChatDAO implements DAO<Chat, Integer> {
     public Chat insert(Chat chat, Connection connection) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CHAT, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, chat.getType());
+            preparedStatement.setString(2, chat.getName());
             preparedStatement.executeUpdate();
             ResultSet keys = preparedStatement.getGeneratedKeys();
             keys.next();
@@ -50,6 +51,7 @@ public class ChatDAO implements DAO<Chat, Integer> {
                 Chat chat = new Chat();
                 chat.setId(resultSet.getInt(1));
                 chat.setType(resultSet.getString(2));
+                chat.setName(resultSet.getString(3));
                 return Optional.of(chat);
             }
         } catch (SQLException e) {

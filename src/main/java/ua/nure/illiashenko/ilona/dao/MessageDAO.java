@@ -84,13 +84,13 @@ public class MessageDAO implements DAO <Message, Integer> {
         }
     }
 
-    public List<Message> getChatMessages(int chatId, Connection connection) throws SQLException {
-        List<Message> messages = new ArrayList<>();
+    public List<String> getChatMessages(int chatId, Connection connection) throws SQLException {
+        List<String> messages = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_MESSAGES_BY_CHAT_ID)) {
             preparedStatement.setInt(1, chatId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                messages.add(getMessage(resultSet));
+                messages.add(getMessage(resultSet).toString());
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());

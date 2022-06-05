@@ -93,8 +93,8 @@ public class FeedbackDAO implements DAO<Feedback, Integer> {
         }
     }
 
-    public List<Feedback> getFeedbacks(Connection connection) throws SQLException {
-        List<Feedback> feedbacks = new ArrayList<>();
+    public List<String> getFeedbacks(Connection connection) throws SQLException {
+        List<String> feedbacks = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_FEEDBACKS)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -105,7 +105,7 @@ public class FeedbackDAO implements DAO<Feedback, Integer> {
                 feedback.setRating(resultSet.getInt(4));
                 feedback.setText(resultSet.getString(5));
                 feedback.setStatus(resultSet.getString(6));
-                feedbacks.add(feedback);
+                feedbacks.add(feedback.toString());
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());

@@ -6,6 +6,7 @@ public class Chat implements Serializable {
 
     private int id;
     private String type;
+    private String name;
 
     public int getId() {
         return id;
@@ -21,5 +22,13 @@ public class Chat implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

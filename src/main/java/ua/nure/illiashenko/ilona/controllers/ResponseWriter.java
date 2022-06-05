@@ -1,13 +1,11 @@
 package ua.nure.illiashenko.ilona.controllers;
 
 import org.json.JSONObject;
+import ua.nure.illiashenko.ilona.dao.entities.Chat;
 import ua.nure.illiashenko.ilona.dao.entities.Feedback;
-import ua.nure.illiashenko.ilona.dao.entities.Message;
-import ua.nure.illiashenko.ilona.dao.entities.Team;
 import ua.nure.illiashenko.ilona.dao.entities.TrainingGoals;
 import ua.nure.illiashenko.ilona.dao.entities.TrainingResults;
 import ua.nure.illiashenko.ilona.dao.entities.User;
-import ua.nure.illiashenko.ilona.dao.entities.UserChat;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,29 +16,35 @@ import java.util.Map;
 public class ResponseWriter {
 
     public void writeUser(HttpServletResponse response, User user) throws IOException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("user", new JSONObject(user));
+        response.setStatus(200);
+        JSONObject jsonObject = new JSONObject(user);
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
     }
 
-    public void writeUserList(HttpServletResponse response, List<User> users) throws IOException {
+    public void writeUserList(HttpServletResponse response, List<String> users) throws IOException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("teamMembers", users);
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
     }
 
-    public void writeUserChats(HttpServletResponse response, List<UserChat> chats) throws IOException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("chats", chats);
+    public void writeUserChats(HttpServletResponse response, Map<Integer, String> chats) throws IOException {
+        JSONObject jsonObject = new JSONObject(chats);
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
     }
 
-    public void writeMessages(HttpServletResponse response, List<Message> messages) throws IOException {
+    public void writeMessages(HttpServletResponse response, List<String> messages) throws IOException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("messages", messages);
+        PrintWriter writer = response.getWriter();
+        writer.write(jsonObject.toString());
+    }
+
+    public void writeChat(HttpServletResponse response, Chat chat) throws IOException {
+        response.setStatus(200);
+        JSONObject jsonObject = new JSONObject(chat);
         PrintWriter writer = response.getWriter();
         writer.write(jsonObject.toString());
     }
@@ -59,7 +63,7 @@ public class ResponseWriter {
         writer.write(jsonObject.toString());
     }
 
-    public void writeFeedbacks(HttpServletResponse response, List<Feedback> feedbacks) throws IOException {
+    public void writeFeedbacks(HttpServletResponse response, List<String> feedbacks) throws IOException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("feedbacks", feedbacks);
         PrintWriter writer = response.getWriter();
@@ -97,6 +101,7 @@ public class ResponseWriter {
 
     public void writeValidationErrors(HttpServletResponse response, List<String> validationErrors) throws IOException {
         response.setStatus(400);
+        response.setContentType("application/json");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("validationErrors", validationErrors);
         PrintWriter writer = response.getWriter();

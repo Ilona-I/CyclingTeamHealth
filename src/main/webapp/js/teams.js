@@ -15,7 +15,6 @@ function getTeams() {
     xmlHttp.open("GET", url, true);
     xmlHttp.onreadystatechange = handleStateChange;
     xmlHttp.setRequestHeader("Content-Type", "application/json");
-    console.log("18");
     xmlHttp.send(null);
 }
 

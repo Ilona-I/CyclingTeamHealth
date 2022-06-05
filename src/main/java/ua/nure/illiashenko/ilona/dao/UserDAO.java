@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.DELETE_USER;
+import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_ALL_USERS;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_TEAM_MEMBERS;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_USER_BY_LOGIN;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.INSERT_USER;
@@ -53,7 +54,7 @@ public class UserDAO implements DAO<User, String> {
     public boolean update(String login, User user, Connection connection) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER)) {
             setUserData(user, preparedStatement);
-            preparedStatement.setString(11, login);
+            preparedStatement.setString(13, login);
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -89,13 +90,13 @@ public class UserDAO implements DAO<User, String> {
         }
     }
 
-    public List<User> getTeamMembers(int teamId, Connection connection) throws SQLException {
-        List<User> teamMembers = new ArrayList<>();
+    public List<String> getTeamMembers(int teamId, Connection connection) throws SQLException {
+        List<String> teamMembers = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_TEAM_MEMBERS)) {
             preparedStatement.setInt(1, teamId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                teamMembers.add(getUser(resultSet));
+                teamMembers.add(getUser(resultSet).toString());
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
@@ -119,5 +120,19 @@ public class UserDAO implements DAO<User, String> {
         user.setGender(resultSet.getString(11));
         user.setStatus(resultSet.getString(12));
         return user;
+    }
+
+    public List<String> getUsers(Connection connection) throws SQLException {
+        List<String> teamMembers = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_USERS)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                teamMembers.add(getUser(resultSet).toString());
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new SQLException();
+        }
+        return teamMembers;
     }
 }

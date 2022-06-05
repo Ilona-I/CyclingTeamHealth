@@ -3,8 +3,7 @@ let xmlHttp;
 function createXMLHttpRequest() {
     if (window.ActiveXObject) {
         xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    else if (window.XMLHttpRequest) {
+    } else if (window.XMLHttpRequest) {
         xmlHttp = new XMLHttpRequest();
     }
 }
@@ -12,16 +11,27 @@ function createXMLHttpRequest() {
 function getChats() {
     const url = "http://localhost:8080/CyclingTeamHealth_war/chats";
     createXMLHttpRequest();
-    xmlHttp.open("GET", url, true);
+    let user = '{"login":"' + localStorage.getItem("login") +
+        '", "firstName":"' + localStorage.getItem("firstName") +
+        '", "lastName":"' + localStorage.getItem("lastName") +
+        '", "email":"' + localStorage.getItem("email") +
+        '", "birthDate":"' + localStorage.getItem("birthDate") +
+        '", "height":"' + localStorage.getItem("height") +
+        '", "weight":"' + localStorage.getItem("weight") +
+        '", "role":"' + localStorage.getItem("role") +
+        '", "gender":"' + localStorage.getItem("gender") +
+        '", "status":"' + localStorage.getItem("status") +
+        '"}';
+    xmlHttp.open("GET", url, false);
     xmlHttp.onreadystatechange = handleStateChange;
     xmlHttp.setRequestHeader("Content-Type", "application/json");
-    console.log("18");
-    xmlHttp.send(null);
+    xmlHttp.setRequestHeader("Authorization", btoa(encodeURIComponent(user)));
+    xmlHttp.send();
 }
 
 function handleStateChange() {
-    if(xmlHttp.readyState == 4) {
-        if(xmlHttp.status == 200) {
+    if (xmlHttp.readyState == 4) {
+        if (xmlHttp.status == 200) {
             jsonToHTML(xmlHttp.responseText);
         } else {
             document.location = "error.jsp";
@@ -32,14 +42,23 @@ function handleStateChange() {
 function jsonToHTML(jsonString) {
     let jsonObject = JSON.parse(jsonString);
     let dataMap = new Map(Object.entries(jsonObject));
-    let teams = document.getElementById("teams");
+    let chats = document.getElementById("chats");
     let innerHTML = "";
     for (const key of dataMap.keys()) {
-        innerHTML += '<div>' + '<h6>' + key + '</h6>' + '<p>' + dataMap.get(key) + '</p>' + '</div><hr/>'
+        innerHTML += '<div>' +
+            '<p>' + dataMap.get(key) + '</p>' +
+            '<button onclick=\'openChat("' + key + '", "' + dataMap.get(key) + '")\'>Open</button>' +
+            '</div><hr/>';
     }
-    teams.innerHTML = innerHTML;
+    chats.innerHTML = innerHTML;
 }
 
 document.addEventListener("DOMContentLoaded", function(){
-    getTeams();
+    getChats();
 });
+
+function openChat(id, name) {
+    localStorage.setItem("chatId", id);
+    localStorage.setItem("chatName", name);
+    document.location = "http://localhost:8080/CyclingTeamHealth_war/chat.jsp";
+}

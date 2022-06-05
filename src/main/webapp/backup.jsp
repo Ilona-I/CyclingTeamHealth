@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: ill76
+  Date: 05.06.2022
+  Time: 22:18
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -22,16 +29,9 @@
         <a href="http://localhost:8080/CyclingTeamHealth_war/backup.jsp">Backup</a>
     </div>
 </div>
-
-    <h2>Profile</h2>
-    <form>
-        <div id="profile">
-
-        </div>
-        <button type="submit" onclick="saveProfile()">Save changes</button>
-    </form>
-
-<script src="js/profile.js"></script>
-<script src="js/menu.js"></script>
+        <button onclick="backUp()">Back up database</button>
+        <button onclick="restore()">Restore database</button>
+        <script src="js/backup.js"></script>
+        <script src="js/menu.js"></script>
 </body>
 </html>

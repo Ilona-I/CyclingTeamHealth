@@ -82,10 +82,10 @@ public class TeamService {
         return doInTransaction(function);
     }
 
-    public List<User> getTeamMembers(int teamId) {
-        Function<Connection, List<User>> function = connection -> {
+    public List<String> getTeamMembers(int teamId) {
+        Function<Connection, List<String>> function = connection -> {
             try {
-                return userDAO.getTeamMembers(teamId, connection);
+                return teamId!=0?userDAO.getTeamMembers(teamId, connection):userDAO.getUsers(connection);
             } catch (SQLException e) {
                 throw new CannotFindTeamMembersException(e.getMessage());
             }

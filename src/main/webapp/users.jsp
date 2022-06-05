@@ -8,14 +8,29 @@
     <title>Users</title>
 </head>
 <body>
-    <a href="/index.jsp">Home</a>
-    <a href="/feedbacks">Feedbacks</a>
+<div>
+    <a href="http://localhost:8080/CyclingTeamHealth_war/index.jsp">Home</a>
+    <a href="http://localhost:8080/CyclingTeamHealth_war/feedbacks.jsp">Feedbacks</a>
+    <a href="http://localhost:8080/CyclingTeamHealth_war/teams.jsp">Teams</a>
+    <div id="userPresent">
+        <a href="http://localhost:8080/CyclingTeamHealth_war/profile.jsp">My profile</a>
+        <a href="http://localhost:8080/CyclingTeamHealth_war/users.jsp">Team members</a>
+        <a href="http://localhost:8080/CyclingTeamHealth_war/chats.jsp">Chats</a>
+        <button onclick="logOut()">Log out</button>
+    </div>
+    <div id="noUser">
+        <a href="http://localhost:8080/CyclingTeamHealth_war/logIn.jsp">Log in</a>
+        <a href="http://localhost:8080/CyclingTeamHealth_war/signUp.jsp">Sign up</a>
+    </div>
+    <div id="admin">
+        <a href="http://localhost:8080/CyclingTeamHealth_war/backup.jsp">Backup</a>
+    </div>
+</div>
 
-    <a href="/user">My profile</a>
-    <a href="/team/users">Team members</a>
-    <a href="/chats">Chats</a>
-    <a href="/logIn.jsp">Log in</a>
-    <a href="/signUp">Sign up</a>
-    <a href="/logIn.jsp">Log out</a>
+<div id="users">
+
+</div>
+<script src="js/users.js"></script>
+<script src="js/menu.js"></script>
 </body>
 </html>

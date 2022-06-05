@@ -13,14 +13,14 @@ public class SQLQuery {
     public static final String GET_TEAM = "SELECT * FROM cycling_team_health.team WHERE `id` = ?;";
     public static final String GET_TEAM_MEMBERS = "SELECT * FROM `user` WHERE `team_id` = ?;";
 
-    public static final String INSERT_CHAT = "INSERT INTO `cycling_team_health`.`chat` (`type`) VALUES (?);";
+    public static final String INSERT_CHAT = "INSERT INTO `cycling_team_health`.`chat` (`type`, `name`) VALUES (?, ?);";
     public static final String GET_CHAT = "SELECT * FROM `cycling_team_health`.`chat` WHERE `id` = ?;";
     public static final String DELETE_CHAT = "DELETE FROM `cycling_team_health`.`chat` WHERE (`id` = ?);";
     public static final String GET_USERS_CHAT_ID = "SELECT `chat_id` FROM `user_chat` WHERE `login` = ? AND `chat_id` in (SELECT `chat_id` FROM `user_chat` WHERE `login` = ?);";
 
     public static final String INSERT_USER_CHAT = "INSERT INTO `cycling_team_health`.`user_chat` (`chat_id`, `login`) VALUES (?, ?);";
     public static final String DELETE_USER_CHAT = "DELETE FROM `cycling_team_health`.`user_chat` WHERE (`id` = ?);";
-    public static final String GET_USER_CHATS = "SELECT * FROM cycling_team_health.user_chat WHERE `login` = ?;";
+    public static final String GET_USER_CHATS = "SELECT id, name FROM cycling_team_health.chat WHERE id in (SELECT chat_id FROM user_chat where `login` = ?);";
 
     public static final String INSERT_MESSAGE = "INSERT INTO `cycling_team_health`.`message` (`chat_id`, `sender`, `text`, `datetime`) VALUES (?, ?, ?, ?);";
     public static final String GET_MESSAGE = "SELECT * FROM `cycling_team_health`.`message` WHERE `id` = ?;";
@@ -50,6 +50,7 @@ public class SQLQuery {
             "where training_id in (SELECT id from training_goals where training_goals.team_id=team.id) and login in (select login from user where role = 'cyclist'))*" +
             "(SELECT sum(UNIX_TIMESTAMP(end_datetime)-UNIX_TIMESTAMP(start_datetime)) from training_goals where training_goals.team_id=team.id) as rating " +
             "from team group by id;";
+    public static final String GET_ALL_USERS = "SELECT * FROM `user`;";
 
     private SQLQuery() {
     }

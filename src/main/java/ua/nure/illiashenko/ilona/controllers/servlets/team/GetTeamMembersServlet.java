@@ -39,7 +39,7 @@ public class GetTeamMembersServlet extends HttpServlet {
             response.setStatus(400);
             return;
         }
-        List<User> users = teamService.getTeamMembers(Integer.parseInt(teamId));
+        List<String> users = teamService.getTeamMembers(Integer.parseInt(teamId));
         responseWriter.writeUserList(response, users);
     }
 }
