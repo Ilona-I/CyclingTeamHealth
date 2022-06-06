@@ -1,23 +1,3 @@
-document.addEventListener("DOMContentLoaded", function() {
-    let profileHTML =
-        '<h6>Login:</h6>' + '<p>'+ localStorage.getItem("login")+'</p>' +
-        '<h6>First name:</h6>' + '<input id="firstName" type="text" value="' + localStorage.getItem("firstName") + '"/>' +
-        '<p id="wrongFirstName"></p>' +
-        '<h6>Last name:</h6>' + '<input id="lastName" type="text" value="' + localStorage.getItem("lastName") + '"/>' +
-        '<p id="wrongLastName"></p>' +
-        '<h6>E-mail:</h6>' + '<input id="email" type="text" value="' + localStorage.getItem("email") + '"/>' +
-        '<p id="wrongEmail"></p>' +
-        '<h6>Birth date:</h6>' + '<input id="birthDate" type="date" value="' + localStorage.getItem("birthDate") + '"/>' +
-        '<p id="wrongBirthDate"></p>' +
-        '<h6>Height:</h6>' + '<input id="height" type="number" min="0" value="' + localStorage.getItem("height") + '"/>' +
-        '<p id="wrongHeight"></p>' +
-        '<h6>Weight:</h6>' + '<input id="weight" type="number" min="0" value="' + localStorage.getItem("weight") + '"/>' +
-        '<p id="wrongWeight"></p>' +
-        '<h6>Gender:</h6>' + '<p>' + localStorage.getItem("gender") + '</p>' +
-        '<h6>Role:</h6>' + '<p>' + localStorage.getItem("role") + '</p>';
-    document.getElementById("profile").innerHTML = profileHTML;
-});
-
 let xmlHttp;
 
 function createXMLHttpRequest() {
@@ -29,41 +9,52 @@ function createXMLHttpRequest() {
     }
 }
 
-function saveProfile() {
-    const url = "http://localhost:8080/CyclingTeamHealth_war/user";
+function signUp() {
+    const url = "http://localhost:8080/CyclingTeamHealth_war/signUp";
     createXMLHttpRequest();
     xmlHttp.open("POST", url, false);
     xmlHttp.onreadystatechange = handleStateChange;
     xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    let user = '{"login":"' + localStorage.getItem("login") +
-        '", "firstName":"' + localStorage.getItem("firstName") +
-        '", "lastName":"' + localStorage.getItem("lastName") +
-        '", "email":"' + localStorage.getItem("email") +
-        '", "birthDate":"' + localStorage.getItem("birthDate") +
-        '", "height":"' + localStorage.getItem("height") +
-        '", "weight":"' + localStorage.getItem("weight") +
-        '", "role":"' + localStorage.getItem("role") +
-        '", "gender":"' + localStorage.getItem("gender") +
-        '", "status":"' + localStorage.getItem("status") +
-        '"}';
-    xmlHttp.setRequestHeader("Authorization", btoa(encodeURIComponent(user)));
+    let login = document.getElementById("login").value;
+    let password = document.getElementById("password").value;
+    let repeatedPassword = document.getElementById("repeatedPassword").value;
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
     let email = document.getElementById("email").value;
     let birthDate = document.getElementById("birthDate").value;
     let height = document.getElementById("height").value;
     let weight = document.getElementById("weight").value;
-    let params = 'login=' + localStorage.getItem("login") +
+    let role = radio("role");
+    let gender = radio("gender");
+    let teamType = radio("teamType");
+    let teamId = document.getElementById("teamId").value;
+    let teamName = document.getElementById("teamName").value;
+    let params = 'login=' + login +
+        '&password=' + password +
+        '&repeatedPassword=' + repeatedPassword +
         '&firstName=' + firstName +
         '&lastName=' + lastName +
         '&email=' + email +
+        '&teamType=' + teamType +
         '&birthDate=' + birthDate +
         '&height=' + height +
         '&weight=' + weight +
-        '&role=' + localStorage.getItem("role") +
-        '&gender=' + localStorage.getItem("gender") +
-        '&status=' + localStorage.getItem("status");
+        '&teamId=' + teamId +
+        '&teamName=' + teamName +
+        '&role=' + role +
+        '&gender=' + gender;
     xmlHttp.send(params);
+}
+
+function radio(radioName) {
+    const radioButtons = document.querySelectorAll('input[name='+radioName+']');
+    for (const radioButton of radioButtons) {
+        if (radioButton.checked) {
+            window.alert(radioButton.value);
+            return radioButton.value;
+            break;
+        }
+    }
 }
 
 function handleStateChange() {
@@ -94,6 +85,9 @@ function jsonToHTML(jsonString) {
     let wrongHeight = document.getElementById("wrongHeight").value;
     let wrongWeight = document.getElementById("wrongWeight").value;
     let list = dataMap.get("validationErrors");
+    if (list.some(e => e == "wrongLogin")) {
+        wrongFirstName.innerText = "Wrong login";
+    }
     if (list.some(e => e == "wrongFirstName")) {
         wrongFirstName.innerText = "Wrong First Name";
     }
@@ -127,4 +121,30 @@ function b64DecodeUnicode(str) {
     return decodeURIComponent(atob(str).split('').map(function (c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
+}
+
+function createTeam(){
+    document.getElementById("enterTeamId").setAttribute("hidden", "");
+    document.getElementById("createTeam").removeAttribute("hidden");
+}
+
+function enterTeamId(){
+    document.getElementById("createTeam").setAttribute("hidden", "");
+    document.getElementById("enterTeamId").removeAttribute("hidden");
+}
+
+function openCyclistRole(){
+    closeNewTeam();
+    document.getElementById("cyclistRole").removeAttribute("hidden");
+}
+
+function openNewTeam(){
+    document.getElementById("newTeam").removeAttribute("disabled");
+}
+
+function closeNewTeam(){
+    enterTeamId();
+    document.getElementById("newTeam").removeAttribute("checked");
+    document.getElementById("enterTeam").setAttribute("checked", "");
+    document.getElementById("newTeam").setAttribute("disabled", "");
 }

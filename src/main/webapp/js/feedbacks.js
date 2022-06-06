@@ -39,6 +39,7 @@ function jsonToHTML(jsonString) {
         let feedbackObject = JSON.parse(element);
         let feedbackMap = new Map(Object.entries(feedbackObject));
         innerHTML += '<div><h6>' + feedbackMap.get("login") + '   |   ' + feedbackMap.get("dateTime") + '</h6>' +
+            '<p>' + feedbackMap.get("rating") + '</p>' +
             '<p>' + feedbackMap.get("text") + '</p>';
         if (role != null && role == 'admin') {
             innerHTML += '<div>' +

@@ -42,6 +42,7 @@ public class AccessRestrictionFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
         if (isAccessAllowed(httpServletRequest, httpServletResponse)) {
+            System.out.println(45);
             filterChain.doFilter(servletRequest, servletResponse);
         }
     }

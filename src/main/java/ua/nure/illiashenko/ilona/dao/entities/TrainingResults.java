@@ -49,4 +49,15 @@ public class TrainingResults  implements Serializable {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"id\":\"" + id +
+                "\", \"trainingId\":\"" + trainingId +
+                "\", \"login\":\"" + login +
+                "\", \"pulse\":\"" + pulse +
+                "\", \"speed\":\"" + speed +
+                "\"}";
+    }
 }

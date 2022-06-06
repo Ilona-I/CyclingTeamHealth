@@ -2,9 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Users</title>
 </head>
 <body>
@@ -16,6 +13,7 @@
         <a href="http://localhost:8080/CyclingTeamHealth_war/profile.jsp">My profile</a>
         <a href="http://localhost:8080/CyclingTeamHealth_war/users.jsp">Team members</a>
         <a href="http://localhost:8080/CyclingTeamHealth_war/chats.jsp">Chats</a>
+        <p id="userLogin"></p>
         <button onclick="logOut()">Log out</button>
     </div>
     <div id="noUser">
@@ -24,6 +22,9 @@
     </div>
     <div id="admin">
         <a href="http://localhost:8080/CyclingTeamHealth_war/backup.jsp">Backup</a>
+    </div>
+    <div id="teamMember">
+        <a href="http://localhost:8080/CyclingTeamHealth_war/trainings.jsp">Trainings</a>
     </div>
 </div>
 

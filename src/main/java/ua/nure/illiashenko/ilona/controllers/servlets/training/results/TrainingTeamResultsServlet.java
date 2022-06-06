@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -45,6 +46,10 @@ public class TrainingTeamResultsServlet extends HttpServlet {
             return;
         }
         List<TrainingResults> trainingResults = trainingService.getTeamTrainingResults(id);
-        responseWriter.writeTrainingResults(response, trainingResults);
+        List<String> trainingResultsAsString = new ArrayList<>();
+        for (TrainingResults tr: trainingResults){
+            trainingResultsAsString.add(tr.toString());
+        }
+        responseWriter.writeTrainingResults(response, trainingResultsAsString);
     }
 }

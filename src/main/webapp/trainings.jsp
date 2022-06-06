@@ -1,8 +1,14 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: ill76
+  Date: 05.06.2022
+  Time: 22:48
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
-
 </head>
 <body>
 <div>
@@ -27,11 +33,12 @@
         <a href="http://localhost:8080/CyclingTeamHealth_war/trainings.jsp">Trainings</a>
     </div>
 </div>
+<button onclick="openTeamTrainingsResults()">Get all team trainings results</button>
+<div id="trainings">
 
-    <h1>Chats</h1>
-    <div id="chats">
-    </div>
-    <script src="js/chats.js"></script>
+</div>
+
+<script src="js/trainings.js"></script>
 <script src="js/menu.js"></script>
 </body>
 </html>

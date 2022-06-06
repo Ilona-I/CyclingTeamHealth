@@ -59,4 +59,16 @@ public class TrainingGoals implements Serializable {
     public void setEndDateTime(Timestamp endDateTime) {
         this.endDateTime = endDateTime;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"id\":\"" + id +
+                "\", \"teamId\":\"" + teamId +
+                "\", \"pulse\":\"" + pulse +
+                "\", \"speed\":\"" + speed +
+                "\", \"startDateTime\":\"" + startDateTime +
+                "\", \"endDateTime\":\"" + endDateTime +
+                "\"}";
+    }
 }

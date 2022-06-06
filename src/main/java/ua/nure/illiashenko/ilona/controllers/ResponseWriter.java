@@ -2,7 +2,6 @@ package ua.nure.illiashenko.ilona.controllers;
 
 import org.json.JSONObject;
 import ua.nure.illiashenko.ilona.dao.entities.Chat;
-import ua.nure.illiashenko.ilona.dao.entities.Feedback;
 import ua.nure.illiashenko.ilona.dao.entities.TrainingGoals;
 import ua.nure.illiashenko.ilona.dao.entities.TrainingResults;
 import ua.nure.illiashenko.ilona.dao.entities.User;
@@ -49,7 +48,7 @@ public class ResponseWriter {
         writer.write(jsonObject.toString());
     }
 
-    public void writeTrainingResults(HttpServletResponse response, List<TrainingResults> trainingResults) throws IOException {
+    public void writeTrainingResults(HttpServletResponse response, List<String> trainingResults) throws IOException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("results", trainingResults);
         PrintWriter writer = response.getWriter();
@@ -78,7 +77,7 @@ public class ResponseWriter {
         writer.write(jsonObject.toString());
     }
 
-    public void writeAllTeamTrainingGoals(HttpServletResponse response, List<TrainingGoals> trainingGoals) throws IOException {
+    public void writeAllTeamTrainingGoals(HttpServletResponse response, List<String> trainingGoals) throws IOException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("trainingGoals", trainingGoals);
         PrintWriter writer = response.getWriter();
@@ -101,7 +100,6 @@ public class ResponseWriter {
 
     public void writeValidationErrors(HttpServletResponse response, List<String> validationErrors) throws IOException {
         response.setStatus(400);
-        response.setContentType("application/json");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("validationErrors", validationErrors);
         PrintWriter writer = response.getWriter();

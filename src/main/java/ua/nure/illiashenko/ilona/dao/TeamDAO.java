@@ -1,6 +1,5 @@
 package ua.nure.illiashenko.ilona.dao;
 
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.nure.illiashenko.ilona.dao.entities.Team;
@@ -10,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -83,7 +82,7 @@ public class TeamDAO implements DAO<Team, Integer> {
     }
 
     public Map<String, Integer> getTeamsRatings(Connection connection) throws SQLException {
-        Map<String, Integer> teamsRatings = new HashMap<>();
+        Map<String, Integer> teamsRatings = new LinkedHashMap<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_TEAMS_RATINGS)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -79,7 +80,11 @@ public class TrainingGoalsServlet extends HttpServlet {
         }
         if (trainingIdParameter == null) {
             List<TrainingGoals> trainingGoalsList = trainingService.getAllTeamTrainings(teamId);
-            responseWriter.writeAllTeamTrainingGoals(response, trainingGoalsList);
+            List<String> trainingGoalsAsString = new ArrayList<>();
+            for(TrainingGoals trainingGoals: trainingGoalsList){
+                trainingGoalsAsString.add(trainingGoals.toString());
+            }
+            responseWriter.writeAllTeamTrainingGoals(response, trainingGoalsAsString);
             return;
         }
         if (!dataValidator.isNumber(trainingIdParameter)) {

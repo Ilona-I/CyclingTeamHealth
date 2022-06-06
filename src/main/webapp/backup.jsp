@@ -19,6 +19,7 @@
         <a href="http://localhost:8080/CyclingTeamHealth_war/profile.jsp">My profile</a>
         <a href="http://localhost:8080/CyclingTeamHealth_war/users.jsp">Team members</a>
         <a href="http://localhost:8080/CyclingTeamHealth_war/chats.jsp">Chats</a>
+        <p id="userLogin"></p>
         <button onclick="logOut()">Log out</button>
     </div>
     <div id="noUser">
@@ -27,6 +28,9 @@
     </div>
     <div id="admin">
         <a href="http://localhost:8080/CyclingTeamHealth_war/backup.jsp">Backup</a>
+    </div>
+    <div id="teamMember">
+        <a href="http://localhost:8080/CyclingTeamHealth_war/trainings.jsp">Trainings</a>
     </div>
 </div>
         <button onclick="backUp()">Back up database</button>

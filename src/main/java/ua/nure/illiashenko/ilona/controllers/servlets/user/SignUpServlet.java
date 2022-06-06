@@ -9,6 +9,7 @@ import ua.nure.illiashenko.ilona.dao.entities.User;
 import ua.nure.illiashenko.ilona.services.DataValidator;
 import ua.nure.illiashenko.ilona.services.TeamService;
 import ua.nure.illiashenko.ilona.services.UserService;
+import ua.nure.illiashenko.ilona.utils.Base64Util;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +21,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.List;
 
+import static ua.nure.illiashenko.ilona.constants.ContextConstants.BASE_64_UTIL;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.DATA_VALIDATOR;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.RESPONSE_WRITER;
 import static ua.nure.illiashenko.ilona.constants.ContextConstants.TEAM_SERVICE;
@@ -36,6 +38,7 @@ public class SignUpServlet extends HttpServlet {
     private TeamService teamService;
     private ResponseWriter responseWriter;
     private DataValidator dataValidator;
+    private Base64Util base64Util;
 
     @Override
     public void init() {
@@ -43,12 +46,16 @@ public class SignUpServlet extends HttpServlet {
         teamService = (TeamService) getServletContext().getAttribute(TEAM_SERVICE);
         responseWriter = (ResponseWriter) getServletContext().getAttribute(RESPONSE_WRITER);
         dataValidator = (DataValidator) getServletContext().getAttribute(DATA_VALIDATOR);
+        base64Util = (Base64Util) getServletContext().getAttribute(BASE_64_UTIL);
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println(54);
         RegistrationData registrationData = new RegistrationData(request);
+        System.out.println("55: "+registrationData);
         List<String> validationErrors = dataValidator.validate(registrationData);
+        System.out.println("57: "+validationErrors);
         if (userService.isUserWithSuchLoginExists(registrationData.getLogin())) {
             validationErrors.add("userWithSuchLoginExists");
         }
@@ -86,12 +93,15 @@ public class SignUpServlet extends HttpServlet {
         if (!registrationData.getWeight().isEmpty()) {
             user.setWeight(Double.parseDouble(registrationData.getWeight()));
         }
+        if (!registrationData.getGender().isEmpty()) {
+            user.setGender(registrationData.getGender());
+        }
         user.setStatus(ACTIVE);
         try {
             userService.addUser(user);
         } catch (NoSuchAlgorithmException e) {
             logger.error(e.getMessage());
         }
-        responseWriter.writeUser(response, user);
+        response.setHeader("Authorization", base64Util.encodeString(user.toString()));
     }
 }

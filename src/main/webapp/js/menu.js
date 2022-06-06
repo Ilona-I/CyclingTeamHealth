@@ -1,11 +1,15 @@
 document.addEventListener("DOMContentLoaded", function() {
     if (localStorage.getItem("login") == null) {
-        document.getElementById("userPresent").setAttribute("hidden", "");
+        document.getElementById("userPresent").innerText='';
     } else {
-        document.getElementById("noUser").setAttribute("hidden", "")
+        document.getElementById("userLogin").innerText=localStorage.getItem("login")+'  |  '+localStorage.getItem("role");
+        document.getElementById("noUser").innerText='';
     }
-    if (localStorage.getItem("login") == null || localStorage.getItem("role") !== "admin") {
-        document.getElementById("admin").setAttribute("hidden", "");
+    if (localStorage.getItem("login") == null || localStorage.getItem("role") != "admin") {
+        document.getElementById("admin").innerText='';
+    }
+    if (localStorage.getItem("login") == null || localStorage.getItem("role") ==="admin") {
+        document.getElementById("teamMember").innerText='';
     }
 });
 
