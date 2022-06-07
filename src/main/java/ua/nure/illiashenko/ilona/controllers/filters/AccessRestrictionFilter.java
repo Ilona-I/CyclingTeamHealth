@@ -42,7 +42,6 @@ public class AccessRestrictionFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
         if (isAccessAllowed(httpServletRequest, httpServletResponse)) {
-            System.out.println(45);
             filterChain.doFilter(servletRequest, servletResponse);
         }
     }
@@ -51,13 +50,8 @@ public class AccessRestrictionFilter implements Filter {
         String requestURI = request.getRequestURI();
         for (Constraint constraint : constraints) {
             if (constraint.getUrlPattern().matcher(requestURI).find()) {
-                System.out.println(constraint.getUrlPattern());
-                System.out.println(requestURI);
                 String user = request.getHeader("Authorization");
                 response.setHeader("Authorization", user);
-                System.out.println("57: "+user);
-                System.out.println(base64Util.decodeString(user));
-                System.out.println(new JSONObject(base64Util.decodeString(user)).get("role"));
                 if (user == null) {
                     response.setStatus(401);
                     return false;

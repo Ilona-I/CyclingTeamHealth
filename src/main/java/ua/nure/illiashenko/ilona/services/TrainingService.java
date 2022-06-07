@@ -89,13 +89,15 @@ public class TrainingService {
         return doInTransaction(function);
     }
 
-    public Map<TrainingGoals, List<TrainingResults>> getTeamTrainingsResults(int teamId) {
-        List<TrainingGoals> teamTrainings = getAllTeamTrainings(teamId);
-        Map<TrainingGoals, List<TrainingResults>> teamTrainingsResults = new HashMap<>();
-        for (TrainingGoals trainingGoals : teamTrainings) {
-            teamTrainingsResults.put(trainingGoals, getTeamTrainingResults(trainingGoals.getId()));
-        }
-        return teamTrainingsResults;
+    public List<TrainingResults> getTeamTrainingsResults(int teamId) {
+        Function<Connection, List<TrainingResults>> function = connection -> {
+            try {
+                return trainingResultsDAO.getTeamTrainingsResults(teamId, connection);
+            } catch (SQLException e) {
+                throw new CannotAddTrainingException(e.getMessage());
+            }
+        };
+        return doInTransaction(function);
     }
 
     public List<TrainingGoals> getAllTeamTrainings(int teamId) {

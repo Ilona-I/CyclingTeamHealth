@@ -11,10 +11,10 @@ function createXMLHttpRequest() {
 function getTrainingsResults() {
     let url;
     if (localStorage.getItem("trainingId") == null) {
-        url = "http://localhost:8080/CyclingTeamHealth_war/training/results?teamId=" + localStorage.getItem("teamId");
+        url = "http://localhost:8080/CyclingTeamHealth_war/trainings/team/results?teamId=" + localStorage.getItem("teamId");
         document.getElementById("title").innerText = 'All trainings results';
     } else {
-        url = "http://localhost:8080/CyclingTeamHealth_war/training//training/team/results?id=" + localStorage.getItem("trainingId");
+        url = "http://localhost:8080/CyclingTeamHealth_war/training/team/results?id=" + localStorage.getItem("trainingId");
         document.getElementById("title").innerText = 'Trainings results. Training id: '+ localStorage.getItem("trainingId");
     }
     createXMLHttpRequest();
@@ -51,17 +51,23 @@ function jsonToHTML(jsonString) {
     let dataMap = new Map(Object.entries(jsonObject));
     let trainingsResults = document.getElementById("trainingsResults");
     let list = dataMap.get("results");
-    let innerHTML = "";
+    let innerHTML = "<table><tr>" +
+        "<th>Training id</th>" +
+        "<th>Login</th>" +
+        "<th>Pulse</th>" +
+        "<th>Speed</th>" +
+        "</tr>";
     for (const element of list) {
         let trainingObject = JSON.parse(element);
-        let trainingResultsMap = new Map(Object.entries(trainingObject));
-        innerHTML += '<div>' +
-            '<p>Training id: ' + trainingResultsMap.get("trainingId") + '</p>' +
-            '<p>Login: ' + trainingResultsMap.get("login") + '</p>' +
-            '<p>Pulse: ' + trainingResultsMap.get("pulse") + '</p>' +
-            '<p>Speed: ' + trainingResultsMap.get("speed") + '</p>' +
-            '</div><hr/>';
+        let trainingMap = new Map(Object.entries(trainingObject));
+        innerHTML += '<tr>' +
+            '<th>' + trainingMap.get("trainingId") + '</th>' +
+            '<th>' + trainingMap.get("login") + '</th>' +
+            '<th>' + trainingMap.get("pulse") + '</th>' +
+            '<th>' + trainingMap.get("speed") + '</th>' +
+            '</tr>';
     }
+    innerHTML += "</table>";
     trainingsResults.innerHTML = innerHTML;
 }
 

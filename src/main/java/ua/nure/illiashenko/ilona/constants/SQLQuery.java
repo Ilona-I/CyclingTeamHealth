@@ -45,7 +45,8 @@ public class SQLQuery {
 
     public static final String GET_USER_TRAINING_RESULTS = "SELECT * FROM cycling_team_health.training_results WHERE `login` = ? AND `id` = ?;";
     public static final String GET_USER_TRAININGS_RESULTS = "SELECT * FROM cycling_team_health.training_results WHERE `login` = ?;";
-    public static final String GET_TEAM_TRAINING_RESULTS = "SELECT * FROM cycling_team_health.training_results WHERE `training_id` = (SELECT id FROM `cycling_team_health`.`training_goals` WHERE `team_id` = ?);";
+    public static final String GET_TEAM_TRAININGS_RESULTS = "SELECT * FROM cycling_team_health.training_results WHERE `training_id` in (SELECT id FROM `cycling_team_health`.`training_goals` WHERE `team_id` = ?);";
+    public static final String GET_TEAM_TRAINING_RESULTS = "SELECT * FROM cycling_team_health.training_results WHERE `training_id` = ?;";
     public static final String GET_TEAMS_RATINGS = "SELECT name, " +
             " ((SELECT sum(training_results.speed) from training_results" +
             " where training_id in" +

@@ -44,19 +44,26 @@ function jsonToHTML(jsonString) {
     let dataMap = new Map(Object.entries(jsonObject));
     let trainings = document.getElementById("trainings");
     let list = dataMap.get("trainingGoals");
-    let innerHTML = "";
+    let innerHTML = "<table><tr>" +
+        "<th>Training id</th>" +
+        "<th>Pulse</th>" +
+        "<th>Speed</th>" +
+        "<th>Start time</th>" +
+        "<th>End time</th>" +
+        "<th></th></tr>";
     for (const element of list) {
         let trainingObject = JSON.parse(element);
         let trainingMap = new Map(Object.entries(trainingObject));
-        innerHTML += '<div>' +
-            '<p>Training id: ' + trainingMap.get("id") + '</p>' +
-            '<p>Pulse: ' + trainingMap.get("pulse") + '</p>' +
-            '<p>Speed: ' + trainingMap.get("speed") + '</p>' +
-            '<p>Start time: ' + trainingMap.get("startDateTime") + '</p>' +
-            '<p>End time: ' + trainingMap.get("endDateTime") + '</p>' +
-            '<button onclick=\'openTeamTrainingResults("' + dataMap.get("id") + '")\'>Get team results</button>' +
-            '</div><hr/>';
+        innerHTML += '<tr>' +
+            '<th>' + trainingMap.get("id") + '</th>' +
+            '<th>' + trainingMap.get("pulse") + '</th>' +
+            '<th>' + trainingMap.get("speed") + '</th>' +
+            '<th>' + trainingMap.get("startDateTime") + '</th>' +
+            '<th>' + trainingMap.get("endDateTime") + '</th>' +
+            '<th><button onclick=\'openTeamTrainingResults("' + trainingMap.get("id") + '")\'>Get team results</button></th>' +
+            '</tr>';
     }
+    innerHTML+="</table>";
     trainings.innerHTML = innerHTML;
 }
 
@@ -65,11 +72,13 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 function openTeamTrainingResults(id) {
+    window.alert("75: "+id);
     localStorage.setItem("trainingId", id);
     document.location = "http://localhost:8080/CyclingTeamHealth_war/trainingsResults.jsp";
 }
 
 function openTeamTrainingsResults(){
+    window.alert(81);
     localStorage.removeItem("trainingId");
     document.location = "http://localhost:8080/CyclingTeamHealth_war/trainingsResults.jsp";
 }

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_TEAM_TRAININGS_RESULTS;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_TEAM_TRAINING_RESULTS;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_TRAINING_RESULTS;
 import static ua.nure.illiashenko.ilona.constants.SQLQuery.GET_USER_TRAININGS_RESULTS;
@@ -97,6 +98,27 @@ public class TrainingResultsDAO implements DAO<TrainingResults, Integer> {
     public List<TrainingResults> getTeamTrainingResults(Integer trainingId, Connection connection) throws SQLException {
         List<TrainingResults> trainingResultsList = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(GET_TEAM_TRAINING_RESULTS)) {
+            preparedStatement.setInt(1, trainingId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                TrainingResults trainingResults = new TrainingResults();
+                trainingResults.setId(resultSet.getInt(1));
+                trainingResults.setTrainingId(resultSet.getInt(2));
+                trainingResults.setLogin(resultSet.getString(3));
+                trainingResults.setPulse(resultSet.getInt(4));
+                trainingResults.setSpeed(resultSet.getInt(5));
+                trainingResultsList.add(trainingResults);
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new SQLException();
+        }
+        return trainingResultsList;
+    }
+
+    public List<TrainingResults> getTeamTrainingsResults(Integer trainingId, Connection connection) throws SQLException {
+        List<TrainingResults> trainingResultsList = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_TEAM_TRAININGS_RESULTS)) {
             preparedStatement.setInt(1, trainingId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

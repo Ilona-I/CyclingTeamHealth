@@ -49,7 +49,7 @@ public class TeamTrainingsResultsServlet extends HttpServlet {
             response.setStatus(404);
             return;
         }
-        List<TrainingResults> trainingResults = trainingService.getTeamTrainingResults(id);
+        List<TrainingResults> trainingResults = trainingService.getTeamTrainingsResults(id);
         List<String> trainingResultsAsString = new ArrayList<>();
         for (TrainingResults tr: trainingResults){
             trainingResultsAsString.add(tr.toString());
