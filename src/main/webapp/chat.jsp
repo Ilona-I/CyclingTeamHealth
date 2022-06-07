@@ -1,30 +1,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<html lang="en">
 <head>
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/menu.css" type="text/css">
+    <title>Cyclist Health</title>
 </head>
 <body>
-<div>
-    <a href="http://localhost:8080/CyclingTeamHealth_war/index.jsp">Home</a>
-    <a href="http://localhost:8080/CyclingTeamHealth_war/feedbacks.jsp">Feedbacks</a>
-    <a href="http://localhost:8080/CyclingTeamHealth_war/teams.jsp">Teams</a>
-    <div id="userPresent">
-        <a href="http://localhost:8080/CyclingTeamHealth_war/profile.jsp">My profile</a>
-        <a href="http://localhost:8080/CyclingTeamHealth_war/users.jsp">Team members</a>
-        <a href="http://localhost:8080/CyclingTeamHealth_war/chats.jsp">Chats</a>
-        <p id="userLogin"></p>
-        <button onclick="logOut()">Log out</button>
+<div class="row div_menu center_content">
+    <div class="div_title_style">
+        <h5 class="h5_title_style">Відстеження <br>фізичного стану <br>велосипедистів</h5>
     </div>
-    <div id="noUser">
-        <a href="http://localhost:8080/CyclingTeamHealth_war/logIn.jsp">Log in</a>
-        <a href="http://localhost:8080/CyclingTeamHealth_war/signUp.jsp">Sign up</a>
-    </div>
-    <div id="admin">
-        <a href="http://localhost:8080/CyclingTeamHealth_war/backup.jsp">Backup</a>
-    </div>
-    <div id="teamMember">
-        <a href="http://localhost:8080/CyclingTeamHealth_war/trainings.jsp">Trainings</a>
-    </div>
+    <div class="center_content div_menu_item"><a href="http://localhost:8080/CyclingTeamHealth_war/index.jsp" class="a_menu_item">Home</a></div>
+    <div class="center_content div_menu_item"><a href="http://localhost:8080/CyclingTeamHealth_war/feedbacks.jsp" class="a_menu_item">Feedbacks</a></div>
+    <div class="center_content div_menu_item"><a href="http://localhost:8080/CyclingTeamHealth_war/teams.jsp" class="a_menu_item">Teams</a></div>
+    <div id="admin" class="center_content div_menu_item"> <a href="http://localhost:8080/CyclingTeamHealth_war/backup.jsp" class="a_menu_item">Backup</a></div>
+    <div id="userPresent1" class="center_content div_menu_item"><a href="http://localhost:8080/CyclingTeamHealth_war/profile.jsp" class="a_menu_item">My profile</a></div>
+    <div id="userPresent2" class="center_content div_menu_item"><a href="http://localhost:8080/CyclingTeamHealth_war/users.jsp" class="a_menu_item">Team members</a></div>
+    <div id="userPresent3" class="center_content div_selected_menu_item"><a href="http://localhost:8080/CyclingTeamHealth_war/chats.jsp" class="a_selected_menu_item">Chats</a></div>
+    <div id="teamMember" class="center_content div_menu_item"><a href="http://localhost:8080/CyclingTeamHealth_war/trainings.jsp" class="a_menu_item">Trainings</a></div>
+    <div id="userPresent4" class="center_content div_button"><button onclick="logOut()" class="button_menu">Log out</button></div>
+    <div id="noUser1" class="center_content div_button"><button onclick="document.location='http://localhost:8080/CyclingTeamHealth_war/logIn.jsp'" class="button_menu">Log in</button></div>
+    <div id="noUser2" class="center_content div_button"><button onclick="document.location='http://localhost:8080/CyclingTeamHealth_war/signUp.jsp'" class="button_menu">Sign up</button></div>
 </div>
 
 <h2 id="chatName">Chat</h2>

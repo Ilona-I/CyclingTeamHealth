@@ -53,6 +53,7 @@ public class UserServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println(56);
         UserData userData = new UserData(request);
         System.out.println(userData);
         List<String> validationErrors = dataValidator.validate(userData);

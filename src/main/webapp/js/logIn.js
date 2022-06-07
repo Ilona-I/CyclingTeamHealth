@@ -24,9 +24,9 @@ function logIn() {
 function handleStateChange() {
     if (xmlHttp.readyState == 4) {
         if (xmlHttp.status == 200) {
+            document.location = "http://localhost:8080/CyclingTeamHealth_war/profile.jsp";
             let user = b64DecodeUnicode(xmlHttp.getResponseHeader("Authorization"));
             saveUserInLocalStorage(user);
-            document.location = "http://localhost:8080/CyclingTeamHealth_war/profile.jsp";
         }
         if(xmlHttp.status == 400){
             onError();

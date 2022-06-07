@@ -38,19 +38,51 @@ function jsonToHTML(jsonString) {
     for (const element of list) {
         let feedbackObject = JSON.parse(element);
         let feedbackMap = new Map(Object.entries(feedbackObject));
-        innerHTML += '<div><h6>' + feedbackMap.get("login") + '   |   ' + feedbackMap.get("dateTime") + '</h6>' +
-            '<p>' + feedbackMap.get("rating") + '</p>' +
-            '<p>' + feedbackMap.get("text") + '</p>';
+        innerHTML += '<div style="width: 30%; float: left;">' +
+        '<div style="margin-top: 40px; background-color: #82b295; width: 90%; margin-right: auto; margin-left: auto;">' +
+        '<hr>' +
+        '   <div class="row" style="width: 90%; margin-right: auto; margin-left: auto; margin-top: 10px; color: white;">' +
+        '       <div style="width: 79%; font-style: italic; font-size: 17px;">' +
+        '           <p>' + feedbackMap.get("login") +
+        '           </p>' +
+        '       </div>' +
+        '       <div style="width: 21%; font-size: 14px;">' +
+        '               <p>' + feedbackMap.get("dateTime").slice(0, 10) +
+        '               </p>' +
+        '       </div>' +
+        '   </div>' +
+        '   <div style="background-color:  #FEF4CE">' +
+        '       <div style="width: 90%; margin-right: auto; margin-left: auto;">' +
+        '           <div style="height: 5px;">' +
+        '           </div>' +
+        '           <div class="rating-mini" style="">' +
+        '               <span ' + getRating(parseInt(feedbackMap.get("rating")), 0) + '></span>' +
+        '               <span ' + getRating(parseInt(feedbackMap.get("rating")), 1) + '></span>' +
+        '               <span ' + getRating(parseInt(feedbackMap.get("rating")), 2) + '></span>' +
+        '               <span ' + getRating(parseInt(feedbackMap.get("rating")), 3) + '></span>' +
+        '               <span ' + getRating(parseInt(feedbackMap.get("rating")), 4) + '></span>' +
+        '          </div>' +
+        '          <p style="color: #353637">' + feedbackMap.get("text") +
+        '          </p>' +
+        '       </div>';
+        console.log(innerHTML);
         if (role != null && role == 'admin') {
-            innerHTML += '<div>' +
-                '<button onClick=\'changeFeedbackStatus("' + feedbackMap.get("id") + '", "' +
+            innerHTML += '<div class="row" style="margin-left: 10px;">' +
+                '<button style="height: 40px;  background-color: transparent; color: #220a02; border-style: dotted; border-width: 2px; " ' +
+                'onClick=\'changeFeedbackStatus("' + feedbackMap.get("id") + '", "' +
                 feedbackMap.get("login") + '", "' +
                 feedbackMap.get("dateTime") + '", "' +
                 feedbackMap.get("rating") + '", "' +
                 feedbackMap.get("text") + '", "' +
-                feedbackMap.get("status") + '")\'>' + feedbackMap.get("status") + '</button></div>';
+                feedbackMap.get("status") + '")\'>' + feedbackMap.get("status") +
+                '</button>' +
+                '</div>';
         }
-        innerHTML += '</div><hr/>';
+        innerHTML += '<div style="height: 10px; "></div>' +
+            '</div>' +
+            '</div>' +
+            ' <hr style="width: 90%; margin-right: auto; margin-left: auto;">' +
+            '</div>';
     }
     feedbacks.innerHTML = innerHTML;
 }
@@ -90,3 +122,6 @@ function handleStateChangePost() {
     }
 }
 
+function getRating(rating, number) {
+    return rating > number ? 'class="active"' : ''
+}

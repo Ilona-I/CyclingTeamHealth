@@ -140,9 +140,9 @@ function changeUserStatus(login, firstName, lastName, email, status){
         "&firstName=" + firstName +
         "&lastName=" + lastName +
         "&email=" + email +
-        "&status=" + status;
+        "&status=" + status + "&birthDate=&gender=&height=&weight=";
     xmlHttp.send(params);
-    getFeedbacks();
+    getTeamUsers();
 }
 
 function handleStateChangePost() {

@@ -1,15 +1,18 @@
 document.addEventListener("DOMContentLoaded", function() {
     if (localStorage.getItem("login") == null) {
-        document.getElementById("userPresent").innerText='';
+        document.getElementById("userPresent1").setAttribute("hidden", "");
+        document.getElementById("userPresent2").setAttribute("hidden", "");
+        document.getElementById("userPresent3").setAttribute("hidden", "");
+        document.getElementById("userPresent4").setAttribute("hidden", "");
     } else {
-        document.getElementById("userLogin").innerText=localStorage.getItem("login")+'  |  '+localStorage.getItem("role");
-        document.getElementById("noUser").innerText='';
+        document.getElementById("noUser1").setAttribute("hidden", "");
+        document.getElementById("noUser2").setAttribute("hidden", "");
     }
     if (localStorage.getItem("login") == null || localStorage.getItem("role") != "admin") {
-        document.getElementById("admin").innerText='';
+        document.getElementById("admin").setAttribute("hidden", "");
     }
     if (localStorage.getItem("login") == null || localStorage.getItem("role") ==="admin") {
-        document.getElementById("teamMember").innerText='';
+        document.getElementById("teamMember").setAttribute("hidden", "");
     }
 });
 

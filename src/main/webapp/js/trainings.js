@@ -72,13 +72,11 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 function openTeamTrainingResults(id) {
-    window.alert("75: "+id);
     localStorage.setItem("trainingId", id);
     document.location = "http://localhost:8080/CyclingTeamHealth_war/trainingsResults.jsp";
 }
 
 function openTeamTrainingsResults(){
-    window.alert(81);
     localStorage.removeItem("trainingId");
     document.location = "http://localhost:8080/CyclingTeamHealth_war/trainingsResults.jsp";
 }
