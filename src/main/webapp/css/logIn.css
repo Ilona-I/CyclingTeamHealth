@@ -1,0 +1,19 @@
+.input_style_log_in{
+    width: 300px;
+}
+
+.button_log_in{
+    background-color: #ABDDC1;
+    color: #353637;
+    height: 50px;
+    width: 300px;
+    border-style: solid;
+    border-color: #353637;
+    border-width: 0px;
+    font-size: 20px
+}
+
+.div_main_log_in{
+    margin-left: 40%;
+    margin-top: 90px;
+}

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -13,7 +14,7 @@
     <div class="div_title_style">
         <h5 class="h5_title_style">Відстеження <br>фізичного стану <br>велосипедистів</h5>
     </div>
-    <div class="center_content div_selected_menu_item"><a href="http://localhost:8080/CyclingTeamHealth_war/index.jsp" class="a_selected_menu_item">Home</a></div>
+    <div class="center_content div_selected_menu_item"><a href="http://localhost:8080/CyclingTeamHealth_war/index.jsp" class="a_selected_menu_item" >Home</a></div>
     <div class="center_content div_menu_item"><a href="http://localhost:8080/CyclingTeamHealth_war/feedbacks.jsp" class="a_menu_item">Feedbacks</a></div>
     <div class="center_content div_menu_item"><a href="http://localhost:8080/CyclingTeamHealth_war/teams.jsp" class="a_menu_item">Teams</a></div>
     <div id="admin" class="center_content div_menu_item"> <a href="http://localhost:8080/CyclingTeamHealth_war/backup.jsp" class="a_menu_item">Backup</a></div>

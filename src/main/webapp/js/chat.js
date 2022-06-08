@@ -49,10 +49,11 @@ function jsonToHTML(jsonString) {
     for (const element of list) {
         let message = JSON.parse(element);
         let messageMap = new Map(Object.entries(message));
-        innerHTML += '<div>' +
-            '<h5>' + messageMap.get("sender") + '   |   ' + messageMap.get("dateTime") + '</h5>' +
-            '<p>' + messageMap.get("text") + '</p>' +
-            '</div><hr/>';
+        innerHTML += '<div style="background-color: white; margin-top: 20px;"><div style="margin-left: 5%;  width: 90%;"><div style="height: 5px;"></div>' +
+            '<p>' + messageMap.get("sender") +  '</p>'+
+            ' <span style="font-style: italic; font-size: small; float: right;">  ' + messageMap.get("dateTime").slice(0, 10) + '</span><hr style="margin-top: -10px">' +
+            '<p>' +messageMap.get("text") + '</p>' +
+            '</div><hr style="margin-top: -1px"></div><hr/>';
     }
     chat.innerHTML = innerHTML;
 }

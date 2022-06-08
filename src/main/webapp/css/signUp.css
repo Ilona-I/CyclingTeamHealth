@@ -1,0 +1,27 @@
+.div_main_sign_up{
+    margin-left: 30%;
+    margin-top: 20px;
+}
+
+.div_sign_up_items{
+    width: 200px;
+}
+
+.button_signUp{
+    background-color: #ABDDC1;
+    color: #353637;
+    height: 50px;
+    width: 460px;
+    border-style: solid;
+    border-color: #353637;
+    border-width: 0px;
+    font-size: 20px
+}
+
+.div_sign_up_elements{
+    margin-bottom: 3px;
+}
+
+.input_style_sign_up{
+    width: 300px;
+}

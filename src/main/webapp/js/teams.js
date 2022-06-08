@@ -30,11 +30,22 @@ function handleStateChange() {
 
 function jsonToHTML(jsonString) {
     let jsonObject = JSON.parse(jsonString);
-    let dataMap = new Map(Object.entries(jsonObject));
+    let myMap = new Map(Object.entries(jsonObject));
+    const dataMap = new Map([...myMap.entries()].sort((a, b) => b[1] - a[1]));
     let teams = document.getElementById("teams");
     let innerHTML = "";
     for (const key of dataMap.keys()) {
-        innerHTML += '<div>' + '<h6>' + key + '</h6>' + '<p>' + dataMap.get(key) + '</p>' + '</div><hr/>'
+        innerHTML += '<div id = "'+key+'" class="row " style="background-color: rgba(203,255,226,0.34);">' +
+            '<div style="width: 47%; text-align: right; margin-top:10px;">'+
+            '<p style="font-size: x-large; color: #353637">' +
+            key +
+            '</p></div>' +
+            '<div style="width: 47%; margin-left:6%;text-align: left;  margin-top:10px;">' +
+            '<p style="font-size: x-large; font-weight: bold">' +
+            dataMap.get(key) +
+            '</p></div>' +
+            '</div>' +
+            '<hr/>';
     }
     teams.innerHTML = innerHTML;
 }

@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="css/menu.css" type="text/css">
+    <link rel="stylesheet" href="css/signUp.css" type="text/css">
     <title>Cyclist Health</title>
 </head>
 <body>
@@ -25,52 +26,107 @@
     <div id="noUser1" class="center_content div_button"><button onclick="document.location='http://localhost:8080/CyclingTeamHealth_war/logIn.jsp'" class="button_menu">Log in</button></div>
     <div id="noUser2" class="center_content div_button"><button onclick="document.location='http://localhost:8080/CyclingTeamHealth_war/signUp.jsp'" class="button_menu">Sign up</button></div>
 </div>
-<h2>Sign up</h2>
-<h6>Login:</h6>
-<input id="login" type="text" />
-<h6>Password:</h6>
-<input id="password" type="password" />
-<h6>Repeat password:</h6>
-<input id="repeatedPassword" type="password" />
-<h6>First name:</h6>
-<input id="firstName" type="text" />
-<p id="wrongFirstName"></p>
-<h6>Last name:</h6>
-<input id="lastName" type="text"/>
-<p id="wrongLastName"></p>
-<h6>E-mail:</h6>
-<input id="email" type="text" />
-<p id="wrongEmail"></p>
-<h6>Role:</h6>
-<label><input type="radio" onclick="openNewTeam()" name="role" id="trainer" value="trainer" checked/>Trainer</label>
-<label><input type="radio" onclick="closeNewTeam()" name="role" id="soigneur" value="soigneur"/>Soigneur</label>
-<label><input type="radio" onclick="openCyclistRole()" name="role" id="cyclist" value="cyclist"/>Cyclist</label>
-<label><input type="radio" onclick="closeNewTeam()" name="role" id="doctor" value="doctor"/>Doctor</label>
-<h6>Team type</h6>
-<label><input type="radio" onclick="createTeam()" name="teamType" id="newTeam" value="newTeam">New team</label>
-<label><input type="radio" onclick="enterTeamId()" name="teamType" id="enterTeam" value="enterTeam" checked>Enter team id</label>
-<div id="createTeam" hidden>
-    <input type="text" id="teamName">
-</div>
-<div id="enterTeamId">
-    <input type="text" id="teamId">
-</div>
-<div id="cyclistRole" hidden>
-    <h6>Birth date:</h6>
-    <input id="birthDate" type="date" />
-    <p id="wrongBirthDate"></p>
-    <h6>Height:</h6>
-    <input id="height" type="number" min="0" />
-    <p id="wrongHeight"></p>
-    <h6>Weight:</h6>
-    <input id="weight" type="number" min="0"/>
-    <p id="wrongWeight"></p>
-</div>
-<h6>Gender:</h6>
-<label><input type="radio" name="gender" id="male" value="male" checked/>Male</label>
-<label><input type="radio" name="gender" id="female" value="female"/>Female</label>
+<div class="div_main_sign_up">
+    <h2 style="margin-left: 200px;">Sign up</h2>
+    <br>
+    <div class="row div_sign_up_elements">
+        <div class="div_sign_up_items">
+            <h6>Login:</h6>
+        </div>
+        <input id="login" type="text" class="input_style_sign_up"/>
+    </div>
+    <div class="row div_sign_up_elements">
+        <div class="div_sign_up_items">
+            <h6>Password:</h6>
+        </div>
+        <input id="password" type="password" class="input_style_sign_up"/>
+    </div>
+    <div class="row div_sign_up_elements">
+        <div class="div_sign_up_items">
+            <h6>Repeat password:</h6>
+        </div>
+        <input id="repeatedPassword" type="password" class="input_style_sign_up"/>
+    </div>
+    <div class="row div_sign_up_elements">
+        <div class="div_sign_up_items">
+            <h6>First name:</h6>
+        </div>
+        <input id="firstName" type="text" class="input_style_sign_up"/>
+        <p id="wrongFirstName"></p>
+    </div>
+    <div class="row div_sign_up_elements">
+        <div class="div_sign_up_items">
+            <h6>Last name:</h6>
+        </div>
+        <input id="lastName" type="text" class="input_style_sign_up"/>
+        <p id="wrongLastName"></p>
+    </div>
+    <div class="row div_sign_up_elements">
+        <div class="div_sign_up_items">
+            <h6>E-mail:</h6>
+        </div>
+        <input id="email" type="text" class="input_style_sign_up"/>
+        <p id="wrongEmail"></p>
+    </div>
+    <div class="row div_sign_up_elements">
+        <div class="div_sign_up_items">
+            <h6>Role:</h6>
+        </div>
+        <div>
+            <label><input type="radio" onclick="openNewTeam()" name="role" id="trainer" value="trainer" checked/>Trainer</label><br>
+            <label><input type="radio" onclick="closeNewTeam()" name="role" id="soigneur" value="soigneur"/>Soigneur</label><br>
+            <label><input type="radio" onclick="openCyclistRole()" name="role" id="cyclist" value="cyclist"/>Cyclist</label><br>
+            <label><input type="radio" onclick="closeNewTeam()" name="role" id="doctor" value="doctor"/>Doctor</label><br>
+        </div>
+    </div>
+    <div class="row div_sign_up_elements">
+        <div class="div_sign_up_items">
+            <h6>Team type:</h6>
+        </div>
+        <div>
+            <label style="width: 100px;"><input type="radio" onclick="createTeam()" name="teamType" id="newTeam" value="newTeam">New team</label>
+            <label><input type="radio" onclick="enterTeamId()" name="teamType" id="enterTeam" value="enterTeam" checked>Enter team id</label><br>
+            <div id="createTeam" hidden>
+                <input type="text" id="teamName" class="input_style_sign_up"/>
+            </div>
+            <div id="enterTeamId">
+                <input type="text" id="teamId" class="input_style_sign_up"/>
+            </div>
+        </div>
+    </div>
+    <div id="cyclistRole" >
+        <div class="row div_sign_up_elements">
+            <div class="div_sign_up_items">
+                <h6>Birth date:</h6>
+            </div>
+            <input id="birthDate" type="date" class="input_style_sign_up"/>
+            <p id="wrongBirthDate"></p>
+        </div>
+        <div class="row div_sign_up_elements">
+            <div class="div_sign_up_items">
+                <h6>Height:</h6>
+            </div>
+            <input id="height" type="number" min="0" class="input_style_sign_up"/>
+            <p id="wrongHeight"></p>
+        </div>
+        <div class="row div_sign_up_elements">
+            <div class="div_sign_up_items">
+                <h6>Weight:</h6>
+            </div>
+            <input id="weight" type="number" min="0" class="input_style_sign_up"/>
+            <p id="wrongWeight"></p>
+        </div>
+    </div>
+    <div class="row div_sign_up_elements">
+        <div class="div_sign_up_items">
+            <h6>Gender:</h6>
+        </div>
+        <label style="width: 100px;"><input type="radio" name="gender" id="male" value="male" checked/>Male</label>
+        <label><input type="radio" name="gender" id="female" value="female"/>Female</label>
+    </div>
 
-<button onclick="signUp()">Sign up</button>
+    <button class="button_signUp" onclick="signUp()">Sign up</button>
+</div>
 <script src="js/signUp.js"></script>
 <script src="js/menu.js"></script>
 </body>

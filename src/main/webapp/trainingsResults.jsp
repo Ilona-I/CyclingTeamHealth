@@ -32,9 +32,12 @@
     <div id="noUser1" class="center_content div_button"><button onclick="document.location='http://localhost:8080/CyclingTeamHealth_war/logIn.jsp'" class="button_menu">Log in</button></div>
     <div id="noUser2" class="center_content div_button"><button onclick="document.location='http://localhost:8080/CyclingTeamHealth_war/signUp.jsp'" class="button_menu">Sign up</button></div>
 </div>
+<div style="margin-left: 10%; margin-top: 40px; width: 80%;">
 <h2 id="title"></h2>
+    <br>
 <div id="trainingsResults">
 
+</div>
 </div>
 <script src="js/trainingsResults.js"></script>
 <script src="js/menu.js"></script>

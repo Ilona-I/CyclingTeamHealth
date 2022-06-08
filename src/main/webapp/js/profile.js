@@ -1,20 +1,65 @@
 document.addEventListener("DOMContentLoaded", function() {
     let profileHTML =
-        '<h6>Login:</h6>' + '<p>'+ localStorage.getItem("login")+'</p>' +
-        '<h6>First name:</h6>' + '<input id="firstName" type="text" value="' + localStorage.getItem("firstName") + '"/>' +
+        '<div class="row div_sign_up_elements">' +
+        '        <div class="div_sign_up_items">' +
+        '           <h6>Login:</h6>' +
+        '       </div>' +
+        '       <p>' + localStorage.getItem("login") + '</p>' +
+        '</div>' +
+        '<div class="row div_sign_up_elements">' +
+        '        <div class="div_sign_up_items">' +
+        '           <h6>First name:</h6>' +
+        '       </div>' +
+        '       <input id="firstName" class="input_style_sign_up" type="text" value="' + localStorage.getItem("firstName") + '"/>' +
         '<p id="wrongFirstName"></p>' +
-        '<h6>Last name:</h6>' + '<input id="lastName" type="text" value="' + localStorage.getItem("lastName") + '"/>' +
+        '</div>' +
+        '<div class="row div_sign_up_elements">' +
+        '        <div class="div_sign_up_items">' +
+        '           <h6>Last name:</h6>' +
+        '        </div>' +
+        '        <input id="lastName" class="input_style_sign_up" type="text" value="' + localStorage.getItem("lastName") + '"/>' +
         '<p id="wrongLastName"></p>' +
-        '<h6>E-mail:</h6>' + '<input id="email" type="text" value="' + localStorage.getItem("email") + '"/>' +
-        '<p id="wrongEmail"></p>' +
-        '<h6>Birth date:</h6>' + '<input id="birthDate" type="date" value="' + localStorage.getItem("birthDate") + '"/>' +
-        '<p id="wrongBirthDate"></p>' +
-        '<h6>Height:</h6>' + '<input id="height" type="number" min="0" value="' + localStorage.getItem("height") + '"/>' +
-        '<p id="wrongHeight"></p>' +
-        '<h6>Weight:</h6>' + '<input id="weight" type="number" min="0" value="' + localStorage.getItem("weight") + '"/>' +
-        '<p id="wrongWeight"></p>' +
-        '<h6>Gender:</h6>' + '<p>' + localStorage.getItem("gender") + '</p>' +
-        '<h6>Role:</h6>' + '<p>' + localStorage.getItem("role") + '</p>';
+        '</div>' +
+        '<div class="row div_sign_up_elements">' +
+        '        <div class="div_sign_up_items">' +
+        '           <h6>E-mail:</h6>' +
+        '        </div>' +
+        '        <input id="email" class="input_style_sign_up" type="text" value="' + localStorage.getItem("email") + '"/>' +
+        '       <p id="wrongEmail"></p>' +
+        '</div>' +
+        '<div class="row div_sign_up_elements">' +
+        '        <div class="div_sign_up_items">' +
+        '           <h6>Birth date:</h6>' +
+        '        </div>' +
+        '        <input id="birthDate" class="input_style_sign_up" type="date" value="' + localStorage.getItem("birthDate") + '"/>' +
+        '        <p id="wrongBirthDate"></p>' +
+        '</div>' +
+        '<div class="row div_sign_up_elements">' +
+        '        <div class="div_sign_up_items">' +
+        '           <h6>Height:</h6>' +
+        '       </div>' +
+        '       <input id="height" class="input_style_sign_up" type="number" min="0" value="' + localStorage.getItem("height") + '"/>' +
+        '       <p id="wrongHeight"></p>' +
+        '</div>' +
+        '<div class="row div_sign_up_elements">' +
+        '        <div class="div_sign_up_items">' +
+        '           <h6>Weight:</h6>' +
+        '       </div>' +
+        '       <input id="weight" class="input_style_sign_up" type="number" min="0" value="' + localStorage.getItem("weight") + '"/>' +
+        '       <p id="wrongWeight"></p>' +
+        '</div>' +
+        '<div class="row div_sign_up_elements">' +
+        '        <div class="div_sign_up_items">' +
+        '           <h6>Gender:</h6>' +
+        '        </div>' +
+        '        <p>' + localStorage.getItem("gender") + '</p>' +
+        '</div>' +
+        '<div class="row div_sign_up_elements" style="margin-top: -20px;">' +
+        '        <div class="div_sign_up_items">' +
+        '           <h6>Role:</h6>' +
+        '        </div>' +
+        '       <p>' + localStorage.getItem("role") + '</p>' +
+        '</div>';
     document.getElementById("profile").innerHTML = profileHTML;
 });
 

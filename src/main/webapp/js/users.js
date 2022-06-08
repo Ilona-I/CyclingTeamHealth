@@ -54,21 +54,23 @@ function jsonToHTML(jsonString) {
     for (const element of list) {
         let usersObject = JSON.parse(element);
         let usersMap = new Map(Object.entries(usersObject));
-        innerHTML += '<div><h6>' + usersMap.get("login") + '   |   ' + usersMap.get("firstName") + '   |   ' + usersMap.get("lastName")+'</h6>';
-        if (role != null && role == 'admin') {
-            innerHTML += '<div>' +
-                '<button onClick=\'changeUserStatus("' +
-                usersMap.get("login") +'", "' +
-                usersMap.get("firstName") +'", "' +
-                usersMap.get("lastName") +'", "' +
-                usersMap.get("email") +'", "' +
-                usersMap.get("status") +
-                '")\'>' + usersMap.get("status") + '</button></div>';
+        if (usersMap.get("role")!="admin") {
+            innerHTML += '<div style="background-color: rgb(233,255,221);" class="center_content"><div style="margin-top: 10px; margin-bottom: 10px;"><h6>' + usersMap.get("login") + '   |   ' + usersMap.get("firstName") + '   |   ' + usersMap.get("lastName") + '</h6>';
+            if (role != null && role == 'admin') {
+                innerHTML += '<div>' +
+                    '<button style="height: 40px; width: 300px; background-color: rgb(229,213,234); color: #714749; border-style: dotted; border-width: 2px; font-size: 18px; " onClick=\'changeUserStatus("' +
+                    usersMap.get("login") + '", "' +
+                    usersMap.get("firstName") + '", "' +
+                    usersMap.get("lastName") + '", "' +
+                    usersMap.get("email") + '", "' +
+                    usersMap.get("status") +
+                    '")\'>' + usersMap.get("status") + '</button></div>';
+            }
+            if (localStorage.getItem("login") != usersMap.get("login")) {
+                innerHTML += '<button style="height: 40px; width: 300px; background-color: rgba(235,255,55,0.6); color: #6b461d; border-style: dotted; border-width: 2px; font-size: 18px; " onclick=\'openChat("' + usersMap.get("login") + '")\'>Open chat</button>';
+            }
+            innerHTML += '</div></div><hr/>';
         }
-        if(localStorage.getItem("login")!=usersMap.get("login")){
-            innerHTML += '<button onclick=\'openChat("'+usersMap.get("login")+'")\'>Open chat</button>';
-        }
-        innerHTML += '</div><hr/>';
     }
     users.innerHTML = innerHTML;
 }

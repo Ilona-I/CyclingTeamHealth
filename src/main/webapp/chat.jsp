@@ -26,15 +26,19 @@
     <div id="noUser2" class="center_content div_button"><button onclick="document.location='http://localhost:8080/CyclingTeamHealth_war/signUp.jsp'" class="button_menu">Sign up</button></div>
 </div>
 
-<h2 id="chatName">Chat</h2>
-<div id="chat">
-
+<div style="margin-left:10%; background-color: #e1e2e3; width: 80%; margin-top: 40px; ">
+    <div style="margin-left: 5%; width: 90%">
+        <h2 id="chatName" style=" margin-top: 10px;">Chat</h2>
+            <div id="chat">
+            </div>
+    </div>
+    <input style="margin-left: 10%; width: 60%;" type="text" id="text" placeholder="Type...">
+    <button style="background-color: #ABDDC1; color: #353637; height: 40px; width: 100px; border-style: solid; border-color: #353637; border-width: 1px; font-size: 20px" onclick="sendMessage()">Send</button>
+<br><br>
 </div>
 
-<form>
-    <input type="text" id="text">
-    <button onclick="sendMessage()">Send</button>
-</form>
+
+
 <script src="js/chat.js"></script>
 <script src="js/menu.js"></script>
 </body>

@@ -32,11 +32,15 @@
     <div id="noUser1" class="center_content div_button"><button onclick="document.location='http://localhost:8080/CyclingTeamHealth_war/logIn.jsp'" class="button_menu">Log in</button></div>
     <div id="noUser2" class="center_content div_button"><button onclick="document.location='http://localhost:8080/CyclingTeamHealth_war/signUp.jsp'" class="button_menu">Sign up</button></div>
 </div>
-<button onclick="openTeamTrainingsResults()">Get all team trainings results</button>
-<div id="trainings">
+<div style="margin-left: 10%; margin-top: 40px; width: 80%;">
+    <h1>Trainings</h1>
+    <br>
+<button style="height: 40px; width: 300px; background-color: rgba(235,255,55,0.6); color: #6b461d; border-style: dotted; border-width: 2px; font-size: 18px; " onclick="openTeamTrainingsResults()">Get all team trainings results</button>
+<br><br>
+    <div id="trainings">
 
 </div>
-
+</div>
 <script src="js/trainings.js"></script>
 <script src="js/menu.js"></script>
 </body>

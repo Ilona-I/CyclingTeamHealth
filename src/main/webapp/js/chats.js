@@ -45,10 +45,11 @@ function jsonToHTML(jsonString) {
     let chats = document.getElementById("chats");
     let innerHTML = "";
     for (const key of dataMap.keys()) {
-        innerHTML += '<div>' +
+        innerHTML += '<div class="center_content" style="background-color: rgb(233,255,221);"><div style="margin-top: 10px; margin-bottom: 10px;">' +
             '<p>' + dataMap.get(key) + '</p>' +
-            '<button onclick=\'openChat("' + key + '", "' + dataMap.get(key) + '")\'>Open</button>' +
-            '</div><hr/>';
+            '<button style="height: 40px; width: 300px; background-color: rgba(235,255,55,0.6); color: #6b461d; border-style: dotted; border-width: 2px; font-size: 18px; " onclick=\'openChat("' + key + '", "' + dataMap.get(key) + '")\'>Open chat</button>' +
+            '</div></div>' +
+            '<hr/>';
     }
     chats.innerHTML = innerHTML;
 }

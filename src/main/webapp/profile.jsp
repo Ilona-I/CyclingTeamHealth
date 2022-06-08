@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="css/menu.css" type="text/css">
+    <link rel="stylesheet" href="css/signUp.css" type="text/css">
     <title>Cyclist Health</title>
 </head>
 <body>
@@ -25,13 +26,14 @@
     <div id="noUser1" class="center_content div_button"><button onclick="document.location='http://localhost:8080/CyclingTeamHealth_war/logIn.jsp'" class="button_menu">Log in</button></div>
     <div id="noUser2" class="center_content div_button"><button onclick="document.location='http://localhost:8080/CyclingTeamHealth_war/signUp.jsp'" class="button_menu">Sign up</button></div>
 </div>
-    <h2>Profile</h2>
-    <form>
+<div class="div_main_sign_up">
+    <h2 style="margin-left: 200px;">Profile</h2>
+    <br>
         <div id="profile">
 
         </div>
-        <button type="submit" onclick="saveProfile()">Save changes</button>
-    </form>
+        <button class="button_signUp" onclick="saveProfile()">Save changes</button>
+</div>
 
 <script src="js/menu.js"></script>
 <script src="js/profile.js"></script>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlResolveMappings">
+    <file url="file://$PROJECT_DIR$/src/main/java/com/illiashenko/DAO/FeedbackDAO.java" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;@negative&quot;:&quot;1&quot;   }  } }}" />
+    <file url="PROJECT" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;name&quot;:{     &quot;@qname&quot;:&quot;5d093694-b5d7-4cbe-b617-e4c5223e5ce1&quot;    },    &quot;group&quot;:{     &quot;@kind&quot;:&quot;schema&quot;,     &quot;node&quot;:{      &quot;name&quot;:{       &quot;@qname&quot;:&quot;cyclist_health_db&quot;      }     }    }   }  } }}" />
+  </component>
+</project>

@@ -45,12 +45,12 @@ function jsonToHTML(jsonString) {
     let trainings = document.getElementById("trainings");
     let list = dataMap.get("trainingGoals");
     let innerHTML = "<table><tr>" +
-        "<th>Training id</th>" +
-        "<th>Pulse</th>" +
-        "<th>Speed</th>" +
-        "<th>Start time</th>" +
-        "<th>End time</th>" +
-        "<th></th></tr>";
+        "<th style='width: 100px;'>Training id</th>" +
+        "<th style='width: 100px;'>Pulse</th>" +
+        "<th style='width: 100px;'>Speed</th>" +
+        "<th style='width: 350px;'>Start time</th>" +
+        "<th style='width: 350px;'>End time</th>" +
+        "<th style='width: 200px;'></th></tr>";
     for (const element of list) {
         let trainingObject = JSON.parse(element);
         let trainingMap = new Map(Object.entries(trainingObject));
@@ -60,7 +60,7 @@ function jsonToHTML(jsonString) {
             '<th>' + trainingMap.get("speed") + '</th>' +
             '<th>' + trainingMap.get("startDateTime") + '</th>' +
             '<th>' + trainingMap.get("endDateTime") + '</th>' +
-            '<th><button onclick=\'openTeamTrainingResults("' + trainingMap.get("id") + '")\'>Get team results</button></th>' +
+            '<th><button style="height: 40px; width: 300px; background-color: rgba(235,255,55,0.6); color: #6b461d; border-style: dotted; border-width: 2px; font-size: 18px; " onclick=\'openTeamTrainingResults("' + trainingMap.get("id") + '")\'>Get team results</button></th>' +
             '</tr>';
     }
     innerHTML+="</table>";

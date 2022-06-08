@@ -52,10 +52,10 @@ function jsonToHTML(jsonString) {
     let trainingsResults = document.getElementById("trainingsResults");
     let list = dataMap.get("results");
     let innerHTML = "<table><tr>" +
-        "<th>Training id</th>" +
-        "<th>Login</th>" +
-        "<th>Pulse</th>" +
-        "<th>Speed</th>" +
+        "<th style='width: 200px;'>Training id</th>" +
+        "<th style='width: 200px;'>Login</th>" +
+        "<th style='width: 200px;'>Pulse</th>" +
+        "<th style='width: 200px;'>Speed</th>" +
         "</tr>";
     for (const element of list) {
         let trainingObject = JSON.parse(element);

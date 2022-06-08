@@ -32,7 +32,7 @@
     <div id="noUser1" class="center_content div_button"><button onclick="document.location='http://localhost:8080/CyclingTeamHealth_war/logIn.jsp'" class="button_menu">Log in</button></div>
     <div id="noUser2" class="center_content div_button"><button onclick="document.location='http://localhost:8080/CyclingTeamHealth_war/signUp.jsp'" class="button_menu">Sign up</button></div>
 </div>
-
+<h1 style="margin-top: 80px; margin-left: 40%;">Error</h1>
 <script src="js/menu.js"></script>
 </body>
 </html>
